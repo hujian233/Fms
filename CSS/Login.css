@@ -1,0 +1,22 @@
+#login_form{
+    background-color: white;
+    opacity: 0.9;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+#tip{
+    display: none;
+    position: relative;
+    color: red;
+}
+#link{
+    text-decoration: none;
+    position: relative;
+    float: right;
+}
+#label{
+    position: relative;
+}
+#button{
+    position: relative;
+}
