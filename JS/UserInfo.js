@@ -1,9 +1,7 @@
 var is_password_legel = true;
 var is_rePassword_legal = true;
-var is_phoneNum = true;
 var is_email = true;
 var password_reg = new RegExp('^[a-zA-Z0-9]{6,12}$');
-var phoneNum_reg = new RegExp('^[1]([3-9])[0-9]{9}$');
 var email_reg = new RegExp('^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$');
 
 $('#newPassword').change(function(){
@@ -45,26 +43,6 @@ $('#rePassword').change(function(){
     }
 });
 
-$('#newPhoneNum').change(function(){
-    if($(this).val() != ""){
-        if(!phoneNum_reg.test($(this).val())){
-            is_phoneNum_legel = false;
-            $(this).parent().parent().attr('class', 'form-group has-error has-feedback');
-            $(this).parent().children('span').remove();
-            $(this).parent().append('<span class="glyphicon glyphicon-remove form-control-feedback"></span>');
-        }else{
-            is_phoneNum_legel = true;
-            $(this).parent().parent().attr('class', 'form-group has-success has-feedback');
-            $(this).parent().children('span').remove();
-            $(this).parent().append('<span class="glyphicon glyphicon-ok form-control-feedback"></span>');
-        }
-    }else{
-        is_phoneNum_legel = true;
-        $(this).parent().parent().attr('class', 'form-group');
-        $(this).parent().children('span').remove();
-    }
-});
-
 $('#newEmail').change(function(){
     if($(this).val() != ""){
         if(!email_reg.test($(this).val())){
@@ -86,7 +64,7 @@ $('#newEmail').change(function(){
 });
 
 function validate(){
-    if(is_password_legel && is_rePassword_legal && is_phoneNum_legel && is_email_legel){
+    if(is_password_legel && is_rePassword_legal && is_email_legel){
         return true;
     }else{
         return false;
