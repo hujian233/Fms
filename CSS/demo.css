@@ -1,0 +1,11 @@
+button:focus {
+	outline: none;
+}
+
+.header_box{
+	background-color: rgb(40,60,150);
+    border-color: rgb(40,80,150);
+}
+#logo{
+	padding-left: 3rem;
+}
