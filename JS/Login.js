@@ -72,16 +72,30 @@
     //点击获取验证码按钮的事件
     $('#getNum').click(function(){
         if(_id_is_legal && email_is_legal){
-            var json_data = {
+            var time = 60;    //60s内不可重复获取验证码
+            $(this).attr('disabled', 'disabled');
+            
+            var json_data = {     //构造json
                 'userID': $('#_userID').val(),
                 'email': $('#email').val()  
             };
-            $.ajax({              //向后端发送工号与该工号的绑定邮箱（json）
+/*             $.ajax({              //向后端发送工号与该工号的绑定邮箱（json）
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(json_data),
                 url: ''           //后端action
-            });
+            }); */
+
+            var timer = setInterval(function(){
+                if(time == 0){
+                    $('#getNum').removeAttr('disabled');
+                    $('#getNum').html('再次获取');
+                    clearInterval(timer);
+                }else{
+                    $('#getNum').html(time + '秒后可再次获取');
+                    time--;
+                }
+            }, 1000);
         }
     });
     
