@@ -11,6 +11,7 @@
 }
 .act-btn{
     margin-right: 2px;
+    margin-top: 0.3rem;
 }
 .table-responsive{
     overflow-x: inherit;
@@ -19,32 +20,74 @@
 .cache-box{
     position: sticky;
     top: 2rem;
+    right: 1rem;
     display: block;
     float: right;
     z-index: 101;
-    width: 280px;
-    background-color: rgb(181, 185, 199);
+    width: 300px;
+    background-color: rgb(185, 185, 200);
     border-radius: 10px;
     box-shadow: -3px 3px 20px 0px;
 }
-.cache-title{
+.cache-tab-a{
+    height: 45px;
+    width: 100px;
+    float: left;
+    text-align: center;
+    background-color: white;
+    cursor: pointer;
+    text-decoration: none !important;
+    color: rgb(100,100,100) !important;
     font-weight: bold;
     font-size: 1.9rem;
+    line-height: 4rem;
+}
+.a-active{
+    background-color: rgb(185, 185, 200);
+    color: #333 !important;
+}
+.cache-icon{
+    padding: 10px;
+}
+.cache-title{
+    font-weight: bold;
+    font-size: 2.2rem;
     margin-left: 1.5rem;
+}
+
+.cache-content{
+    padding: 0 15px;
 }
 .cache-remove-icon{
     float: right;
-    color: rgb(255, 80, 80);
+    color: rgb(255, 100, 100);
+    zoom: 1.2;
 }
+.cache-remove-icon:hover{
+    color: rgb(255, 30, 30);
+    cursor: pointer;
+}
+.btn-cache{
+    float: right;
+    margin-left: 1.2rem;
+    margin-bottom: 1rem;
+}
+
 @media(min-width: 768px){
     
 }
 
 @media(max-width: 768px){
+    .cache-box{
+        width: 78px;
+    }
+    .cache-box:hover{
+        background-color: rgb(207, 207, 207);
+    }
     .cache-content{
         display: none;
     }
-    .cache-title{
+    .cache-title,.cache-tab{
         display: none;
     }
 }

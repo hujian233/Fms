@@ -14,8 +14,13 @@
         <link rel="shortcut icon" href="../IMG/favicon.ico"> 
     </head>
     <body>
-        <div class="cache-box container">
-            <img class="cacheIcon" src="../IMG/icon.png">
+        <div class="cache-box">
+            <div class="cache-tab">
+                <a class="cache-tab-a a-active" >出库单</a>
+                <a class="cache-tab-a">报修单</a>
+                <a class="cache-tab-a">报废单</a>
+            </div>
+            <img class="cache-icon" src="../IMG/icon.png">
             <span class="cache-title">待提交列表</span>
             <div class="cache-content">
                 <table class="table table-hover">
@@ -38,6 +43,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div>
+                    <button class="btn btn-cache">清空</button>
+                    <button class="btn btn-cache">提交</button>
+                </div>
             </div>
         </div>
         <div class="container">
