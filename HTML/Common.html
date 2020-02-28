@@ -8,10 +8,8 @@
     <link rel="icon" href="../IMG/favicon.ico">
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../node_modules/normalize.css/normalize.css" />
-
-    <link rel="stylesheet" type="text/css" href="../CSS/Common.css"/>
-    <script src="../JS/sidebar/snap.svg-min.js"></script>
-    <script src="../JS/sidebar/html5.js"></script>  <!--兼容IE-->
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   </head>
 
   <body>
@@ -68,14 +66,15 @@
     </div>
     <button class="menu-button" id="open-button">Open Menu</button>
 
-    <div class="content-wrap container-fluid">
-      <div class="content">
-        <h2>Hello World!</h2>
+    <div class="content-wrap">
+      <div class="content" id="content">
+        
       </div>
     </div>
     
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../CSS/Common.css"/>
+    <script src="../JS/sidebar/snap.svg-min.js"></script>
+    <script src="../JS/sidebar/html5.js"></script>  <!--兼容IE-->
     <script src="../JS/Common.js"></script>
     <script src="../JS/sidebar/classie.js"></script>
     <script src="../JS/sidebar/main4.js"></script>

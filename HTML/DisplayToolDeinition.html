@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DisplayToolDefinition</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <!-- IE8兼容 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="../node_modules/normalize.css/normalize.css">
+        <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+        <link rel="shortcut icon" href="../IMG/favicon.ico"> 
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h2>夹具定义信息列表</h2>
+            </div>
+            <div class="table-box table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>Code</td>
+                            <td>Name</td>
+                            <td>Family</td>
+                            <td>Model</td>
+                            <td>PartNo</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">夹具定义详细信息</h4>
+                    </div>
+                    <div class="modal-body" id="modal_body">
+                        <div class="container content">
+                            <div class="form-group">
+                                <label class="control-label" for="Code">Code</label>
+                                <p class="attr" id="Code"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="Name">Name</label>
+                                <p class="attr" id="Name"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="Family">Family</label>
+                                <p class="attr" id="Family"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="Model">Model</label>
+                                <p class="attr" id="Model"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="PartNo">PartNo</label>
+                                <p class="attr" id="PartNo"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="UPL">UPL</label>
+                                <p class="attr" id="UPL"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="UsedFor">UsedFor</label>
+                                <p class="attr" id="UsedFor"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="PMPeriod">PMPeriod</label>
+                                <p class="attr" id="PMPeriod"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="PMContent">PMContent</label>
+                                <p class="attr" id="PMContent"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="OwnerID">OwnerID</label>
+                                <p class="attr" id="OwnerID"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="OwnerName">OwnerName</label>
+                                <p class="attr" id="OwnerName"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="RecOn">RecOn</label>
+                                <p class="attr" id="RecOn"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="RecorderID">RecorderID</label>
+                                <p class="attr" id="RecorderID"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="RecorderName">RecorderName</label>
+                                <p class="attr" id="RecorderName"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="EditOn">EditOn</label>
+                                <p class="attr" id="EditOn"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="EditorID">EditorID</label>
+                                <p class="attr" id="EditorID"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="EditorName">EditorName</label>
+                                <p class="attr" id="EditorName"></p>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="Workcell">Workcell</label>
+                                <p class="attr" id="Workcell"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <link href="../CSS/DisplayToolDefinition.css" rel="stylesheet" type="text/css">
+    <script src="../JS/DisplayToolDefinition.js"></script>
+</html>

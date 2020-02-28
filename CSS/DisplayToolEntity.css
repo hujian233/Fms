@@ -1,0 +1,50 @@
+.attr{
+    display: inline;
+    margin-left: 2rem;
+}
+.content{
+    width: 100%;
+    padding-left: 30%;
+}
+.table-box{
+    text-align: center;
+}
+.act-btn{
+    margin-right: 2px;
+}
+.table-responsive{
+    overflow-x: inherit;
+}
+
+.cache-box{
+    position: sticky;
+    top: 2rem;
+    display: block;
+    float: right;
+    z-index: 101;
+    width: 280px;
+    background-color: rgb(181, 185, 199);
+    border-radius: 10px;
+    box-shadow: -3px 3px 20px 0px;
+}
+.cache-title{
+    font-weight: bold;
+    font-size: 1.9rem;
+    margin-left: 1.5rem;
+}
+.cache-remove-icon{
+    float: right;
+    color: rgb(255, 80, 80);
+}
+@media(min-width: 768px){
+    
+}
+
+@media(max-width: 768px){
+    .cache-content{
+        display: none;
+    }
+    .cache-title{
+        display: none;
+    }
+}

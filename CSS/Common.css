@@ -1,4 +1,4 @@
-body{
+	body{
 	padding-top: 50px;
 	font-family:'微软雅黑',cursive, Helvetica,Arial,sans-serif;
 }
@@ -88,9 +88,9 @@ body{
 		height: 100%;
 	}
 
-	.container {
+	/* .container {
 		background: #373a47;
-	}
+	} */
 
 	.content-wrap {
 		overflow-y: scroll;
@@ -187,7 +187,7 @@ body{
 	.menu-wrap {
 		position: absolute;
 		z-index: 1001;
-		width: 15%;
+		width: 200px;
 		height: 100%;
 		-webkit-transform: translate3d(-280px,0,0);
 		transform: translate3d(-280px,0,0);

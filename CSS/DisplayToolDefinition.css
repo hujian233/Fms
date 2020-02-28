@@ -1,0 +1,14 @@
+.attr{
+    display: inline;
+    margin-left: 2rem;
+}
+.content{
+    width: 100%;
+    padding-left: 30%;
+}
+.table-box{
+    text-align: center;
+}
+.act-btn{
+    margin-right: 2px;
+}
