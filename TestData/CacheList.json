@@ -1,0 +1,32 @@
+{
+    "InOut":[
+        {
+            "Code": "EF0790",
+            "SeqID": "1"
+        },
+        {
+            "Code": "EF0789",
+            "SeqID": "3"
+        }
+    ],
+    "Repair":[
+        {
+            "Code": "EF0733",
+            "SeqID": "5"
+        },
+        {
+            "Code": "EF0701",
+            "SeqID": "1"
+        }
+    ],
+    "Scrap":[
+        {
+            "Code": "EF0764",
+            "SeqID": "7"
+        },
+        {
+            "Code": "EF0799",
+            "SeqID": "9"
+        }
+    ]
+}

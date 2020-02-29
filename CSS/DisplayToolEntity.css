@@ -1,11 +1,25 @@
+/* Modal */
 .attr{
     display: inline;
     margin-left: 2rem;
 }
-.content{
+.infoModal-content{
     width: 100%;
     padding-left: 30%;
 }
+.repair-btn{
+    width: 150px;
+    margin: 0 auto;
+    display: block;
+}
+.img-box{
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 4rem;
+}
+
+/* Main */
 .table-box{
     text-align: center;
 }
@@ -14,9 +28,13 @@
     margin-top: 0.3rem;
 }
 .table-responsive{
-    overflow-x: inherit;
+    overflow-x: auto;
+}
+.table>tbody>tr>td{
+    vertical-align: middle;
 }
 
+/* Cache-Box */
 .cache-box{
     position: fixed;
     top: 1rem;
@@ -55,11 +73,12 @@
     font-size: 2.2rem;
     margin-left: 1.3rem;
 }
-
 .cache-content{
     padding: 0 15px;
+    overflow-y: auto;
+    max-height: 300px;
 }
-.tbody-display{
+.tbody-nodisplay{
     display: none;
 }
 .cache-remove-icon{

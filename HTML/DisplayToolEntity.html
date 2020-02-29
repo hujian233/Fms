@@ -30,36 +30,12 @@
                             <td>SeqID</td>
                         </tr>
                     </thead>
-                    <tbody id="outPutTbody">
-                        <tr>
-                            <td>EF0789</td>
-                            <td>1</td>
-                            <td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td>
-                        </tr>
-                        <tr>
-                            <td>EF0791</td>
-                            <td>2</td>
-                            <td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td>
-                        </tr>
-                    </tbody>
-                    <tbody id="repairTbody" class="tbody-display">
-                        <tr>
-                            <td>EF0789</td>
-                            <td>1</td>
-                            <td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td>
-                        </tr>
-                    </tbody>
-                    <tbody id="scrapTbody" class="tbody-display">
-                        <tr>
-                            <td>EF0791</td>
-                            <td>2</td>
-                            <td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="inOutTbody"></tbody>
+                    <tbody id="repairTbody" class="tbody-nodisplay"></tbody>
+                    <tbody id="scrapTbody" class="tbody-nodisplay"></tbody>
                 </table>
                 <div>
-                    <button class="btn btn-cache">清空</button>
-                    <button class="btn btn-cache">提交</button>
+                    <button class="btn btn-cache">批量处理申请单</button>
                 </div>
             </div>
         </div>
@@ -84,7 +60,7 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- InfoModal -->
         <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -93,7 +69,7 @@
                         <h4 class="modal-title">夹具实体详细信息</h4>
                     </div>
                     <div class="modal-body" id="modal_body">
-                        <div class="container content">
+                        <div class="container infoModal-content">
                             <div class="form-group">
                                 <label class="control-label" for="Code">Code</label>
                                 <p class="attr" id="Code"></p>
@@ -139,6 +115,44 @@
                                 <img id="Image">
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RepairModal -->
+        <div class="modal fade" id="RepairModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">加入报修申请单</h4>
+                    </div>
+                    <div class="modal-body" id="modal_body">
+                        <form class="form-horizontal" action="" method="POST">   <!-- action待添加 -->
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="repairCode">Code</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" id="repairCode" name="Code" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="repairSeqID">SeqID</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" id="repairSeqID" name="SeqID" disabled> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="repairImage">Image</label>
+                                <div class="col-md-8">
+                                    <input type="file" id="repairImage" name="Image">
+                                </div>
+                                <div class="img-box"><img id="repairImage"><span><i>图片预览</i></span></div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary repair-btn" type="submit">提交</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
