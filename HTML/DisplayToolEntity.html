@@ -31,8 +31,8 @@
                         </tr>
                     </thead>
                     <tbody id="inOutTbody"></tbody>
-                    <tbody id="repairTbody" class="tbody-nodisplay"></tbody>
-                    <tbody id="scrapTbody" class="tbody-nodisplay"></tbody>
+                    <tbody id="repairTbody" class="nodisplay"></tbody>
+                    <tbody id="scrapTbody" class="nodisplay"></tbody>
                 </table>
                 <div>
                     <button class="btn btn-cache">批量处理申请单</button>
@@ -143,11 +143,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2" for="repairImage">Image</label>
+                                <label class="control-label col-md-2" for="repairImageInput">Image</label>
                                 <div class="col-md-8">
-                                    <input type="file" id="repairImage" name="Image">
+                                    <input type="file" id="repairImageInput" name="Image">
                                 </div>
-                                <div class="img-box"><img id="repairImage"><span><i>图片预览</i></span></div>
+                                <div class="img-box"><img id="repairImage"><span class="imageScan"><i>图片预览</i></span></div>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary repair-btn" type="submit">提交</button>

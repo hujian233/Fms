@@ -13,10 +13,13 @@
     display: block;
 }
 .img-box{
-    width: 50%;
+    width: 60%;
     margin: 0 auto;
     text-align: center;
-    margin-top: 4rem;
+}
+#repairImage{
+    max-width: 100%;
+    margin-top: 2rem;
 }
 
 /* Main */
@@ -78,7 +81,7 @@
     overflow-y: auto;
     max-height: 300px;
 }
-.tbody-nodisplay{
+.nodisplay{
     display: none;
 }
 .cache-remove-icon{

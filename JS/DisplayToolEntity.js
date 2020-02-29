@@ -124,15 +124,14 @@ function putRepair(e){
 }
 
 //预览图片
-$('#repairImage').change(function(){
-    url = document.getElementById('repairImage').files[0];
+$('#repairImageInput').change(function(){
+    f = document.getElementById('repairImageInput').files[0];
     var fileReader = new FileReader();
-    fileReader.readAsDataURL(url);
+    fileReader.readAsDataURL(f);
     fileReader.onload = function(){
-        console.log(fileReader.result);
         $('#repairImage').attr('src', fileReader.result);
+        $('.imageScan').addClass('nodisplay');
     }
-    
 });
 
 
@@ -163,20 +162,20 @@ function putScrap(e){
 //缓存窗tab按钮
 function changeTab(e){
     if($(e).text() == '出库单'){
-        $('#cacheTable').children().eq(1).addClass('tbody-nodisplay');
-        $('#cacheTable').children().eq(2).addClass('tbody-nodisplay');
-        $('#cacheTable').children().eq(3).addClass('tbody-nodisplay');
-        $('#cacheTable').children().eq(1).removeClass('tbody-nodisplay');
+        $('#cacheTable').children().eq(1).addClass('nodisplay');
+        $('#cacheTable').children().eq(2).addClass('nodisplay');
+        $('#cacheTable').children().eq(3).addClass('nodisplay');
+        $('#cacheTable').children().eq(1).removeClass('nodisplay');
     }else if($(e).text() == '报修单'){
-        $('#cacheTable').children().eq(1).addClass('tbody-nodisplay');
-        $('#cacheTable').children().eq(2).addClass('tbody-nodisplay');
-        $('#cacheTable').children().eq(3).addClass('tbody-nodisplay');
-        $('#cacheTable').children().eq(2).removeClass('tbody-nodisplay');
+        $('#cacheTable').children().eq(1).addClass('nodisplay');
+        $('#cacheTable').children().eq(2).addClass('nodisplay');
+        $('#cacheTable').children().eq(3).addClass('nodisplay');
+        $('#cacheTable').children().eq(2).removeClass('nodisplay');
     }else{
-        $('#cacheTable').children().eq(1).addClass('tbody-nodisplay');
-        $('#cacheTable').children().eq(2).addClass('tbody-nodisplay');
-        $('#cacheTable').children().eq(3).addClass('tbody-nodisplay');
-        $('#cacheTable').children().eq(3).removeClass('tbody-nodisplay');
+        $('#cacheTable').children().eq(1).addClass('nodisplay');
+        $('#cacheTable').children().eq(2).addClass('nodisplay');
+        $('#cacheTable').children().eq(3).addClass('nodisplay');
+        $('#cacheTable').children().eq(3).removeClass('nodisplay');
     }
     $(e).parent().children().eq(0).removeClass('a-active');
     $(e).parent().children().eq(1).removeClass('a-active');
