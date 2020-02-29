@@ -27,6 +27,31 @@ $(window).on('load', function(){
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//缓存窗按钮
+function changeTab(e){
+    $(e).parent().children().eq(0).removeClass('a-active');
+    $(e).parent().children().eq(1).removeClass('a-active');
+    $(e).parent().children().eq(2).removeClass('a-active');
+    $(e).addClass('a-active');
+    if($(e).text() == '出库单'){
+        $('#cacheTable').children().eq(1).addClass('tbody-display');
+        $('#cacheTable').children().eq(2).addClass('tbody-display');
+        $('#cacheTable').children().eq(3).addClass('tbody-display');
+        $('#cacheTable').children().eq(1).removeClass('tbody-display');
+    }else if($(e).text() == '报修单'){
+        $('#cacheTable').children().eq(1).addClass('tbody-display');
+        $('#cacheTable').children().eq(2).addClass('tbody-display');
+        $('#cacheTable').children().eq(3).addClass('tbody-display');
+        $('#cacheTable').children().eq(2).removeClass('tbody-display');
+    }else{
+        $('#cacheTable').children().eq(1).addClass('tbody-display');
+        $('#cacheTable').children().eq(2).addClass('tbody-display');
+        $('#cacheTable').children().eq(3).addClass('tbody-display');
+        $('#cacheTable').children().eq(3).removeClass('tbody-display');
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //获取夹具定义的详细信息
 function getInfo(e){
     var code = $(e).parent().parent().children().eq(0).text();

@@ -16,26 +16,40 @@
     <body>
         <div class="cache-box">
             <div class="cache-tab">
-                <a class="cache-tab-a a-active" >出库单</a>
-                <a class="cache-tab-a">报修单</a>
-                <a class="cache-tab-a">报废单</a>
+                <a class="cache-tab-a a-active" onclick="changeTab(this);">出库单</a>
+                <a class="cache-tab-a" onclick="changeTab(this);">报修单</a>
+                <a class="cache-tab-a" onclick="changeTab(this);">报废单</a>
             </div>
-            <img class="cache-icon" src="../IMG/icon.png">
+            <img class="cache-icon" src="../IMG/icon48.png">
             <span class="cache-title">待提交列表</span>
             <div class="cache-content">
-                <table class="table table-hover">
+                <table class="table table-hover" id="cacheTable">
                     <thead>
                         <tr>
                             <td>Code</td>
                             <td>SeqID</td>
                         </tr>
                     </thead>
-                    <tbody id="cacheTbody">
+                    <tbody id="outPutTbody">
                         <tr>
                             <td>EF0789</td>
                             <td>1</td>
                             <td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td>
                         </tr>
+                        <tr>
+                            <td>EF0791</td>
+                            <td>2</td>
+                            <td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td>
+                        </tr>
+                    </tbody>
+                    <tbody id="repairTbody" class="tbody-display">
+                        <tr>
+                            <td>EF0789</td>
+                            <td>1</td>
+                            <td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td>
+                        </tr>
+                    </tbody>
+                    <tbody id="scrapTbody" class="tbody-display">
                         <tr>
                             <td>EF0791</td>
                             <td>2</td>
