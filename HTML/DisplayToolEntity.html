@@ -14,13 +14,14 @@
         <link rel="shortcut icon" href="../IMG/favicon.ico"> 
     </head>
     <body>
+        <!-- 待提交悬浮窗 -->
         <div class="cache-box">
             <div class="cache-tab">
                 <a class="cache-tab-a a-active" onclick="changeTab(this);">出库单</a>
                 <a class="cache-tab-a" onclick="changeTab(this);">报修单</a>
                 <a class="cache-tab-a" onclick="changeTab(this);">报废单</a>
             </div>
-            <img class="cache-icon" src="../IMG/icon48.png">
+            <img class="cache-icon" src="../IMG/icon48.png" title="点击隐藏悬浮窗">
             <span class="cache-title">待提交列表</span>
             <div class="cache-content">
                 <table class="table table-hover" id="cacheTable">
@@ -39,9 +40,29 @@
                 </div>
             </div>
         </div>
+        <!-- 主体 -->
         <div class="container">
             <div class="page-header">
                 <h2>夹具实体信息列表</h2>
+                <div class="search-box input-group col-sm-4 col-xs-8">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" id="searchTypeBtn" data-toggle="dropdown">
+                            查找方式
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="search-type" onclick="chooseSearchType(this);">Code</a></li>
+                            <li><a class="search-type" onclick="chooseSearchType(this);">SeqID</a></li>
+                            <li><a class="search-type" onclick="chooseSearchType(this);">UsedCount</a></li>
+                            <li><a class="search-type" onclick="chooseSearchType(this);">Status</a></li>
+                            <li><a class="search-type" onclick="chooseSearchType(this);">Show all</a></li>
+                        </ul>
+                      </div>
+                    <input type="text" class="form-control" id="paramInput" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="searchBtn">查找</button>
+                    </span>
+                </div>
             </div>
             <div class="table-box table-responsive">
                 <table class="table table-striped">

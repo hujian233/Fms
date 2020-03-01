@@ -1,64 +1,105 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//定义全局变量
+var jData = [];
+var searchType = '';
+var cacheTbodyType = 'InOut';
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //获取定义列表、刷新带申请列表（函数）
-$(window).on('load', function(){
-    var code = getUrlVars()['Code'];
-    $.ajax({
-        type: 'GET',
-        dataType: 'JSON',
-        url: '../TestData/ToolEntityList.json',  //后端Url，附加code参数   
-        success: function(result){
-            for(var i = 0; i < result.length; i++){
-                $('#definitionTbody').append('<tr><td>' + result[i]['Code']
-                + '</td><td>' + result[i]['SeqID']
-                + '</td><td>' + result[i]['RegDate']
-                + '</td><td>' + result[i]['UsedCount']
-                + '</td><td>' + result[i]['State']
-                + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>' 
-                + '<button class="btn act-btn" onclick="putInOut(this);">加入出库单</button>' 
-                + '<button class="btn act-btn" onclick="putRepair(this);">加入报修单</button>'
-                + '<button class="btn act-btn" onclick="putScrap(this);">加入报废单</button>'
-                + '</td></tr>');
+{
+    $(window).on('load', function(){
+        var code = getUrlVars()['Code'];
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '../TestData/ToolEntityList.json',  //后端Url，附加code参数   
+            success: function(result){
+                addToTbody(result);
+                jData = result;
+            },
+            error: function(){
+                alert('获取信息失败，请稍后重试...');
             }
-        },
-        error: function(){
-            alert('获取信息失败，请稍后重试...');
-        }
+        });
+        refleshCache();
     });
-
-    refleshCache();
-});
-
-function refleshCache(){
-    $('#inOutTbody').empty();
-    $('#repairTbody').empty();
-    $('#scrapTbody').empty();
-    $.ajax({
-        type: 'GET',
-        dataType: 'JSON',
-        url: '../TestData/CacheList.json',   //待改  后端URL
-        success: function(result){
-            for(var i = 0; i < result.InOut.length; i++){
-                $('#inOutTbody').append('<tr><td>' + result.InOut[i].Code
-                + '</td><td>' + result.InOut[i].SeqID
-                + '</td><td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td></tr>')
+    
+    function addToTbody(data){
+        $('#definitionTbody').empty();
+        for(var i = 0; i < data.length; i++){
+            $('#definitionTbody').append('<tr><td>' + data[i]['Code']
+            + '</td><td>' + data[i]['SeqID']
+            + '</td><td>' + data[i]['RegDate']
+            + '</td><td>' + data[i]['UsedCount']
+            + '</td><td>' + data[i]['State']
+            + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>' 
+            + '<button class="btn act-btn" onclick="putInOut(this);">加入出库单</button>' 
+            + '<button class="btn act-btn" onclick="putRepair(this);">加入报修单</button>'
+            + '<button class="btn act-btn" onclick="putScrap(this);">加入报废单</button>'
+            + '</td></tr>');
+        }
+    }
+    
+    function refleshCache(){
+        $('#inOutTbody').empty();
+        $('#repairTbody').empty();
+        $('#scrapTbody').empty();
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '../TestData/CacheList.json',   //待改  后端URL
+            success: function(result){
+                for(var i = 0; i < result.InOut.length; i++){
+                    $('#inOutTbody').append('<tr><td>' + result.InOut[i].Code
+                    + '</td><td>' + result.InOut[i].SeqID
+                    + '</td><td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td></tr>')
+                }
+                for(var i = 0; i < result.Repair.length; i++){
+                    $('#repairTbody').append('<tr><td>' + result.Repair[i].Code
+                    + '</td><td>' + result.Repair[i].SeqID
+                    + '</td><td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td></tr>')
+                }
+                for(var i = 0; i < result.Scrap.length; i++){
+                    $('#scrapTbody').append('<tr><td>' + result.Scrap[i].Code
+                    + '</td><td>' + result.Scrap[i].SeqID
+                    + '</td><td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td></tr>')
+                }
+            },
+            error: function(){
+                alert('待提交申请中，部分夹具被其他用户操作，系统已自动将其去除');
             }
-            for(var i = 0; i < result.Repair.length; i++){
-                $('#repairTbody').append('<tr><td>' + result.Repair[i].Code
-                + '</td><td>' + result.Repair[i].SeqID
-                + '</td><td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td></tr>')
-            }
-            for(var i = 0; i < result.Scrap.length; i++){
-                $('#scrapTbody').append('<tr><td>' + result.Scrap[i].Code
-                + '</td><td>' + result.Scrap[i].SeqID
-                + '</td><td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td></tr>')
-            }
-        },
-        error: function(){
-            alert('待提交申请中，部分夹具被其他用户操作，系统已自动将其去除');
+        });
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//查找
+{
+    function chooseSearchType(e){
+        $('#searchTypeBtn').text($(e).text());
+        searchType = $(e).text();
+        $('#paramInput').focus();
+    }
+    
+    $('#searchBtn').click(function(){
+        var param = $('#paramInput').val();
+        switch(searchType){
+            case 'Code':
+                addToTbody(jData.filter(item => { return item.Code == param}));
+                break;
+            case 'SeqID':
+                addToTbody(jData.filter(item => { return item.SeqID == param}));
+                break;
+            case 'UsedCount':
+                addToTbody(jData.filter(item => { return item.UsedCount == param}));
+                break;
+            case 'Status':
+                addToTbody(jData.filter(item => { return item.State == param}));
+                break;
+            default:
+                $('#paramInput').val('');
+                addToTbody(jData);
         }
     });
 }
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //获取夹具定义的详细信息
 function getInfo(e){
@@ -134,7 +175,6 @@ $('#repairImageInput').change(function(){
     }
 });
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //加入报废单
 function putScrap(e){
@@ -159,6 +199,22 @@ function putScrap(e){
 } 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//缓存窗隐藏
+$('.cache-icon').click(function(){
+    if($(".cache-content").hasClass('nodisplay')){
+        $('.cache-tab').removeClass('nodisplay');
+        $('.cache-content').removeClass('nodisplay');
+        $('.cache-title').removeClass('nodisplay');
+        $('.cache-box').width(300);
+    }else{
+        $('.cache-tab').addClass('nodisplay');
+        $('.cache-content').addClass('nodisplay');
+        $('.cache-title').addClass('nodisplay');
+        $('.cache-box').width(56);
+    }
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //缓存窗tab按钮
 function changeTab(e){
     if($(e).text() == '出库单'){
@@ -166,16 +222,19 @@ function changeTab(e){
         $('#cacheTable').children().eq(2).addClass('nodisplay');
         $('#cacheTable').children().eq(3).addClass('nodisplay');
         $('#cacheTable').children().eq(1).removeClass('nodisplay');
+        cacheTbodyType = 'InOut';
     }else if($(e).text() == '报修单'){
         $('#cacheTable').children().eq(1).addClass('nodisplay');
         $('#cacheTable').children().eq(2).addClass('nodisplay');
         $('#cacheTable').children().eq(3).addClass('nodisplay');
         $('#cacheTable').children().eq(2).removeClass('nodisplay');
+        cacheTbodyType = 'Repair';
     }else{
         $('#cacheTable').children().eq(1).addClass('nodisplay');
         $('#cacheTable').children().eq(2).addClass('nodisplay');
         $('#cacheTable').children().eq(3).addClass('nodisplay');
         $('#cacheTable').children().eq(3).removeClass('nodisplay');
+        cacheTbodyType = 'Scrap';
     }
     $(e).parent().children().eq(0).removeClass('a-active');
     $(e).parent().children().eq(1).removeClass('a-active');
@@ -186,6 +245,24 @@ function changeTab(e){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //缓存窗单个清除按钮
 function remove(e){ 
+    var code = $(e).parent().parent().children().eq(0).text();
+    var seqID = $(e).parent().parent().children().eq(1).text();
+    var transData = [];
+    transData.push({'Code': code, 'SeqID': seqID, 'Type': cacheTbodyType});
+    /* $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(transData),
+        url: '',  //待改  后端接口
+        success: function(result){
+            if(result.Status == 'error'){
+                alert('操作失败，请稍后重试...');
+            }
+        } 
+    }); */
+
+    refleshCache();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
