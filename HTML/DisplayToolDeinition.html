@@ -16,7 +16,22 @@
     <body>
         <div class="container">
             <div class="page-header">
-                <h2>夹具定义信息列表</h2>
+                <h2 class="page-title">夹具定义信息列表</h2>
+                <div class="search-box input-group col-sm-4 col-xs-8">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">查找方式 <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Code</a></li>
+                            <li><a href="#">Name</a></li>
+                            <li><a href="#">Family</a></li>
+                            <li><a href="#">Model</a></li>
+                        </ul>
+                      </div><!-- /btn-group -->
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">查找</button>
+                    </span>
+                </div>
             </div>
             <div class="table-box table-responsive">
                 <table class="table table-striped">
