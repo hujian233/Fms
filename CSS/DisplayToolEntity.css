@@ -113,3 +113,35 @@
     margin-left: 1.2rem;
     margin-bottom: 1rem;
 }
+.setPageDiv{
+    text-align: center;
+}
+
+@media (min-width: 300px){
+    #cacheTab{
+        display: none;
+    }
+    #cacheCont{
+        display: none;
+    }
+    #cacheTitl{
+        display: none;
+    }
+    .cache-box{
+        width: 56px;
+    }
+}
+@media (min-width: 768px){
+    #cacheTab{
+        display: block;
+    }
+    #cacheCont{
+        display: block;
+    }
+    #cacheTitl{
+        display: block;
+    }
+    .cache-box{
+        width: 300px;
+    }
+}

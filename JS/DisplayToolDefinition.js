@@ -1,22 +1,35 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //定义全局变量
-var jData = [];
-var searchType = '';
+var jData = [];                 //全体数据
+var searchType = ''; 
+var pageSize = 16;              //一页最多显示16条信息
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//获取定义列表
-
-function addToTbody(data){
-    $('tbody').empty();
-    for(var i = 0; i < data.length; i++){
-        $('tbody').append('<tr><td>' + data[i]['Code']
-        + '</td><td>' + data[i]['Name']
-        + '</td><td>' + data[i]['Family']
-        + '</td><td>' + data[i]['Model']
-        + '</td><td>' + data[i]['PartNo']
-        +'</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>'
-        + '<button class="btn act-btn" onclick="getEntity(this);">查看实体</button></td></tr>');
-    }
+function displayTable(data){
+    $('#paginationToolDeinit').jqPaginator({
+        first: '<li class="first"><a href="javascript:;">首页</a></li>',
+        prev: '<li class="prev"><a href="javascript:;"><<</a></li>',
+        next: '<li class="next"><a href="javascript:;">>></a></li>',
+        last: '<li class="last"><a href="javascript:;">末页</a></li>',
+        page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+        totalPages: Math.ceil(data.length / pageSize),
+        totalCounts: data.length,
+        pageSize: pageSize,
+        onPageChange: function(num){
+            $('tbody').empty();
+            var begin = (num - 1) * pageSize;
+            for(var i = begin; i < data.length && i < begin + pageSize; i++){
+                $('tbody').append('<tr><td>' + data[i]['Code']
+                + '</td><td>' + data[i]['Name']
+                + '</td><td>' + data[i]['Family']
+                + '</td><td>' + data[i]['Model']
+                + '</td><td>' + data[i]['PartNo']
+                + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>'
+                + '<button class="btn act-btn" onclick="getEntity(this);">查看实体</button>'
+                + '</td></tr>');
+            }
+        }
+    });
 }
 
 $(window).on('load', function(){
@@ -25,15 +38,14 @@ $(window).on('load', function(){
         dataType: 'JSON',
         url: '../TestData/ToolDefinitionList.json',  //后端Url，待改
         success: function(result){
-            addToTbody(result);
+            displayTable(result);
             jData = result;
         },
         error: function(){
             alert('获取信息失败，请刷新重试...');
         }
     })
-});
-
+})
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //查找
 function chooseSearchType(e){
@@ -46,19 +58,20 @@ $('#searchBtn').click(function(){
     var param = $('#paramInput').val();
     switch(searchType){
         case 'Code':
-            addToTbody(jData.filter(item => { return item.Code == param}));
+            displayTable(jData.filter(item => { return item.Code == param}));
             break;
         case 'Name':
-            addToTbody(jData.filter(item => { return item.Name == param}));
+            displayTable(jData.filter(item => { return item.Name == param}));
             break;
         case 'Family':
-            addToTbody(jData.filter(item => { return item.Family == param}));
+            displayTable(jData.filter(item => { return item.Family == param}));
             break;
         case 'Model':
-            addToTbody(jData.filter(item => { return item.Model == param}));
+            displayTable(jData.filter(item => { return item.Model == param}));
             break;
         default:
-            addToTbody(jData);
+            displayTable(jData);
+            $('#paramInput').val('');
     }
 });
 

@@ -3,6 +3,7 @@
 var jData = [];
 var searchType = '';
 var cacheTbodyType = 'InOut';
+var pageSize = 16;              //一页最多显示16条信息
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //获取定义列表、刷新带申请列表（函数）
 {
@@ -11,9 +12,9 @@ var cacheTbodyType = 'InOut';
         $.ajax({
             type: 'GET',
             dataType: 'JSON',
-            url: '../TestData/ToolEntityList.json',  //后端Url，附加code参数   
+            url: '../TestData/ToolEntityList.json',  //后端Url，附加code参数
             success: function(result){
-                addToTbody(result);
+                displayTable(result);
                 jData = result;
             },
             error: function(){
@@ -22,23 +23,36 @@ var cacheTbodyType = 'InOut';
         });
         refleshCache();
     });
-    
-    function addToTbody(data){
-        $('#definitionTbody').empty();
-        for(var i = 0; i < data.length; i++){
-            $('#definitionTbody').append('<tr><td>' + data[i]['Code']
-            + '</td><td>' + data[i]['SeqID']
-            + '</td><td>' + data[i]['RegDate']
-            + '</td><td>' + data[i]['UsedCount']
-            + '</td><td>' + data[i]['State']
-            + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>' 
-            + '<button class="btn act-btn" onclick="putInOut(this);">加入出库单</button>' 
-            + '<button class="btn act-btn" onclick="putRepair(this);">加入报修单</button>'
-            + '<button class="btn act-btn" onclick="putScrap(this);">加入报废单</button>'
-            + '</td></tr>');
-        }
+
+    function displayTable(data){
+        $('#paginationToolEntity').jqPaginator({
+            first: '<li class="first"><a href="javascript:;">首页</a></li>',
+            prev: '<li class="prev"><a href="javascript:;"><<</a></li>',
+            next: '<li class="next"><a href="javascript:;">>></a></li>',
+            last: '<li class="last"><a href="javascript:;">末页</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            totalPages: Math.ceil(data.length / pageSize),
+            totalCounts: data.length,
+            pageSize: pageSize,
+            onPageChange: function(num){
+                $('#definitionTbody').empty();
+                var begin = (num - 1) * pageSize;
+                for(var i = begin; i < data.length && i < begin + pageSize; i++){
+                    $('#definitionTbody').append('<tr><td>' + data[i]['Code']
+                    + '</td><td>' + data[i]['SeqID']
+                    + '</td><td>' + data[i]['RegDate']
+                    + '</td><td>' + data[i]['UsedCount']
+                    + '</td><td>' + data[i]['State']
+                    + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>'
+                    + '<button class="btn act-btn" onclick="putInOut(this);">加入出库单</button>'
+                    + '<button class="btn act-btn" onclick="putRepair(this);">加入报修单</button>'
+                    + '<button class="btn act-btn" onclick="putScrap(this);">加入报废单</button>'
+                    + '</td></tr>');
+                }
+            }
+        });
     }
-    
+
     function refleshCache(){
         $('#inOutTbody').empty();
         $('#repairTbody').empty();
@@ -83,20 +97,20 @@ var cacheTbodyType = 'InOut';
         var param = $('#paramInput').val();
         switch(searchType){
             case 'Code':
-                addToTbody(jData.filter(item => { return item.Code == param}));
+                displayTable(jData.filter(item => { return item.Code == param}));
                 break;
             case 'SeqID':
-                addToTbody(jData.filter(item => { return item.SeqID == param}));
+                displayTable(jData.filter(item => { return item.SeqID == param}));
                 break;
             case 'UsedCount':
-                addToTbody(jData.filter(item => { return item.UsedCount == param}));
+                displayTable(jData.filter(item => { return item.UsedCount == param}));
                 break;
             case 'Status':
-                addToTbody(jData.filter(item => { return item.State == param}));
+                displayTable(jData.filter(item => { return item.State == param}));
                 break;
             default:
                 $('#paramInput').val('');
-                addToTbody(jData);
+                displayTable(jData);
         }
     });
 }
@@ -201,15 +215,15 @@ function putScrap(e){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //缓存窗隐藏
 $('.cache-icon').click(function(){
-    if($(".cache-content").hasClass('nodisplay')){
-        $('.cache-tab').removeClass('nodisplay');
-        $('.cache-content').removeClass('nodisplay');
-        $('.cache-title').removeClass('nodisplay');
+    if($('.cache-content').css('display') == 'none'){
+        $('.cache-tab').show();
+        $('.cache-content').show();
+        $('.cache-title').show();
         $('.cache-box').width(300);
     }else{
-        $('.cache-tab').addClass('nodisplay');
-        $('.cache-content').addClass('nodisplay');
-        $('.cache-title').addClass('nodisplay');
+        $('.cache-tab').hide();
+        $('.cache-content').hide();
+        $('.cache-title').hide();
         $('.cache-box').width(56);
     }
 });
