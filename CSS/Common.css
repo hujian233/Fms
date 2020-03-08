@@ -29,7 +29,10 @@
 .coll_a>li>a:focus, .coll_a>li>a:hover{
 	background-color: rgb(182, 182, 182);
 }
-
+.content{
+	width: 100%;
+	padding: 0.5rem 4rem;
+}
 
 @media screen and (min-width:992px){
 	#logo{

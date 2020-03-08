@@ -6,10 +6,6 @@
     display: inline;
     margin-left: 2rem;
 }
-.infoModal-content{
-    width: 100%;
-    padding-left: 30%;
-}
 .repair-btn{
     width: 150px;
     margin: 0 auto;
@@ -52,7 +48,6 @@
 /* Cache-Box */
 .cache-box{
     position: fixed;
-    top: 1rem;
     right: 1rem;
     display: block;
     float: right;
@@ -139,7 +134,7 @@
         display: block;
     }
     #cacheTitl{
-        display: block;
+        display: inline;
     }
     .cache-box{
         width: 300px;

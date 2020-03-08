@@ -1,1 +1,1 @@
-$('#content').load('../HTML/UserInfo.html');
+$('#content').load('../HTML/DisplayToolEntity.html');
