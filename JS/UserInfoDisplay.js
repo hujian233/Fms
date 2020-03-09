@@ -1,9 +1,74 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 全局变量
 var is_password_legel = true;
 var is_rePassword_legal = true;
-var is_email = true;
+var is_email_legel = true;
 var password_reg = new RegExp('^[a-zA-Z0-9]{6,12}$');
 var email_reg = new RegExp('^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$');
+//#endregion
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 渲染数据
+$(window).on('load', function(){
+    $.ajax({
+        type: 'GET',
+        dataType: 'JSON',
+        url: '../TestData/UserInfo.json',  //待改
+        success: function(result){
+            $('#UserID').text(result.UserID);
+            $('#Name').text(result.Name);
+            $('#Email').text(result.Email);
+            $('#Privilege').text(result.Privilege);
+            $('#Workcell').text(result.Workcell);
+            $('#LastLogin').text(result.LastLogin);
+        },
+        error: function(){
+            alert('数据获取失败，请稍后重试...');
+        }
+    });
+});
+//#endregion
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 弹出修改窗、提交修改
+$('#showEditModal').click(function(){
+    $('#modalUserID').val($('#UserID').text());
+    $('#newEmail').val($('#Email').text());
+    $('#editModal').modal('show');
+});
+$('#EditBtn').click(function(){
+    if(is_password_legel && is_rePassword_legal && is_email_legel){
+        var transData = {
+            'UserID': $('#modalUserID').val(),
+            'NewPassword': $('#newPassword').val(),
+            'NewEmail': $('#newEmail').val()
+        };
+        /* $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            data: transData,
+            url: '',       //待填
+            success: function(result){
+                if(result.Status == 'success'){
+                    alert('修改成功！');
+                    window.location = '../HTML/UserInfoDisplay.html';
+                }else{
+                    alert('修改失败，请稍后重试...');
+                }
+            },
+            error: function(){
+                alert('修改失败，请稍后重试...');
+            }
+        }); */
+    }else{
+        alert('请正确填写信息');
+    }
+});
+//#endregion
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 修改窗输入框验证
 $('#newPassword').change(function(){
     if($(this).val() != ""){
         if(!password_reg.test($(this).val())){
@@ -63,10 +128,4 @@ $('#newEmail').change(function(){
     }
 });
 
-function validate(){
-    if(is_password_legel && is_rePassword_legal && is_email_legel){
-        return true;
-    }else{
-        return false;
-    }
-}
+//#endregion

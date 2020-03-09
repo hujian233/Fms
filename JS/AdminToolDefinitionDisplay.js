@@ -3,7 +3,6 @@
 var jData = [];                 //全体数据
 var searchType = ''; 
 var pageSize = 16;              //一页最多显示16条信息
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function displayTable(data){
     $('#paginationToolDeinit').jqPaginator({
@@ -31,7 +30,6 @@ function displayTable(data){
         }
     });
 }
-
 $(window).on('load', function(){
     $.ajax({
         type: 'GET',
@@ -45,7 +43,7 @@ $(window).on('load', function(){
             alert('获取信息失败，请刷新重试...');
         }
     })
-})
+});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //查找
 function chooseSearchType(e){
@@ -80,9 +78,9 @@ $('#searchBtn').click(function(){
 function getInfo(e){
     var code = $(e).parent().parent().children().eq(0).text();
     $.ajax({
-        type: "GET",
-        dataType: "JSON",
-        url: "../TestData/ToolDefinitionInfo.json",  //code附在url后  "...?code=" + code
+        type: 'GET',
+        dataType: 'JSON',
+        url: '../TestData/ToolDefinitionInfo.json',  //code附在url后  "...?code=' + code
         success: function(result){
             
             $('#Code').val(result.Code);
@@ -111,7 +109,50 @@ function getInfo(e){
 
     $('#InfoModal').modal('show');
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//修改夹具定义信息
+$('#EditBtn').click(function(){
+    var transData = {
+        'Code': $('#Code').val(),
+        'Name': $('#Name').val(),
+        'Family': $('#Family').val(),
+        'Model': $('#Model').val(),
+        'PartNo': $('#PartNo').val(),
+        'UPL': $('#UPL').val(),
+        'UsedFor': $('#UsedFor').val(),
+        'PMPeriod': $('#PMPeriod').val(),
+        'PMContent': $('#PMContent').val(),
+        'OwnerID': $('#OwnerID').val(),
+        'OwnerName': $('#OwnerName').val(),
+        'RecOn': $('#RecOn').val(),
+        'RecorderID': $('#RecorderID').val(),
+        'RecorderName': $('#RecorderName').val(),
+        'EditOn': $('#EditOn').val(),
+        'EditorID': $('#EditorID').val(),
+        'EditorName': $('#EditorName').val(),
+        'Workcell': $('#Workcell').val()
+    };
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        data: transData,
+        url: '',                                    //待改
+        success: function(result){
+            if(result.Status == 'success'){
+                alert('修改成功！');
+                window.location = '../HTML/AdminToolDefinitionDisplay.html';
+            }else{
+                alert('修改失败，请稍后重试...');
+            }
+        },
+        error: function(){
+            alert('修改失败，请稍后重试...');
+        }
+    });
 
+    refleshTable();
+});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //获取夹具实体列表
 function getEntity(e){
