@@ -1,5 +1,5 @@
 {
-    "InOut":[
+    "Out":[
         {
             "Code": "EF0790",
             "SeqID": "1"
@@ -7,6 +7,16 @@
         {
             "Code": "EF0789",
             "SeqID": "3"
+        }
+    ],
+    "In":[
+        {
+            "Code": "EF0780",
+            "SeqID": "2"
+        },
+        {
+            "Code": "EF0789",
+            "SeqID": "9"
         }
     ],
     "Repair":[

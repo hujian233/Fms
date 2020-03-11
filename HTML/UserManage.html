@@ -21,11 +21,11 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="search-type" onclick="chooseSearchType(this);">UserID</a></li>
-                        <li><a class="search-type" onclick="chooseSearchType(this);">Name</a></li>
-                        <li><a class="search-type" onclick="chooseSearchType(this);">Privilege</a></li>
-                        <li><a class="search-type" onclick="chooseSearchType(this);">Workcell</a></li>
-                        <li><a class="search-type" onclick="chooseSearchType(this);">Show all</a></li>
+                        <li><a class="search-type" onclick="chooseSearchType(this);">工号</a></li>
+                        <li><a class="search-type" onclick="chooseSearchType(this);">姓名</a></li>
+                        <li><a class="search-type" onclick="chooseSearchType(this);">权限</a></li>
+                        <li><a class="search-type" onclick="chooseSearchType(this);">工作部门</a></li>
+                        <li><a class="search-type" onclick="chooseSearchType(this);">展示所有</a></li>
                     </ul>
                   </div>
                 <input type="text" class="form-control" id="paramInput" placeholder="Search for...">
@@ -40,12 +40,12 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <td>UserID</td>
-                        <td>Name</td>
-                        <td>Email</td>
-                        <td>Privilege</td>
-                        <td>Workcell</td>
-                        <td>LastLogin</td>
+                        <td>工号</td>
+                        <td>姓名</td>
+                        <td>电子邮箱</td>
+                        <td>权限</td>
+                        <td>工作部门</td>
+                        <td>上次登录时间</td>
                         <td>操作</td>
                     </tr>
                 </thead>
@@ -68,25 +68,25 @@
                     <div class="modal-body" id="modal_body">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="UserID">UserID</label>
+                                <label class="control-label col-sm-3" for="UserID">工号</label>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="UserID" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="NewName">NewName</label>
+                                <label class="control-label col-sm-3" for="NewName">新姓名</label>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="NewName">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="NewPrivilege">NewPrivilege</label>
+                                <label class="control-label col-sm-3" for="NewPrivilege">新权限</label>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="NewPrivilege">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="NewWorkcell">NewWorkcell</label>
+                                <label class="control-label col-sm-3" for="NewWorkcell">新工作部门</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" id="NewWorkcell">
                                         <option value="初级用户">初级用户</option>
@@ -117,19 +117,19 @@
                     <div class="modal-body" id="modal_body">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="NewUserName">Name</label>
+                                <label class="control-label col-sm-3" for="NewUserName">姓名</label>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="NewUserName">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="NewUserPrivilege">Privilege</label>
+                                <label class="control-label col-sm-3" for="NewUserPrivilege">权限</label>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="NewUserPrivilege">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="NewUserWorkcell">Workcell</label>
+                                <label class="control-label col-sm-3" for="NewUserWorkcell">工作部门</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" id="NewUserWorkcell">
                                         <option value="初级用户">初级用户</option>

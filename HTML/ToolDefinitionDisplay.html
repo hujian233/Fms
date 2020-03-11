@@ -25,11 +25,11 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="search-type" onclick="chooseSearchType(this);">Code</a></li>
-                            <li><a class="search-type" onclick="chooseSearchType(this);">Name</a></li>
-                            <li><a class="search-type" onclick="chooseSearchType(this);">Family</a></li>
-                            <li><a class="search-type" onclick="chooseSearchType(this);">Model</a></li>
-                            <li><a class="search-type" onclick="chooseSearchType(this);">Show all</a></li>
+                            <li><a class="search-type" onclick="chooseSearchType(this);">按夹具代码</a></li>
+                            <li><a class="search-type" onclick="chooseSearchType(this);">按夹具名称</a></li>
+                            <li><a class="search-type" onclick="chooseSearchType(this);">按所属大类</a></li>
+                            <li><a class="search-type" onclick="chooseSearchType(this);">按夹具模组</a></li>
+                            <li><a class="search-type" onclick="chooseSearchType(this);">展示所有</a></li>
                         </ul>
                       </div><!-- /btn-group -->
                     <input type="text" class="form-control" id="paramInput" placeholder="Search for...">
@@ -42,11 +42,11 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <td>Code</td>
-                            <td>Name</td>
-                            <td>Family</td>
-                            <td>Model</td>
-                            <td>PartNo</td>
+                            <td>夹具代码</td>
+                            <td>夹具名称</td>
+                            <td>所属大类</td>
+                            <td>夹具模组</td>
+                            <td>夹具料号</td>
                             <td>操作</td>
                         </tr>
                     </thead>
@@ -71,75 +71,75 @@
                     <div class="modal-body" id="modal_body">
                         <div class="InfoModal-main">
                             <div class="form-group">
-                                <label class="control-label" for="Code">Code</label>
+                                <label class="control-label" for="Code">夹具代码</label>
                                 <p class="attr" id="Code"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="Name">Name</label>
+                                <label class="control-label" for="Name">夹具名称</label>
                                 <p class="attr" id="Name"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="Family">Family</label>
+                                <label class="control-label" for="Family">所属大类</label>
                                 <p class="attr" id="Family"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="Model">Model</label>
+                                <label class="control-label" for="Model">夹具模组</label>
                                 <p class="attr" id="Model"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="PartNo">PartNo</label>
+                                <label class="control-label" for="PartNo">夹具料号</label>
                                 <p class="attr" id="PartNo"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="UPL">UPL</label>
+                                <label class="control-label" for="UPL">单条产线上所需数量</label>
                                 <p class="attr" id="UPL"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="UsedFor">UsedFor</label>
+                                <label class="control-label" for="UsedFor">用途</label>
                                 <p class="attr" id="UsedFor"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="PMPeriod">PMPeriod</label>
+                                <label class="control-label" for="PMPeriod">保养点检周期</label>
                                 <p class="attr" id="PMPeriod"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="PMContent">PMContent</label>
+                                <label class="control-label" for="PMContent">点检内容</label>
                                 <p class="attr" id="PMContent"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="OwnerID">OwnerID</label>
+                                <label class="control-label" for="OwnerID">责任人工号</label>
                                 <p class="attr" id="OwnerID"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="OwnerName">OwnerName</label>
+                                <label class="control-label" for="OwnerName">责任人姓名</label>
                                 <p class="attr" id="OwnerName"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="RecOn">RecOn</label>
+                                <label class="control-label" for="RecOn">录入时间</label>
                                 <p class="attr" id="RecOn"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="RecorderID">RecorderID</label>
+                                <label class="control-label" for="RecorderID">录入人工号</label>
                                 <p class="attr" id="RecorderID"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="RecorderName">RecorderName</label>
+                                <label class="control-label" for="RecorderName">录入人姓名</label>
                                 <p class="attr" id="RecorderName"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="EditOn">EditOn</label>
+                                <label class="control-label" for="EditOn">修改日期</label>
                                 <p class="attr" id="EditOn"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="EditorID">EditorID</label>
+                                <label class="control-label" for="EditorID">修改人工号</label>
                                 <p class="attr" id="EditorID"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="EditorName">EditorName</label>
+                                <label class="control-label" for="EditorName">修改人姓名</label>
                                 <p class="attr" id="EditorName"></p>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="Workcell">Workcell</label>
+                                <label class="control-label" for="Workcell">工作部门</label>
                                 <p class="attr" id="Workcell"></p>
                             </div>
                         </div>
