@@ -1,1 +1,5 @@
-$('#content').load('../HTML/ToolEntityDisplay.html');
+$(window).on('load', function(){
+    $('#content').empty();
+    $('#content').load('../HTML/ToolEntityDisplay.html');
+})
+

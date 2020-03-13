@@ -37,17 +37,47 @@ function displayTable(data){                                                //�
             $('#definitionTbody').empty();
             var begin = (num - 1) * pageSize;
             for(var i = begin; i < data.length && i < begin + pageSize; i++){
-                $('#definitionTbody').append('<tr><td>' + data[i]['Code']
-                + '</td><td>' + data[i]['SeqID']
-                + '</td><td>' + data[i]['RegDate']
-                + '</td><td>' + data[i]['UsedCount']
-                + '</td><td>' + data[i]['State']
-                + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>'
-                + '<button class="btn act-btn" onclick="putOut(this);">出库</button>'
-                + '<button class="btn act-btn" onclick="putIn(this);">入库</button>'
-                + '<button class="btn act-btn" onclick="putRepair(this);">报修</button>'
-                + '<button class="btn act-btn" onclick="putScrap(this);">报废</button>'
-                + '</td></tr>');
+                var appendData = 
+                    '<tr><td>' + data[i].Code
+                    + '</td><td>' + data[i].SeqID
+                    + '</td><td>' + data[i].RegDate
+                    + '</td><td>' + data[i].UsedCount
+                    + '</td><td>' + data[i].State
+                    + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>';
+                
+                switch(data[i].State){    //根据夹具不同状态设定不同的操作
+                    case '可用':
+                        appendData += '<button class="btn act-btn" onclick="putOut(this);">出库</button>'
+                        + '<button class="btn act-btn" onclick="putRepair(this);">报修</button>'
+                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        $('#definitionTbody').append(appendData);
+                        break;
+                    case '已出库':
+                        appendData += '<button class="btn act-btn" onclick="putIn(this);">入库</button>'
+                        + '<button class="btn act-btn" onclick="putRepair(this);">报修</button>'
+                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        $('#definitionTbody').append(appendData);
+                        break;
+                    case '已报修':
+                        appendData += '<button class="btn act-btn" onclick="putIn(this);">入库</button>'
+                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        $('#definitionTbody').append(appendData);
+                        break;
+                    case '已报废':
+                        appendData += '</td></tr>';
+                        $('#definitionTbody').append(appendData);
+                        break;
+                    case '待入库':
+                        appendData += '<button class="btn act-btn" onclick="putRepair(this);">报修</button>'
+                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        $('#definitionTbody').append(appendData);
+                        break;
+                    case '待点检':
+                        appendData += '<button class="btn act-btn" onclick="putRepair(this);">报修</button>'
+                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        $('#definitionTbody').append(appendData);
+                        break;
+                }
             }
         }
     });
@@ -63,7 +93,7 @@ function refleshCache(){
         dataType: 'JSON',
         url: '../TestData/CacheList.json',   //待改  后端URL
         success: function(result){
-            function addToCacheTbody(tbodyID, len, array){
+            function addToCacheTbody(tbodyID, len, array){    //将数据分类归入不同表格
                 for(var i = 0; i < len; i++){
                     $('#' + tbodyID).append('<tr><td>' + array[i].Code
                     + '</td><td>' + array[i].SeqID
@@ -93,9 +123,6 @@ function chooseSearchType(e){
 $('#searchBtn').click(function(){
     var param = $('#paramInput').val();
     switch(searchType){
-        case '按夹具代码':
-            displayTable(jData.filter(item => { return item.Code == param}));
-            break;
         case '按夹具序列号':
             displayTable(jData.filter(item => { return item.SeqID == param}));
             break;
@@ -144,7 +171,9 @@ function getInfo(e){
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 加入出库单
+//#region  加入临时申请列表
+
+// 加入出库单
 function putOut(e){
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
@@ -165,10 +194,8 @@ function putOut(e){
 
     refleshCache();
 }
-//#endregion
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 加入入库单
+//加入入库单
 function putIn(e){
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
@@ -189,10 +216,8 @@ function putIn(e){
 
     refleshCache();
 }
-//#endregion
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 加入报修单
+// 加入报修单
 function putRepair(e){
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
@@ -211,10 +236,8 @@ $('#repairImageInput').change(function(){
         $('.imageScan').addClass('nodisplay');
     }
 });
-//#endregion
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 加入报废单
+// 加入报废单
 function putScrap(e){
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
@@ -238,7 +261,9 @@ function putScrap(e){
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 缓存窗隐藏
+//#region  缓存窗
+
+//缓存窗隐藏
 $('.cache-icon').click(function(){
     if($('.cache-content').css('display') == 'none'){
         $('.cache-tab').show();
@@ -252,10 +277,8 @@ $('.cache-icon').click(function(){
         $('.cache-box').width(56);
     }
 });
-//#endregion
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 缓存窗tab按钮
+//缓存窗tab按钮
 function hideAllCacheTbody(){
     for(var i = 1; i < 5; i++){
         $('#cacheTable').children().eq(i).hide();
@@ -285,10 +308,8 @@ function changeTab(e){
     $(e).parent().children().eq(3).removeClass('a-active');
     $(e).addClass('a-active');
 }
-//#endregion
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 缓存窗单个清除按钮
+//缓存窗单个清除按钮
 function remove(e){ 
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
