@@ -13,8 +13,14 @@ $(window).on('load', function(){
         dataType: 'JSON',
         url: '../TestData/ToolEntityList.json',  //后端Url，附加code参数
         success: function(result){
-            displayTable(result);
-            jData = result;
+            function compare(a, b){
+                if(a.State == '可用' && b.State == '可用')  return 0;
+                else if(a.State == '可用')  return -5;
+                else if(b.State == '可用')  return 5;
+                else    return a.State.localeCompare(b.State);
+            }
+            jData = result.sort(compare);    //将实体数据按照状态排序  可用放最前
+            displayTable(jData);
         },
         error: function(){
             alert('获取信息失败，请稍后重试...');
@@ -23,7 +29,7 @@ $(window).on('load', function(){
     refleshCache();
 });
 
-function displayTable(data){                                                //待改。。。根据State设置操作类型
+function displayTable(data){                                                
     $('#paginationToolEntity').jqPaginator({
         first: '<li class="first"><a href="javascript:;">首页</a></li>',
         prev: '<li class="prev"><a href="javascript:;"><<</a></li>',

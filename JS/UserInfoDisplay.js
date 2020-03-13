@@ -9,7 +9,13 @@ var email_reg = new RegExp('^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 渲染数据
-$(window).on('load', function(){
+function refleshData(){
+    $('##UserID').text('');
+    $('##Name').text('');
+    $('##Email').text('');
+    $('##Privilege').text('');
+    $('##Workcell').text('');
+    $('##LastLogin').text('');
     $.ajax({
         type: 'GET',
         dataType: 'JSON',
@@ -26,7 +32,8 @@ $(window).on('load', function(){
             alert('数据获取失败，请稍后重试...');
         }
     });
-});
+}
+$(window).on('load', refleshData());
 //#endregion
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +59,7 @@ $('#EditBtn').click(function(){
             success: function(result){
                 if(result.Status == 'success'){
                     alert('修改成功！');
-                    window.location = '../HTML/UserInfoDisplay.html';
+                    refleshData();
                 }else{
                     alert('修改失败，请稍后重试...');
                 }

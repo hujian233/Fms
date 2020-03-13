@@ -4,7 +4,7 @@ var pageSize = 16;              //一页最多显示16条信息
 var jData = [];
 var searchType = '';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//展示表格
+//展示表格  
 function displayTable(data){
     $('#paginationUserInfoList').jqPaginator({
         first: '<li class="first"><a href="javascript:;">首页</a></li>',
@@ -16,7 +16,6 @@ function displayTable(data){
         totalCounts: data.length,
         pageSize: pageSize,
         onPageChange: function(num){
-            $('tbody').empty();
             var begin = (num - 1) * pageSize;
             for(var i = begin; i < data.length && i < begin + pageSize; i++){
                 $('tbody').append('<tr><td>' + data[i]['UserID']
@@ -32,7 +31,8 @@ function displayTable(data){
         }
     });
 }
-$(window).on('load', function(){
+function refleshTable(){
+    $('tbody').empty();
     $.ajax({
         type: "GET",
         dataType: "JSON",
@@ -45,10 +45,10 @@ $(window).on('load', function(){
             alert('获取信息失败，请稍后刷新重试...');
         }
     });
-});
+}
+$(window).on('load', refleshTable());
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//查找
-{
+//#region 查找
     function chooseSearchType(e){
         $('#searchTypeBtn').text($(e).text());
         searchType = $(e).text();
@@ -75,9 +75,10 @@ $(window).on('load', function(){
                 displayTable(jData);
         }
     });
-}
+//#endregion
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//修改用户信息
+//#region 修改用户信息
 function showEditModal(e){
     $('#UserID').val($(e).parent().parent().children().eq(0).text());
     $('#NewName').val($(e).parent().parent().children().eq(1).text());
@@ -102,7 +103,7 @@ $('#EditBtn').click(function(){
         success: function(result){
             if(result.Status == 'success'){
                 alert('修改成功！');
-                window.location = '../HTML/UserManage.html';
+                refleshTable();
             }else{
                 alert('修改失败，请稍后重试...');
             }
@@ -112,8 +113,10 @@ $('#EditBtn').click(function(){
         }
     }); */
 });
+//#endregion
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//删除用户
+//#region 删除用户信息
 function delUser(e){
     var userID = $(e).parent().parent().children().eq(0).text();
     if(confirm('是否需要删除工号为' + userID + '用户？')){
@@ -124,7 +127,7 @@ function delUser(e){
             success: function(result){
                 if(result.Status == 'success'){
                     alert('删除成功！');
-                    window.location = '../HTML/UserManage.html';
+                    refleshTable();
                 }else{
                     alert('删除失败，请稍后重试...');
                 }
@@ -135,8 +138,10 @@ function delUser(e){
         }); */
     }
 }
+//#endregion
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//添加用户
+//#region 添加用户
 $('#showAddModalBtn').click(function(){
     $('#addModal').modal('show');
 });
@@ -155,7 +160,7 @@ $('#AddBtn').click(function(){
         success: function(result){
             if(result.Status == 'success'){
                 alert('添加成功！');
-                window.location = '../HTML/UserManage.html';
+                refleshTable();
             }else{
                 alert('添加失败，请稍后重试...');
             }
@@ -165,3 +170,4 @@ $('#AddBtn').click(function(){
         }
     }); */
 });
+//#endregion
