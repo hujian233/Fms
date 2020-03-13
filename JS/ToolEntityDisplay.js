@@ -93,16 +93,16 @@ function chooseSearchType(e){
 $('#searchBtn').click(function(){
     var param = $('#paramInput').val();
     switch(searchType){
-        case 'Code':
+        case '按夹具代码':
             displayTable(jData.filter(item => { return item.Code == param}));
             break;
-        case 'SeqID':
+        case '按夹具序列号':
             displayTable(jData.filter(item => { return item.SeqID == param}));
             break;
-        case 'UsedCount':
+        case '按使用次数':
             displayTable(jData.filter(item => { return item.UsedCount == param}));
             break;
-        case 'Status':
+        case '按夹具状态':
             displayTable(jData.filter(item => { return item.State == param}));
             break;
         default:
