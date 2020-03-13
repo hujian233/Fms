@@ -1,4 +1,4 @@
-	body{
+body{
 	padding-top: 50px;
 	font-family:'微软雅黑',cursive, Helvetica,Arial,sans-serif;
 }
@@ -55,7 +55,7 @@
 		background-color:rgb(60,80,180);
 	}
 	.menu-wrap{
-		width: 15%;
+		width: 200px;
 		height: 100%;
 		background-color: rgb(240,240,240);
 		float: left;
@@ -71,7 +71,8 @@
 	}
 	.content-wrap{
 		float: left;
-		margin-left: 15%;
+		margin-left: 200px;
+		width: 80%
 	}
 }
 

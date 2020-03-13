@@ -16,12 +16,15 @@
     margin: 0 auto;
     text-align: center;
 }
+.infoModal-content{
+    margin-left: 28%;
+}
 #repairImage{
     max-width: 100%;
     margin-top: 2rem;
 }
 
-/* Main */
+/* Definition-display */
 .table-box{
     text-align: center;
 }
@@ -34,17 +37,31 @@
 }
 .table>tbody>tr>td{
     vertical-align: middle;
+    text-align: center;
 }
-
-/* Search-Box */
-.search-type{
+th{
+    text-align: center;
+}
+/* Oper-box */
+.oper-box{
+    display: flex;
+    z-index: 99;
+    padding: 1rem 0;
+}
+.oper-box-sticky{
+    padding: 1rem ;
+    width: 62%;
+    border-radius: 10px;
+    background-color: rgba(200, 200, 200, 0.9);
+    position: fixed;
+    top: 55px;
+}
+.pointer-type{
     cursor: pointer;
 }
-.search-box{
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+.bulkoper-box{
+    margin-left: 4rem;
 }
-
 /* Cache-Box */
 .cache-box{
     position: fixed;
@@ -108,8 +125,11 @@
     margin-left: 1.2rem;
     margin-bottom: 1rem;
 }
+
+/* 分页框 */
 .setPageDiv{
     text-align: center;
+    width: 80%;
 }
 
 @media (min-width: 300px){

@@ -14,7 +14,7 @@
         <link rel="shortcut icon" href="../IMG/favicon.ico"> 
     </head> 
     <body>
-        <!-- 待提交悬浮窗 -->
+        <!-- 右上待提交悬浮窗 -->
         <div class="cache-box">
             <div class="cache-tab" id="cacheTab">
                 <a class="cache-tab-a a-active" onclick="changeTab(this);">出库</a>
@@ -22,14 +22,14 @@
                 <a class="cache-tab-a" onclick="changeTab(this);">报修</a>
                 <a class="cache-tab-a" onclick="changeTab(this);">报废</a>
             </div>
-            <img class="cache-icon" src="../IMG/icon48.png" title="点击隐藏悬浮窗">
+            <img class="cache-icon" src="../IMG/icon48.png" title="点击可隐藏悬浮窗">
             <span class="cache-title" id="cacheTitl">待提交的申请</span>
             <div class="cache-content" id="cacheCont">
-                <table class="table table-hover" id="cacheTable">
+                <table class="table  table-hover" id="cacheTable">
                     <thead>
                         <tr>
-                            <td>夹具代码</td>
-                            <td>夹具序列号</td>
+                            <th>夹具代码</th>
+                            <th>夹具序列号</th>
                         </tr>
                     </thead>
                     <tbody id="outTbody"></tbody>
@@ -46,46 +46,71 @@
         <div class="main">
             <div class="page-header">
                 <h2>夹具实体信息列表</h2>
-                <div class="search-box input-group col-sm-4 col-xs-8">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" id="searchTypeBtn" data-toggle="dropdown">
-                            查找方式
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="search-type" onclick="chooseSearchType(this);">按夹具序列号</a></li>
-                            <li><a class="search-type" onclick="chooseSearchType(this);">按使用次数</a></li>
-                            <li><a class="search-type" onclick="chooseSearchType(this);">按夹具状态</a></li>
-                            <li><a class="search-type" onclick="chooseSearchType(this);">展示所有</a></li>
-                        </ul>
-                      </div>
-                    <input type="text" class="form-control" id="paramInput" placeholder="Search for...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" id="searchBtn">查找</button>
-                    </span>
-                </div>
+                
+                <div class="oper-box">
+                    <!-- 查找 -->
+                    <div class="search-box input-group col-sm-3 col-xs-9">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" id="searchTypeBtn" data-toggle="dropdown">
+                                查找方式
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="pointer-type" onclick="chooseSearchType(this);">按使用次数</a></li>
+                                <li><a class="pointer-type" onclick="chooseSearchType(this);">按夹具状态</a></li>
+                                <li><a class="pointer-type" onclick="chooseSearchType(this);">展示所有</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control" id="paramInput">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="searchBtn">查找</button>
+                        </span>
+                    </div>
+                    <!-- 批量操作 -->
+                    <div class="bulkoper-box input-group col-sm-5 col-xs-9">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" id="bulkOperTypeBtn" data-toggle="dropdown">
+                                批量操作
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="pointer-type" onclick="chooseBulkOperType(this);">出库</a></li>
+                                <li><a class="pointer-type" onclick="chooseBulkOperType(this);">入库</a></li>
+                                <li><a class="pointer-type" onclick="chooseBulkOperType(this);">报废</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control" id="num1Input" placeholder="填写序号">
+                        <span class="input-group-addon" id="basic-addon1">至</span>
+                        <input type="text" class="form-control" id="num2Input" placeholder="填写序号">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="bulkOperBtn">提交</button>
+                        </span>
+                    </div>
+                </div>                
             </div>
+            <!-- 实体展示 -->
             <div class="table-box table-responsive">
-                <table class="table table-striped">
+                <table class="table table-hover">
                     <thead>
                         <tr>
-                            <td>夹具代码</td>
-                            <td>夹具序列号</td>
-                            <td>入库时间</td>
-                            <td>已使用次数</td>
-                            <td>状态</td>
-                            <td>操作</td>
+                            <th>序号</th>
+                            <th>夹具代码</th>
+                            <th>夹具序列号</th>
+                            <th>入库时间</th>
+                            <th>已使用次数</th>
+                            <th>状态</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody id="definitionTbody"></tbody>
                 </table>
             </div>
+            <!-- 分页框 -->
+            <div class="setPageDiv">
+                <ul class="pagination" id="paginationToolEntity"></ul>
+            </div>
         </div>
-        <!-- 分页框 -->
-        <div class="setPageDiv">
-            <ul class="pagination" id="paginationToolEntity"></ul>
-        </div>
-
+        
         <!-- InfoModal -->
         <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -95,7 +120,7 @@
                         <h4 class="modal-title">夹具实体详细信息</h4>
                     </div>
                     <div class="modal-body" id="modal_body">
-                        <div class="container infoModal-content">
+                        <div class="infoModal-content">
                             <div class="form-group">
                                 <label class="control-label" for="Code">夹具代码</label>
                                 <p class="attr" id="Code"></p>
@@ -178,6 +203,7 @@
                 </div>
             </div>
         </div>
+        
         <link href="../CSS/ToolEntityDisplay.css" rel="stylesheet" type="text/css">
         <script src="../node_modules/jqPaginator-2.0.2/dist/jq-paginator.js"></script>
         <script src="../JS/ToolEntityDisplay.js"></script>

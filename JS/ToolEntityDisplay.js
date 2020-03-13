@@ -2,8 +2,9 @@
 //定义全局变量
 var jData = [];
 var searchType = '';
+var bulkOperType = '';
 var cacheTbodyType = 'Out';
-var pageSize = 16;              //一页最多显示16条信息
+var pageSize = 20;              //一页最多显示16条信息
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 获取定义列表、刷新带申请列表（函数）
 $(window).on('load', function(){
@@ -42,9 +43,11 @@ function displayTable(data){
         onPageChange: function(num){
             $('#definitionTbody').empty();
             var begin = (num - 1) * pageSize;
+            var num = 1;
             for(var i = begin; i < data.length && i < begin + pageSize; i++){
                 var appendData = 
-                    '<tr><td>' + data[i].Code
+                    '<tr><th>' + num
+                    + '</th><td>' + data[i].Code
                     + '</td><td>' + data[i].SeqID
                     + '</td><td>' + data[i].RegDate
                     + '</td><td>' + data[i].UsedCount
@@ -53,20 +56,20 @@ function displayTable(data){
                 
                 switch(data[i].State){    //根据夹具不同状态设定不同的操作
                     case '可用':
-                        appendData += '<button class="btn act-btn" onclick="putOut(this);">出库</button>'
-                        + '<button class="btn act-btn" onclick="putRepair(this);">报修</button>'
-                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        appendData += '<button class="btn act-btn" onclick="addToOut(this);">出库</button>'
+                        + '<button class="btn act-btn" onclick="addToRepair(this);">报修</button>'
+                        + '<button class="btn act-btn" onclick="addToScrap(this);">报废</button></td></tr>';
                         $('#definitionTbody').append(appendData);
                         break;
                     case '已出库':
-                        appendData += '<button class="btn act-btn" onclick="putIn(this);">入库</button>'
-                        + '<button class="btn act-btn" onclick="putRepair(this);">报修</button>'
-                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        appendData += '<button class="btn act-btn" onclick="addToIn(this);">入库</button>'
+                        + '<button class="btn act-btn" onclick="addToRepair(this);">报修</button>'
+                        + '<button class="btn act-btn" onclick="addToScrap(this);">报废</button></td></tr>';
                         $('#definitionTbody').append(appendData);
                         break;
                     case '已报修':
-                        appendData += '<button class="btn act-btn" onclick="putIn(this);">入库</button>'
-                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        appendData += '<button class="btn act-btn" onclick="addToIn(this);">入库</button>'
+                        + '<button class="btn act-btn" onclick="addToScrap(this);">报废</button></td></tr>';
                         $('#definitionTbody').append(appendData);
                         break;
                     case '已报废':
@@ -74,16 +77,17 @@ function displayTable(data){
                         $('#definitionTbody').append(appendData);
                         break;
                     case '待入库':
-                        appendData += '<button class="btn act-btn" onclick="putRepair(this);">报修</button>'
-                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        appendData += '<button class="btn act-btn" onclick="addToRepair(this);">报修</button>'
+                        + '<button class="btn act-btn" onclick="addToScrap(this);">报废</button></td></tr>';
                         $('#definitionTbody').append(appendData);
                         break;
                     case '待点检':
-                        appendData += '<button class="btn act-btn" onclick="putRepair(this);">报修</button>'
-                        + '<button class="btn act-btn" onclick="putScrap(this);">报废</button></td></tr>';
+                        appendData += '<button class="btn act-btn" onclick="addToRepair(this);">报修</button>'
+                        + '<button class="btn act-btn" onclick="addToScrap(this);">报废</button></td></tr>';
                         $('#definitionTbody').append(appendData);
                         break;
                 }
+                num++;   //当前页面序号
             }
         }
     });
@@ -129,9 +133,6 @@ function chooseSearchType(e){
 $('#searchBtn').click(function(){
     var param = $('#paramInput').val();
     switch(searchType){
-        case '按夹具序列号':
-            displayTable(jData.filter(item => { return item.SeqID == param}));
-            break;
         case '按使用次数':
             displayTable(jData.filter(item => { return item.UsedCount == param}));
             break;
@@ -143,6 +144,81 @@ $('#searchBtn').click(function(){
             displayTable(jData);
     }
 });
+//#endregion
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 批量加入申请列表
+function submitByAjax(data){          //url待填
+    /* $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(data),
+        url: '',  
+        success: function(result){
+            if(result.Status == 'error'){
+                alert('操作失败，请稍后重试...');
+            }
+        } 
+    }); */
+}
+function chooseBulkOperType(e){
+    $('#bulkOperTypeBtn').text($(e).text());
+    bulkOperType = $(e).text();
+    $('#num1Input').focus();
+}
+$('#bulkOperBtn').click(function(){
+    var transData = [];
+    var displayedData = $('#definitionTbody').children();
+    var num1 = Number.parseInt($('#num1Input').val());
+    var num2 = Number.parseInt($('#num2Input').val());
+    if(!(num1 >= 1 && num2 <= pageSize && num1 <= num2 && Number.isInteger(num1)) && Number.isInteger(num2))
+        throw '序号格式错误';
+    try{
+        switch(bulkOperType){
+            case '出库':
+                for(let i = num1; i < num2; i++){
+                    let state = displayedData.eq(i).children().eq(5).text();
+                    if(state == '可用')
+                        transData.push({
+                            'Code': displayedData.eq(i).children().eq(1).text(),
+                            'SeqID': displayedData.eq(i).children().eq(2).text(),
+                            'Type': 'Out'
+                        });
+                    else    throw '夹具选择错误';
+                }
+                break;
+            case '入库':
+                for(let i = num1; i < num2; i++){
+                    let state = displayedData.eq(i).children().eq(5).text();
+                    if(state == '已报修' || state == '已出库')
+                        transData.push({
+                            'Code': displayedData.eq(i).children().eq(1).text(),
+                            'SeqID': displayedData.eq(i).children().eq(2).text(),
+                            'Type': 'Out'
+                        });
+                    else    throw '夹具选择错误';
+                }
+                break;
+            case '报废':
+                for(let i = num1; i < num2; i++){
+                    let state = displayedData.eq(i).children().eq(5).text();
+                    if(state != '已报废')
+                        transData.push({
+                            'Code': displayedData.eq(i).children().eq(1).text(),
+                            'SeqID': displayedData.eq(i).children().eq(2).text(),
+                            'Type': 'Out'
+                        });
+                    else    throw '夹具选择错误';
+                }
+                break;
+        }
+        submitByAjax(transData);
+    }
+    catch(err){
+        alert(err + '，请重新填写...');
+    } 
+})
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -178,53 +254,30 @@ function getInfo(e){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region  加入临时申请列表
-
 // 加入出库单
-function putOut(e){
+function addToOut(e){
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
     var transData = [];
     transData.push({'Code': code, 'SeqID': seqID, 'Type': 'Out'});
-    /* $.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(transData),
-        url: '',  //待改  后端接口
-        success: function(result){
-            if(result.Status == 'error'){
-                alert('操作失败，请稍后重试...');
-            }
-        } 
-    }); */
+    //submitByAjax(transData)
 
     refleshCache();
 }
 
 //加入入库单
-function putIn(e){
+function addToIn(e){
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
     var transData = [];
     transData.push({'Code': code, 'SeqID': seqID, 'Type': 'In'});
-    /* $.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(transData),
-        url: '',  //待改  后端接口
-        success: function(result){
-            if(result.Status == 'error'){
-                alert('操作失败，请稍后重试...');
-            }
-        } 
-    }); */
+    //submitByAjax(transData)
 
     refleshCache();
 }
 
 // 加入报修单
-function putRepair(e){
+function addToRepair(e){
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
     $('#repairCode').val(code);
@@ -244,23 +297,12 @@ $('#repairImageInput').change(function(){
 });
 
 // 加入报废单
-function putScrap(e){
+function addToScrap(e){
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
     var transData = [];
     transData.push({'Code': code, 'SeqID': seqID, 'Type': 'Scrap'});
-    /* $.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(transData),
-        url: '',  //待改  后端接口
-        success: function(result){
-            if(result.Status == 'error'){
-                alert('操作失败，请稍后重试...');
-            }
-        } 
-    }); */
+    //submitByAjax(transData)
     
     refleshCache();
 } 
@@ -354,3 +396,11 @@ function getUrlVars()
 }
 //#endregion
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 滚动条监听，操作窗固定
+$(window).scroll(function(){
+    if($(window).scrollTop() > 100)
+        $('.oper-box').addClass('oper-box-sticky');
+    else
+        $('.oper-box').removeClass('oper-box-sticky');
+})

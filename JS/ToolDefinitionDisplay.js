@@ -19,11 +19,12 @@ function displayTable(data){
             $('tbody').empty();
             var begin = (num - 1) * pageSize;
             for(var i = begin; i < data.length && i < begin + pageSize; i++){
-                $('tbody').append('<tr><td>' + data[i]['Code']
-                + '</td><td>' + data[i]['Name']
-                + '</td><td>' + data[i]['Family']
-                + '</td><td>' + data[i]['Model']
-                + '</td><td>' + data[i]['PartNo']
+                $('tbody').append('<tr><td>' + data[i].Code
+                + '</td><td>' + data[i].Name
+                + '</td><td>' + data[i].Family
+                + '</td><td>' + data[i].Model
+                + '</td><td>' + data[i].PartNo
+                + '</td><td>' + data[i].OwnerID + '&nbsp&nbsp&nbsp' + data[i].OwnerName
                 + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>'
                 + '<button class="btn act-btn" onclick="getEntity(this);">查看实体</button>'
                 + '</td></tr>');

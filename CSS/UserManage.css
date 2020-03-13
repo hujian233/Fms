@@ -4,6 +4,9 @@
 .table>tbody>tr>td{
     vertical-align: middle;
 }
+th{
+    text-align: center;
+}
 .act-btn{
     margin-right: 2px;
 }
