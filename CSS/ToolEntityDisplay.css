@@ -25,6 +25,9 @@
 }
 
 /* Definition-display */
+.main{
+    margin-right: 150px;
+}
 .table-box{
     text-align: center;
 }

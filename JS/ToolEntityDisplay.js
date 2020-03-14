@@ -6,7 +6,7 @@ var bulkOperType = '';
 var cacheTbodyType = 'Out';
 var pageSize = 20;              //一页最多显示16条信息
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 获取定义列表、刷新带申请列表（函数）
+//#region 获取定义列表、刷新待申请列表（函数）
 $(window).on('load', function(){
     var code = getUrlVars()['Code'];
     $.ajax({
@@ -107,7 +107,7 @@ function refleshCache(){
                 for(var i = 0; i < len; i++){
                     $('#' + tbodyID).append('<tr><td>' + array[i].Code
                     + '</td><td>' + array[i].SeqID
-                    + '</td><td><span class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></span></td></tr>')
+                    + '</td><td><i class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></i></td></tr>')
                 }
             }
             addToCacheTbody('outTbody', result.Out.length, result.Out);
@@ -172,9 +172,9 @@ $('#bulkOperBtn').click(function(){
     var displayedData = $('#definitionTbody').children();
     var num1 = Number.parseInt($('#num1Input').val());
     var num2 = Number.parseInt($('#num2Input').val());
-    if(!(num1 >= 1 && num2 <= pageSize && num1 <= num2 && Number.isInteger(num1)) && Number.isInteger(num2))
-        throw '序号格式错误';
     try{
+        if(!(num1 >= 1 && num2 <= pageSize && num1 <= num2 && Number.isInteger(num1)) && Number.isInteger(num2))
+            throw '序号格式错误';
         switch(bulkOperType){
             case '出库':
                 for(let i = num1; i < num2; i++){
@@ -404,3 +404,4 @@ $(window).scroll(function(){
     else
         $('.oper-box').removeClass('oper-box-sticky');
 })
+//#endregion
