@@ -10,12 +10,12 @@ var email_reg = new RegExp('^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 渲染数据
 function refleshData(){
-    $('##UserID').text('');
-    $('##Name').text('');
-    $('##Email').text('');
-    $('##Privilege').text('');
-    $('##Workcell').text('');
-    $('##LastLogin').text('');
+    $('#UserID').text('');
+    $('#Name').text('');
+    $('#Email').text('');
+    $('#Privilege').text('');
+    $('#Workcell').text('');
+    $('#LastLogin').text('');
     $.ajax({
         type: 'GET',
         dataType: 'JSON',

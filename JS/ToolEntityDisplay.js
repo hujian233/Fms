@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //定义全局变量
-var jData = [];
+var initData = [];
 var searchType = '';
 var bulkOperType = '';
 var cacheTbodyType = 'Out';
@@ -20,8 +20,8 @@ $(window).on('load', function(){
                 else if(b.State == '可用')  return 5;
                 else    return a.State.localeCompare(b.State);
             }
-            jData = result.sort(compare);    //将实体数据按照状态排序  可用放最前
-            displayTable(jData);
+            initData = result.sort(compare);    //将实体数据按照状态排序  可用放最前
+            displayTable(initData);
         },
         error: function(){
             alert('获取信息失败，请稍后重试...');
@@ -43,10 +43,10 @@ function displayTable(data){
         onPageChange: function(num){
             $('#definitionTbody').empty();
             var begin = (num - 1) * pageSize;
-            var num = 1;
+            var n = 1;
             for(var i = begin; i < data.length && i < begin + pageSize; i++){
                 var appendData = 
-                    '<tr><th>' + num
+                    '<tr><th>' + n
                     + '</th><td>' + data[i].Code
                     + '</td><td>' + data[i].SeqID
                     + '</td><td>' + data[i].RegDate
@@ -87,7 +87,7 @@ function displayTable(data){
                         $('#definitionTbody').append(appendData);
                         break;
                 }
-                num++;   //当前页面序号
+                n++;   //当前页面序号
             }
         }
     });
@@ -134,14 +134,14 @@ $('#searchBtn').click(function(){
     var param = $('#paramInput').val();
     switch(searchType){
         case '按使用次数':
-            displayTable(jData.filter(item => { return item.UsedCount == param}));
+            displayTable(initData.filter(item => { return item.UsedCount == param}));
             break;
         case '按夹具状态':
-            displayTable(jData.filter(item => { return item.State == param}));
+            displayTable(initData.filter(item => { return item.State == param}));
             break;
         default:
             $('#paramInput').val('');
-            displayTable(jData);
+            displayTable(initData);
     }
 });
 //#endregion

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //定义全局变量
-var jData = [];                 //从后端获取的初始数据           
+var initData = [];                 //从后端获取的初始数据           
 var pageSize = 20;              //一页最多显示20条信息
 var filterBy = {                //存放筛选条件
     'Code': '',
@@ -46,7 +46,7 @@ $(window).on('load', function(){
         url: '../TestData/ToolDefinitionList.json',  //后端Url，待改
         success: function(result){
             displayTable(result);
-            jData = result;
+            initData = result;
         },
         error: function(){
             alert('获取信息失败，请刷新重试...');
@@ -56,7 +56,7 @@ $(window).on('load', function(){
         type: 'GET',
         dataType: 'JSON',
         url: '../TestData/FamModDict.json',  //后端Url，待改
-        success: function(result){
+        success: function(result){p
             for(let p in result.Family)
                 $('#familyFilterInput').append('<option value="' + result.Family[p] + '">' + result.Family[p] + '</option>');
             for(let n in result.Model)
@@ -72,8 +72,8 @@ $(window).on('load', function(){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 筛选
-function runFilter(){  //执行筛选，并刷新展示的表格
-    var tempData = jData;
+function runFilter(e, type){  //执行筛选，并刷新展示的表格
+    var tempData = initData;
     if(filterBy.Code != '')
         tempData = tempData.filter(item => {return item.Code == filterBy.Code});
     if(filterBy.Name != '')
@@ -85,17 +85,21 @@ function runFilter(){  //执行筛选，并刷新展示的表格
     
     if(tempData.length > 0)
         displayTable(tempData);
-    else
+    else{
         alert('无筛选结果..');
+        $(e).val('');
+        filterBy[type] = '';
+    }
+        
 }
 function changeFilter(e, type){  //响应绑定的控件
-    filterBy[type] = $(e).val();
-    runFilter();
+    filterBy[type] = $(e).val()
+    runFilter(e, type);
 }
 function removeFilter(e, type){  //响应绑定的控件
     filterBy[type] = '';
     $(e).parent().children().eq(0).val('');
-    runFilter();
+    runFilter(e, type);
 }
 //#endregion
 

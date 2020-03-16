@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ToolDefinitionDisplay</title>
+        <title>AdminToolDefinitionDisplay</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +40,7 @@
                     </li>
                     <li>
                         <span class="a-filterby">所属大类<i class="fa fa-chevron-right" aria-hidden="true"></i></span>
-                        <div class="filterby-input" style="display: none;">
+                        <div class="filterby-input">
                             <select class="form-control filterby-input" id="familyFilterInput" onchange="changeFilter(this, 'Family');">
                                 <option value="">选择所属大类</option>
                             </select>
@@ -49,7 +49,7 @@
                     </li>
                     <li>
                         <span class="a-filterby">夹具模组<i class="fa fa-chevron-right" aria-hidden="true"></i></span>
-                        <div class="filterby-input" style="display: none;">
+                        <div class="filterby-input">
                             <select class="form-control filterby-input" id="modelFilterInput" onchange="changeFilter(this, 'Model');">
                                 <option value="">选择夹具模组</option>
                             </select>
@@ -91,7 +91,7 @@
                         <h4 class="modal-title">夹具定义详细信息</h4>
                     </div>
                     <div class="modal-body" id="modal_body">
-                        <div class="form-horizontal">     <!-- action带填写 -->
+                        <div class="form-horizontal">
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="Code">夹具代码</label>
                                 <div class="col-sm-8">
@@ -107,13 +107,13 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="Family">所属大类</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="Family"> 
+                                    <select class="form-control" id="Family"></select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="Model">夹具模组</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="Model"> 
+                                    <select class="form-control" id="Model"></select>
                                 </div>
                             </div>
                             <div class="form-group">

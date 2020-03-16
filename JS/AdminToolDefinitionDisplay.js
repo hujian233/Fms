@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //定义全局变量
-var jData = [];                 //全体数据
+var initData = [];                 //全体数据
 var pageSize = 16;              //一页最多显示16条信息
 var filterBy = {                //存放筛选条件
     'Code': '',
@@ -8,6 +8,7 @@ var filterBy = {                //存放筛选条件
     'Family': '',
     'Model': ''
 };   
+var fmDict = {};                //Family、Model字典
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 初始化/刷新表格数据
 function displayTable(data){
@@ -45,7 +46,7 @@ $(window).on('load', function(){
         url: '../TestData/ToolDefinitionList.json',  //后端Url，待改
         success: function(result){
             displayTable(result);
-            jData = result;
+            initData = result;
         },
         error: function(){
             alert('获取信息失败，请刷新重试...');
@@ -55,11 +56,16 @@ $(window).on('load', function(){
         type: 'GET',
         dataType: 'JSON',
         url: '../TestData/FamModDict.json',  //后端Url，待改
-        success: function(result){
-            for(let p in result.Family)
+        success: function(result){           //字典数据绑定至筛选下拉框、信息修改下拉框
+            fmDict = result;
+            for(let p in result.Family){
                 $('#familyFilterInput').append('<option value="' + result.Family[p] + '">' + result.Family[p] + '</option>');
-            for(let n in result.Model)
+                $('#Family').append('<option value="' + result.Family[p] + '">' + result.Family[p] + '</option>');
+            }
+            for(let n in result.Model){
                 $('#modelFilterInput').append('<option value="' + result.Model[n] + '">' + result.Model[n] + '</option>');
+                $('#Model').append('<option value="' + result.Model[n] + '">' + result.Model[n] + '</option>')
+            }
         },
         error: function(){
             $('#familyFilterInput').replaceWith('<input class="form-control filterby-input" id="familyFilterInput" onchange="changeFilter(this, ' + "'Model'" + ');">');
@@ -71,8 +77,8 @@ $(window).on('load', function(){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 筛选
-function runFilter(){  //执行筛选，并刷新展示的表格
-    var tempData = jData;
+function runFilter(e, type){  //执行筛选，并刷新展示的表格
+    var tempData = initData;
     if(filterBy.Code != '')
         tempData = tempData.filter(item => {return item.Code == filterBy.Code});
     if(filterBy.Name != '')
@@ -84,17 +90,20 @@ function runFilter(){  //执行筛选，并刷新展示的表格
     
     if(tempData.length > 0)
         displayTable(tempData);
-    else
+    else{
         alert('无筛选结果..');
+        $(e).val('');
+        filterBy[type] = '';
+    }
 }
-function changeFilter(e, type){  //响应绑定的控件
+function changeFilter(e, type){  //改变筛选条件
     filterBy[type] = $(e).val();
-    runFilter();
+    runFilter(e, type);
 }
-function removeFilter(e, type){  //响应绑定的控件
+function removeFilter(e, type){  //删除该筛选条件
     filterBy[type] = '';
     $(e).parent().children().eq(0).val('');
-    runFilter();
+    runFilter(e, type);
 }
 //#endregion
 
@@ -107,10 +116,9 @@ function getInfo(e){
         dataType: 'JSON',
         url: '../TestData/ToolDefinitionInfo.json',  //code附在url后  "...?code=' + code
         success: function(result){
-            
             $('#Code').val(result.Code);
             $('#Name').val(result.Name);
-            $('#Family').val(result.Family);
+            $('#Family').val(result.Family)
             $('#Model').val(result.Model);
             $('#PartNo').val(result.PartNo);
             $('#UPL').val(result.UPL);
@@ -138,12 +146,18 @@ function getInfo(e){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 修改夹具定义信息
+
+function findKey(obj, value, compare = (a, b) => a === b) {  //根据value查找key
+    return Object.keys(obj).find(k => compare(obj[k], value))
+}
 $('#EditBtn').click(function(){
+    var familyID = findKey(fmDict['Family'], $('#Family').val());
+    var modelID = findKey(fmDict['Model'], $('#Model').val());
     var transData = {
         'Code': $('#Code').val(),
         'Name': $('#Name').val(),
-        'Family': $('#Family').val(),
-        'Model': $('#Model').val(),
+        'FamilyID': familyID,
+        'ModelID': modelID,
         'PartNo': $('#PartNo').val(),
         'UPL': $('#UPL').val(),
         'UsedFor': $('#UsedFor').val(),
