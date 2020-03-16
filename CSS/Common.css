@@ -1,6 +1,7 @@
 body{
 	padding-top: 50px;
 	font-family:'微软雅黑',cursive, Helvetica,Arial,sans-serif;
+	overflow-y: scroll;
 }
 .header_box{
 	background-color: rgb(40,60,150);
@@ -8,7 +9,6 @@ body{
 	border-radius: 15px;
 	box-shadow: 10px 3px 20px rgb(110, 110, 110);
 }
-
 .nav-pills>li.active>a{
 	background-color: rgb(60,80,180);
 	color:white;
@@ -31,7 +31,7 @@ body{
 }
 .content{
 	width: 100%;
-	padding: 0.5rem 4rem;
+	padding: 0.5rem 5rem;
 }
 
 @media screen and (min-width:992px){

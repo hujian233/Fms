@@ -2,10 +2,10 @@
 //定义全局变量
 var initData = {};
 var displayType = 'Out';                //当前展示的申请类型
-var searchType = '';                         //搜索类型
-var selectedToolModel = [];         //已选择的夹具实体
+var searchType = '';                    //搜索类型
+var selectedToolModel = [];             //已选择的夹具实体
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 获取定义列表、刷新待申请列表（函数）
+//#region 获取待提交申请列表、刷新待申请列表（函数）
 function refreshTable(){
     $.ajax({
         type: 'GET',
@@ -13,6 +13,11 @@ function refreshTable(){
         url: '../TestData/TempApplicationList.json',  //后端Url，附加code参数
         success: function(result){
             initData = result;
+            
+            $('#Workcell').val(initData['Workcell']);        //将申请人信息绑定至申请单
+            $('#ApplicantID').val(initData['ApplicantID']);
+            $('#ApplicantName').val(initData['ApplicantName']);
+
             displayTable(initData[displayType]);
         },
         error: function(){
@@ -32,7 +37,27 @@ function displayTable(data){
     }
 }
 
-$(window).on('load', refreshTable());
+$(window).on('load', function(){
+    refreshTable();
+    $.ajax({                //获取故障类型与产线的字典
+        type: 'GET',
+        dataType: 'JSON',
+        url: '../TestData/LinePMDict.json',  //后端Url，附加code参数
+        success: function(result){
+            for(let p in result['Line']){            //将产线、故障字典绑定至下拉框
+                $('#LineID').append('<option value="' 
+                    + p + '">' + result['Line'][p] + '</option>');
+            }
+            for(let p in result['PMContent']){
+                $('#PMContentID').append('<option value="' 
+                    + p + '">' + result['PMContent'][p] + '</option>');
+            }
+        },
+        error: function(){
+            alert('获取信息失败，请稍后重试...');
+        }
+    });
+});
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,6 +65,7 @@ $(window).on('load', refreshTable());
 function changeTab(e, type){
     $('#' + displayType + 'Tab').removeClass('a-tab-active');
     $(e).addClass('a-tab-active');
+    $('#selectAll').prop('checked', false);
     displayType = type;
     displayTable(initData[displayType]);
 }
@@ -50,12 +76,12 @@ function changeTab(e, type){
 $('#selectAll').change(function(){
     if($(this).prop('checked')){
         for(let i = 0; i < $('tbody').children().length; i++){
-            $('tbody').children().eq(i).children().eq(0).children().eq(0).prop("checked", true);
+            $('tbody').children().eq(i).children().eq(0).children().eq(0).prop('checked', true);
             $('tbody').children().eq(i).addClass('tr-selected');
         }
     }else{
         for(let i = 0; i < $('tbody').children().length; i++){
-            $('tbody').children().eq(i).children().eq(0).children().eq(0).prop("checked", false);
+            $('tbody').children().eq(i).children().eq(0).children().eq(0).prop('checked', false);
             $('tbody').children().eq(i).removeClass('tr-selected');
         }
     }
@@ -121,108 +147,145 @@ $('#searchBtn').click(function(){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 填写申请单
 function showFillInModal(){
-    for(let i = 0; i < $('tbody').children().length; i++){
-        if($('tbody').children().eq(i).children().eq(0).children().eq(0).prop("checked")){
-            
+    selectedToolModel = [];
+    var selectedCount = 0;        //选中夹具数
+    for(let i = 0; i < $('tbody').children().length; i++){    //将选中的夹具添加入变量数组
+        if($('tbody').children().eq(i).children().eq(0).children().eq(0).prop('checked')){
+            selectedToolModel.push({
+                'Code': $('tbody').children().eq(i).children().eq(1).text(),
+                'SeqID': $('tbody').children().eq(i).children().eq(2).text()
+            });
+            selectedCount++;
         }
     }
-    switch(displayType){
+    if(selectedCount == 0){
+        alert('您当前还未选择任何夹具！');
+        return;
+    }
+    $('#outInput').hide();
+    $('#inInput').hide();
+    $('#repairInput').hide();
+    $('#scrapInput').hide();
+    switch(displayType){                         //更改模态窗内容
         case 'Out': 
             $('#modalTitle').text('填写出库申请单');
+            $('#LineID').val('');
+            $('#Check').prop('checked', false);
+            $('#OutRemarks').val('');
+            $('#outInput').show();
             break;
         case 'In':
             $('#modalTitle').text('填写入库申请单');
+            $('#InRemarks').val('');
+            $('#inInput').show();
             break;
         case 'Repair':
             $('#modalTitle').text('填写报修申请单');
+            $('#PMContentID').val('');
+            $('#RepairReason').val('');
+            $('#repairInput').show();
             break;
         case 'Scrap':
             $('#modalTitle').text('填写报废申请单');
+            $('#ScrapReason').val('');
+            $('#scrapInput').show();
             break;
     }
 
+    $('#selectedModelTextarea').text('');                       //清空富文本框显示夹具  
+    for(let i = 0; i < selectedToolModel.length; i++){          //刷新富文本框显示夹具
+        let temp = $('#selectedModelTextarea').text();
+        $('#selectedModelTextarea').text(temp + 'No.' + (i + 1) + '    ' 
+            + selectedToolModel[i].Code + '    ' 
+            + selectedToolModel[i].SeqID + '\n');
+    }
+    
     $('#fillInModal').modal('show');
 }
 
-function submitByAjax(data){          //url待填
-    /* $.ajax({
+$('#SubmitBtn').click(function(){               //提交申请单
+    var transData = {
+        'ToolModel': selectedToolModel,
+        'Workcell': initData['Workcell'],
+        'ApplicantID': initData['ApplicantID'],
+        'ApplicantName': initData['ApplicantName']
+    };
+    switch(displayType){
+        case 'Out':
+            transData['LineID'] = $('#LineID').val();
+            transData['Check'] = $('#Check').prop('checked');
+            transData['Remarks'] = $('#OutRemarks').val();
+            //SubmitByAjax(transData, '');
+            break;
+        case 'In':
+            transData['Remarks'] = $('#InRemarks').val();
+            //SubmitByAjax(transData, '');
+            break;
+        case 'Repair':
+            transData['PMContentID'] = $('#PMContentID').val();
+            transData['Reason'] = $('#RepairReason').val();
+            //SubmitByAjax(transData, '');
+            break;
+        case 'Scrap':
+            transData['Reason'] = $('#ScrapReason').val();
+            //SubmitByAjax(transData, '');
+            break;
+    }
+});
+
+function SubmitByAjax(data, url){
+    $.ajax({
         type: 'POST',
         dataType: 'JSON',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(data),
-        url: '',  
+        url: url,  
         success: function(result){
             if(result.Status == 'error'){
                 alert('操作失败，请稍后重试...');
+            }else{
+                alert('提交成功！');
+                refreshTable();
             }
         } 
-    }); */
+    });
 }
-function chooseBulkOperType(e){
-    $('#bulkOperTypeBtn').text($(e).text());
-    bulkOperType = $(e).text();
-    $('#num1Input').focus();
-}
-$('#bulkOperBtn').click(function(){
-    var transData = [];
-    var displayedData = $('#definitionTbody').children();
-    var num1 = Number.parseInt($('#num1Input').val());
-    var num2 = Number.parseInt($('#num2Input').val());
-    try{
-        if(!(num1 >= 1 && num2 <= pageSize && num1 <= num2 && Number.isInteger(num1)) && Number.isInteger(num2))
-            throw '序号格式错误';
-        switch(bulkOperType){
-            case '出库':
-                for(let i = num1; i < num2; i++){
-                    let state = displayedData.eq(i).children().eq(5).text();
-                    if(state == '可用')
-                        transData.push({
-                            'Code': displayedData.eq(i).children().eq(1).text(),
-                            'SeqID': displayedData.eq(i).children().eq(2).text(),
-                            'Type': 'Out'
-                        });
-                    else    throw '夹具选择错误';
-                }
-                break;
-            case '入库':
-                for(let i = num1; i < num2; i++){
-                    let state = displayedData.eq(i).children().eq(5).text();
-                    if(state == '已报修' || state == '已出库')
-                        transData.push({
-                            'Code': displayedData.eq(i).children().eq(1).text(),
-                            'SeqID': displayedData.eq(i).children().eq(2).text(),
-                            'Type': 'Out'
-                        });
-                    else    throw '夹具选择错误';
-                }
-                break;
-            case '报废':
-                for(let i = num1; i < num2; i++){
-                    let state = displayedData.eq(i).children().eq(5).text();
-                    if(state != '已报废')
-                        transData.push({
-                            'Code': displayedData.eq(i).children().eq(1).text(),
-                            'SeqID': displayedData.eq(i).children().eq(2).text(),
-                            'Type': 'Out'
-                        });
-                    else    throw '夹具选择错误';
-                }
-                break;
-        }
-        submitByAjax(transData);
-    }
-    catch(err){
-        alert(err + '，请重新填写...');
-    } 
-})
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 滚动条监听，操作窗固定
-$(window).scroll(function(){
-    if($(window).scrollTop() > 100)
-        $('.oper-box').addClass('oper-box-sticky');
-    else
-        $('.oper-box').removeClass('oper-box-sticky');
+//#region 回到顶部悬浮按钮
+$(window).on('load', function(){
+    // 获取页面可视区域的高度
+    var clientHeight = document.documentElement.clientHeight;
+    var timer = null;// 定义定时器变量
+    var isTop = true;// 是否返回顶部
+    // 滚动滚动条时候触发
+    $(window).on('scroll', function(){
+        // 获取滚动条到顶部高度-返回顶部显示或者隐藏
+        var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (osTop >= clientHeight / 3) {
+            $('#danglingBack').show();
+        } else {
+            $('#danglingBack').hide();
+        }
+        // 如果是用户触发滚动条就取消定时器
+        if (!isTop) {
+            clearInterval(timer);
+        }
+        isTop = false;
+    });
+    // 返回顶部按钮点击事件
+    $('#danglingBack').click(function(){
+        timer = setInterval(function() {
+            // 获取滚动条到顶部高度
+            var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var distance = Math.floor(-osTop / 6);
+            document.documentElement.scrollTop = document.body.scrollTop = osTop + distance;
+            isTop = true;
+            if (osTop == 0) {
+                clearInterval(timer);
+            }
+        }, 30);
+    });
 })
 //#endregion

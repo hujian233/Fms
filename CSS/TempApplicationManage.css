@@ -1,5 +1,5 @@
 .main{
-    margin-right: 15%;
+    margin-right: 8%;
 }
 .oper-box{
     display: flex;
@@ -18,7 +18,8 @@
         display: block;
     }
 }
-/* tab */
+
+/* Tab */
 .tab-box{
     width: 100%;
     display: inline-block;
@@ -38,7 +39,8 @@
     border-bottom: 2px solid rgb(40,60,150);
     margin-bottom: -2px;
 }
-/* table */
+
+/* Table */
 .table-responsive{
     overflow-x: auto;
 }
@@ -56,7 +58,7 @@ th{
 }
 .checkbox{
     margin: 0 !important;
-    zoom: 1.1;
+    zoom: 1.2;
     margin-right: -10px !important;
 }
 .remove-icon{
@@ -66,4 +68,30 @@ th{
 .remove-icon:hover{
     color: rgb(255, 30, 30);
     cursor: pointer;
+}
+
+/* 悬浮按钮 */
+.dangling-box{
+    position: fixed;
+    bottom: 3rem;
+    right: 2%;
+    display: block;
+    z-index: 101;
+    width: 55px;
+}
+.dangling-icon{
+    cursor: pointer;
+    margin: 0.5rem 0;
+    color: rgb(160, 160, 160);
+    zoom: 2.8;
+}
+.dangling-icon:hover{
+    color: rgb(196, 196, 196);
+}
+
+/* 模态窗 */
+#Check{
+    zoom: 1.3;
+    margin-top: 7px;
+    margin-left: 1.1rem;
 }

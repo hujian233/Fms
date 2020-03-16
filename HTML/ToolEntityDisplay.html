@@ -42,6 +42,10 @@
                 </div>
             </div>
         </div>
+        <!--悬浮按钮-->
+        <div class="dangling-box">
+            <a id="danglingBack" style="display: none;"><i class="dangling-icon fa fa-arrow-up" aria-hidden="true"></i></a>
+        </div>
         <!-- 主体 -->
         <div class="main">
             <div class="page-header">
@@ -172,10 +176,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">加入报修申请单</h4>
+                        <h4 class="modal-title">加入报修申请</h4>
                     </div>
                     <div class="modal-body" id="modal_body">
                         <form class="form-horizontal" action="" method="POST">   <!-- action待添加 -->
+                            <div class="form-group">
+                                <span class="help-block col-sm-offset-3">故障类型与故障描述将在待提交申请处理页面填写</span>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="repairCode">夹具代码</label>
                                 <div class="col-sm-8">
