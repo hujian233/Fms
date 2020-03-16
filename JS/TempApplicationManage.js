@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //定义全局变量
 var initData = {};
-var displayType = 'Out';
-var searchType = '';
+var displayType = 'Out';                //当前展示的申请类型
+var searchType = '';                         //搜索类型
+var selectedToolModel = [];         //已选择的夹具实体
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 获取定义列表、刷新待申请列表（函数）
 function refreshTable(){
@@ -23,7 +24,7 @@ function displayTable(data){
     $('tbody').empty();
     for(let i = 0; i < data.length; i++){
         $('tbody').append(
-            '<tr><td><input class="checkbox" id="selectOne" type="checkbox">'
+            '<tr><td><input class="checkbox" onchange="selectOne(this);" type="checkbox">'
             + '</td><td>' + data[i].Code
             + '</td><td>' + data[i].SeqID
             + '</td><td>' + data[i].Name
@@ -47,14 +48,27 @@ function changeTab(e, type){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region checkbox
 $('#selectAll').change(function(){
-    if($(this).prop('checked') == true){
-        for(let i = 0; i < $('tbody').children().length; i++)
+    if($(this).prop('checked')){
+        for(let i = 0; i < $('tbody').children().length; i++){
             $('tbody').children().eq(i).children().eq(0).children().eq(0).prop("checked", true);
+            $('tbody').children().eq(i).addClass('tr-selected');
+        }
     }else{
-        for(let i = 0; i < $('tbody').children().length; i++)
+        for(let i = 0; i < $('tbody').children().length; i++){
             $('tbody').children().eq(i).children().eq(0).children().eq(0).prop("checked", false);
+            $('tbody').children().eq(i).removeClass('tr-selected');
+        }
     }
 })
+function selectOne(e){
+    if(!$(e).prop('checked')){
+        $(e).prop('checked', false);
+        $(e).parent().parent().removeClass('tr-selected');
+    }else{
+        $(e).prop('checked', true);
+        $(e).parent().parent().addClass('tr-selected');
+    }
+}
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,6 +120,30 @@ $('#searchBtn').click(function(){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 填写申请单
+function showFillInModal(){
+    for(let i = 0; i < $('tbody').children().length; i++){
+        if($('tbody').children().eq(i).children().eq(0).children().eq(0).prop("checked")){
+            
+        }
+    }
+    switch(displayType){
+        case 'Out': 
+            $('#modalTitle').text('填写出库申请单');
+            break;
+        case 'In':
+            $('#modalTitle').text('填写入库申请单');
+            break;
+        case 'Repair':
+            $('#modalTitle').text('填写报修申请单');
+            break;
+        case 'Scrap':
+            $('#modalTitle').text('填写报废申请单');
+            break;
+    }
+
+    $('#fillInModal').modal('show');
+}
+
 function submitByAjax(data){          //url待填
     /* $.ajax({
         type: 'POST',

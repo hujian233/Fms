@@ -145,6 +145,14 @@ th{
     .cache-box{
         width: 56px;
     }
+    /* Oper-box */
+    .oper-box{
+        display: block;
+    }
+    .bulkoper-box {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
 }
 @media (min-width: 1050px){
     .main{

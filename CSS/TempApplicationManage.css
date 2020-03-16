@@ -25,6 +25,7 @@
     border-bottom: 2px solid #d7d7d7;
 }
 .a-tab{
+    color:  rgb(40,60,150);
     float: left;
     text-align: center;
     cursor: pointer;
@@ -46,6 +47,12 @@
 }
 th{
     text-align: center;
+}
+.tr-selected{
+    background-color:  rgb(185, 195, 210);
+}
+.tr-selected:hover{
+    background-color:  rgb(212, 218, 228) !important;
 }
 .checkbox{
     margin: 0 !important;

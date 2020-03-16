@@ -14,7 +14,7 @@
     <body>
         <!--悬浮按钮-->
         <div class="dangling-btn">
-            <a>填写申请单</a>
+            <a onclick="showFillInModal();">填写申请单</a>
             <a>回到顶部</a>
         </div>
         <!-- 主体 -->
@@ -22,7 +22,7 @@
             <div class="page-header">
                 <h2 class="page-title">待提交申请处理</h2>
                 <div class="oper-box">
-                    <button class="btn btn-primary" id="fillInBtn">填写申请</button>
+                    <button class="btn btn-primary" onclick="showFillInModal();">填写申请</button>
                     <!-- 查找 -->
                     <div class="search-box input-group col-xs-9">
                         <div class="input-group-btn">
@@ -69,15 +69,21 @@
         </div>
         
         <!-- 提交申请单 -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="fillInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">填写申请单</h4>
+                        <h4 class="modal-title" id="modalTitle">填写申请单</h4>
                     </div>
                     <div class="modal-body" id="modal_body">
                         <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="selectedModel">已选夹具</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" rows="10" id="selectedModel" disabled></textarea>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="UserID">UserID</label>
                                 <div class="col-sm-8">
