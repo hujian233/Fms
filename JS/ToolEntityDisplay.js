@@ -149,7 +149,7 @@ $('#searchBtn').click(function(){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 批量加入申请列表
 function submitByAjax(data){          //url待填
-    /* $.ajax({
+    $.ajax({
         type: 'POST',
         dataType: 'JSON',
         contentType: 'application/json;charset=UTF-8',
@@ -158,9 +158,12 @@ function submitByAjax(data){          //url待填
         success: function(result){
             if(result.Status == 'error'){
                 alert('操作失败，请稍后重试...');
+            }else{
+                alert('操作成功！');
+                refreshTable();
             }
         } 
-    }); */
+    });
 }
 function chooseBulkOperType(e){
     $('#bulkOperTypeBtn').text($(e).text());

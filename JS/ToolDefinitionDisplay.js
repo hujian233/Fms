@@ -55,7 +55,7 @@ $(window).on('load', function(){
         type: 'GET',
         dataType: 'JSON',
         url: '../TestData/FamModDict.json',  //后端Url，待改
-        success: function(result){p
+        success: function(result){
             for(let p in result.Family)
                 $('#familyFilterInput').append('<option value="' + result.Family[p] + '">' + result.Family[p] + '</option>');
             for(let n in result.Model)
@@ -89,17 +89,53 @@ function runFilter(e, type){  //执行筛选，并刷新展示的表格
         $(e).val('');
         filterBy[type] = '';
     }
-        
 }
 function changeFilter(e, type){  //响应绑定的控件
     filterBy[type] = $(e).val()
     runFilter(e, type);
 }
-function removeFilter(e, type){  //响应绑定的控件
-    filterBy[type] = '';
-    $(e).parent().children().eq(0).val('');
-    runFilter(e, type);
+//#endregion
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 筛选框动画效果、固定顶部
+
+function showFilterInput(e){
+    var inputBoxNode = $(e).parent().children().eq(1);
+    var iconNode = $(e).parent().children().eq(0).children().eq(0);
+    var inputNode = inputBoxNode.children().eq(0); 
+    if(inputBoxNode.css('display') == 'none'){
+        inputBoxNode.show(200);                                         //显示输入框
+        iconNode.css("transform", "rotate(180deg)");                    //旋转图标
+        iconNode.css("transition", "all 0.1s ease-in-out");             //控制旋转图标的时间
+    }else{
+        inputNode.val("");                                //由于直接直接设置value值不会触发changeFilter函数，故获取元素id判断
+        switch(inputNode.attr('id')){
+            case 'codeFilterInput':
+                changeFilter(inputNode, 'Code');
+                break;
+            case 'nameFilterInput':
+                changeFilter(inputNode, 'Name');
+                break;
+            case 'familyFilterInput':
+                changeFilter(inputNode, 'Family');
+                break;                
+            case 'modelFilterInput':
+                changeFilter(inputNode, 'Model');
+                break;
+        }                                  
+        inputBoxNode.hide(200);                                  
+        iconNode.css("transform", "rotate(0deg)");              
+        iconNode.css("transition", "all 0.1s ease-in-out");     
+    }
 }
+
+$(window).scroll(function(){
+    if($(window).scrollTop() > 100)
+        $('.filter-box').addClass('filter-box-sticky');
+    else
+        $('.filter-box').removeClass('filter-box-sticky');
+})
+
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

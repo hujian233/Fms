@@ -24,40 +24,48 @@
             <div class="page-header">
                 <h2 class="page-title">夹具定义信息列表</h2>
             </div>
-            <!-- 筛选框 -->
+             <!-- 筛选框 -->
             <div class="filter-box nav-bar">
-                <ul class="list-unstyled list-inline">
-                    <li>所有筛选<i class="fa fa-chevron-right" aria-hidden="true"></i></li>
+                <ul class="list-unstyled list-inline" id="filBox">
                     <li>
-                        <span class="a-filterby">夹具代码<i class="fa fa-chevron-right" aria-hidden="true"></i></span>
-                        <div class="filterby-input" style="display: none;">
-                            <input class="form-control " type="text" id="codeFilterInput" onchange="changeFilter(this, 'Code');" placeholder="填写夹具代码">
-                            <i class="fa fa-times" aria-hidden="true" onclick="removeFilter(this, 'Code');"></i>
+                        <span class="a-filterby title-filter">
+                            筛选<i class="fa fa-filter a-icon" aria-hidden="true"></i></i>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="a-filterby" onclick="showFilterInput(this);">
+                            夹具代码<i class="fa fa-chevron-right a-icon" aria-hidden="true"></i>
+                        </span>
+                        <div class="filter-input-box">
+                            <input class="form-control" type="text" id="codeFilterInput" onchange="changeFilter(this, 'Code');" placeholder="填写夹具代码">
                         </div>
                     </li>
                     <li>
-                        <span class="a-filterby">夹具名称<i class="fa fa-chevron-right" aria-hidden="true"></i></span>
-                        <div class="filterby-input" style="display: none;">
-                            <input class="form-control filterby-input" type="text" id="nameFilterInput" onchange="changeFilter(this, 'Name');" placeholder="填写夹具名称">
-                            <i class="fa fa-times" aria-hidden="true" onclick="removeFilter(this, 'Name');"></i>
+                        <span class="a-filterby" onclick="showFilterInput(this);">
+                            夹具名称<i class="fa fa-chevron-right a-icon" aria-hidden="true"></i>
+                        </span>
+                        <div class="filter-input-box">
+                            <input class="form-control" type="text" id="nameFilterInput" onchange="changeFilter(this, 'Name');" placeholder="填写夹具名称">
                         </div>
                     </li>
                     <li>
-                        <span class="a-filterby">所属大类<i class="fa fa-chevron-right" aria-hidden="true"></i></span>
-                        <div class="filterby-input">
-                            <select class="form-control filterby-input" id="familyFilterInput" onchange="changeFilter(this, 'Family');">
+                        <span class="a-filterby" onclick="showFilterInput(this);">
+                            所属大类<i class="fa fa-chevron-right a-icon" aria-hidden="true"></i>
+                        </span>
+                        <div class="filter-input-box">
+                            <select class="form-control" id="familyFilterInput" onchange="changeFilter(this, 'Family');">
                                 <option value="">选择所属大类</option>
                             </select>
-                            <i class="fa fa-times" aria-hidden="true" onclick="removeFilter(this, 'Family');"></i>
                         </div>
                     </li>
                     <li>
-                        <span class="a-filterby">夹具模组<i class="fa fa-chevron-right" aria-hidden="true"></i></span>
-                        <div class="filterby-input">
-                            <select class="form-control filterby-input" id="modelFilterInput" onchange="changeFilter(this, 'Model');">
+                        <span class="a-filterby" onclick="showFilterInput(this);">
+                            夹具模组<i class="fa fa-chevron-right a-icon" aria-hidden="true"></i>
+                        </span>
+                        <div class="filter-input-box">
+                            <select class="form-control" id="modelFilterInput" onchange="changeFilter(this, 'Model');">
                                 <option value="">选择夹具模组</option>
                             </select>
-                            <i class="fa fa-times" aria-hidden="true" onclick="removeFilter(this, 'Model');"></i>
                         </div>
                     </li>
                 </ul>

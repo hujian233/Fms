@@ -169,6 +169,7 @@ function showFillInModal(){
     switch(displayType){                         //更改模态窗内容
         case 'Out': 
             $('#modalTitle').text('填写出库申请单');
+            $('#UserName').val('');
             $('#LineID').val('');
             $('#Check').prop('checked', false);
             $('#OutRemarks').val('');
@@ -212,6 +213,7 @@ $('#SubmitBtn').click(function(){               //提交申请单
     };
     switch(displayType){
         case 'Out':
+            transData['UserName'] = $('#UserName').val();
             transData['LineID'] = $('#LineID').val();
             transData['Check'] = $('#Check').prop('checked');
             transData['Remarks'] = $('#OutRemarks').val();
@@ -242,7 +244,7 @@ function SubmitByAjax(data, url){
         url: url,  
         success: function(result){
             if(result.Status == 'error'){
-                alert('操作失败，请稍后重试...');
+                alert('提交失败，请稍后重试...');
             }else{
                 alert('提交成功！');
                 refreshTable();

@@ -1,10 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //全局变量
-var pageSize = 16;              //一页最多显示16条信息
+var pageSize = 20;              //一页最多显示16条信息
 var jData = [];
 var searchType = '';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//展示表格  
+//#region 展示表格  
 function displayTable(data){
     $('#paginationUserInfoList').jqPaginator({
         first: '<li class="first"><a href="javascript:;">首页</a></li>',
@@ -47,6 +47,8 @@ function refleshTable(){
     });
 }
 $(window).on('load', refleshTable());
+//#endregion
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 查找
     function chooseSearchType(e){
@@ -81,18 +83,14 @@ $(window).on('load', refleshTable());
 //#region 修改用户信息
 function showEditModal(e){
     $('#UserID').val($(e).parent().parent().children().eq(0).text());
-    $('#NewName').val($(e).parent().parent().children().eq(1).text());
-    $('#NewPrivilege').val($(e).parent().parent().children().eq(2).text());
-    $("#NewWorkcell").val($(e).parent().parent().children().eq(3).text());
+    $('#NewPrivilege').val($(e).parent().parent().children().eq(3).text());
 
     $('#editModal').modal('show');
 }
 $('#EditBtn').click(function(){
     var transData = {
         'UserID': $('#UserID').val(),
-        'NewName': $('#NewName').val(),
-        'NewPrivilege': $('#NewPrivilege').val(),
-        'NewWorkcell': $('#NewWorkcell').val()
+        'NewPrivilege': $('#NewPrivilege').val()
     };
     /* $.ajax({
         type: 'POST',
@@ -147,9 +145,9 @@ $('#showAddModalBtn').click(function(){
 });
 $('#AddBtn').click(function(){
     var transData = {
+        'UserID': $('#NewUserUserID').val(),
         'Name': $('#NewUserName').val(),
-        'Privilege': $('#NewUserPrivilege').val(),
-        'Workcell': $('#NewUserWorkcell').val()
+        'Privilege': $('#NewUserPrivilege').val()
     };
     /* $.ajax({
         type: 'POST',
@@ -170,4 +168,42 @@ $('#AddBtn').click(function(){
         }
     }); */
 });
+//#endregion
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 回到顶部悬浮按钮
+$(window).on('load', function(){
+    // 获取页面可视区域的高度
+    var clientHeight = document.documentElement.clientHeight;
+    var timer = null;// 定义定时器变量
+    var isTop = true;// 是否返回顶部
+    // 滚动滚动条时候触发
+    $(window).on('scroll', function(){
+        // 获取滚动条到顶部高度-返回顶部显示或者隐藏
+        var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (osTop >= clientHeight / 3) {
+            $('#danglingBack').show();
+        } else {
+            $('#danglingBack').hide();
+        }
+        // 如果是用户触发滚动条就取消定时器
+        if (!isTop) {
+            clearInterval(timer);
+        }
+        isTop = false;
+    });
+    // 返回顶部按钮点击事件
+    $('#danglingBack').click(function(){
+        timer = setInterval(function() {
+            // 获取滚动条到顶部高度
+            var osTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var distance = Math.floor(-osTop / 6);
+            document.documentElement.scrollTop = document.body.scrollTop = osTop + distance;
+            isTop = true;
+            if (osTop == 0) {
+                clearInterval(timer);
+            }
+        }, 30);
+    });
+})
 //#endregion

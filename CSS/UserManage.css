@@ -1,3 +1,14 @@
+.main{
+    margin-right: 5%;
+}
+.oper-box{
+    display: flex;
+    float: right;
+    margin: 2rem 0;
+}
+.search-box{
+    margin-left: 2rem;
+}
 .table-box{
     text-align: center;
 }
@@ -13,26 +24,41 @@ th{
 .search-type{
     cursor: pointer;
 }
-#showAddModalBtn{
-    float: right;
-    margin-right: 3rem;
-}
 @media(min-width: 750px){
     .page-title{
         display: inline;
     }
-    .search-box{
-        float: right !important;
+    .oper-box{
+        margin: 0;
     }
 }
 @media(max-width: 750px){
     .page-title{
         display: block;
     }
-    .search-box{
-        margin-top: 2rem;
+    .oper-box{
+        margin: 2rem 0;
     }
 }
 .setPageDiv{
     text-align: center;
+}
+
+/* 悬浮按钮 */
+.dangling-box{
+    position: fixed;
+    bottom: 3rem;
+    right: 2%;
+    display: block;
+    z-index: 101;
+    width: 55px;
+}
+.dangling-icon{
+    cursor: pointer;
+    margin: 0.5rem 0;
+    color: rgb(160, 160, 160);
+    zoom: 2.8;
+}
+.dangling-icon:hover{
+    color: rgb(196, 196, 196);
 }

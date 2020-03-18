@@ -57,7 +57,7 @@ $(window).on('load', function(){
         dataType: 'JSON',
         url: '../TestData/FamModDict.json',  //后端Url，待改
         success: function(result){           //字典数据绑定至筛选下拉框、信息修改下拉框
-            fmDict = result;
+            fmDict = result;                 //说明：为查看详情时可自动将Family和Model两个下拉框补全，故采用value与text均为实际内容
             for(let p in result.Family){
                 $('#familyFilterInput').append('<option value="' + result.Family[p] + '">' + result.Family[p] + '</option>');
                 $('#Family').append('<option value="' + result.Family[p] + '">' + result.Family[p] + '</option>');
@@ -96,15 +96,51 @@ function runFilter(e, type){  //执行筛选，并刷新展示的表格
         filterBy[type] = '';
     }
 }
-function changeFilter(e, type){  //改变筛选条件
-    filterBy[type] = $(e).val();
+function changeFilter(e, type){  //响应绑定的控件
+    filterBy[type] = $(e).val()
     runFilter(e, type);
 }
-function removeFilter(e, type){  //删除该筛选条件
-    filterBy[type] = '';
-    $(e).parent().children().eq(0).val('');
-    runFilter(e, type);
+//#endregion
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 筛选框动画效果、固定顶部
+function showFilterInput(e){
+    var inputBoxNode = $(e).parent().children().eq(1);
+    var iconNode = $(e).parent().children().eq(0).children().eq(0);
+    var inputNode = inputBoxNode.children().eq(0); 
+    if(inputBoxNode.css('display') == 'none'){
+        inputBoxNode.show(200);                                         //显示输入框
+        iconNode.css("transform", "rotate(180deg)");                    //旋转图标
+        iconNode.css("transition", "all 0.1s ease-in-out");             //控制旋转图标的时间
+    }else{
+        inputNode.val("");                                //由于直接直接设置value值不会触发changeFilter函数，故获取元素id判断
+        switch(inputNode.attr('id')){
+            case 'codeFilterInput':
+                changeFilter(inputNode, 'Code');
+                break;
+            case 'nameFilterInput':
+                changeFilter(inputNode, 'Name');
+                break;
+            case 'familyFilterInput':
+                changeFilter(inputNode, 'Family');
+                break;                
+            case 'modelFilterInput':
+                changeFilter(inputNode, 'Model');
+                break;
+        }                                  
+        inputBoxNode.hide(200);                                  
+        iconNode.css("transform", "rotate(0deg)");              
+        iconNode.css("transition", "all 0.1s ease-in-out");     
+    }
 }
+
+$(window).scroll(function(){
+    if($(window).scrollTop() > 100)
+        $('.filter-box').addClass('filter-box-sticky');
+    else
+        $('.filter-box').removeClass('filter-box-sticky');
+})
+
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +182,6 @@ function getInfo(e){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 修改夹具定义信息
-
 function findKey(obj, value, compare = (a, b) => a === b) {  //根据value查找key
     return Object.keys(obj).find(k => compare(obj[k], value))
 }
@@ -163,15 +198,7 @@ $('#EditBtn').click(function(){
         'UsedFor': $('#UsedFor').val(),
         'PMPeriod': $('#PMPeriod').val(),
         'PMContent': $('#PMContent').val(),
-        'OwnerID': $('#OwnerID').val(),
-        'OwnerName': $('#OwnerName').val(),
-        'RecOn': $('#RecOn').val(),
-        'RecorderID': $('#RecorderID').val(),
-        'RecorderName': $('#RecorderName').val(),
-        'EditOn': $('#EditOn').val(),
-        'EditorID': $('#EditorID').val(),
-        'EditorName': $('#EditorName').val(),
-        'Workcell': $('#Workcell').val()
+        'OwnerID': $('#OwnerID').val()
     };
     $.ajax({
         type: 'POST',

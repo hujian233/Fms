@@ -12,51 +12,59 @@
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   </head>
     <body>
-        <div class="page-header">
-            <h2 class="page-title">用户信息管理</h2>
-            <div class="search-box input-group col-sm-4 col-xs-8">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" id="searchTypeBtn" data-toggle="dropdown">
-                        查找方式
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="search-type" onclick="chooseSearchType(this);">工号</a></li>
-                        <li><a class="search-type" onclick="chooseSearchType(this);">姓名</a></li>
-                        <li><a class="search-type" onclick="chooseSearchType(this);">权限</a></li>
-                        <li><a class="search-type" onclick="chooseSearchType(this);">工作部门</a></li>
-                        <li><a class="search-type" onclick="chooseSearchType(this);">展示所有</a></li>
-                    </ul>
-                  </div>
-                <input type="text" class="form-control" id="paramInput" placeholder="Search for...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="searchBtn">查找</button>
-                </span>
-            </div>
-            <button class="btn btn-primary" id="showAddModalBtn">添加用户</button>
+        <!--悬浮按钮-->
+        <div class="dangling-box">
+            <a id="danglingBack" style="display: none;"><i class="dangling-icon fa fa-arrow-up" aria-hidden="true"></i></a>
         </div>
         <!-- 主体 -->
-        <div class="table-box table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>工号</th>
-                        <th>姓名</th>
-                        <th>电子邮箱</th>
-                        <th>权限</th>
-                        <th>工作部门</th>
-                        <th>上次登录时间</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+        <div class="main">
+            <div class="page-header">
+                <h2 class="page-title">用户信息管理</h2>
+                <!-- 操作框 -->
+                <div class="oper-box">
+                    <button class="btn btn-primary" id="showAddModalBtn">添加用户</button>
+                    <div class="search-box input-group col-xs-9">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" id="searchTypeBtn" data-toggle="dropdown">
+                                查找方式
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="search-type" onclick="chooseSearchType(this);">工号</a></li>
+                                <li><a class="search-type" onclick="chooseSearchType(this);">姓名</a></li>
+                                <li><a class="search-type" onclick="chooseSearchType(this);">权限</a></li>
+                                <li><a class="search-type" onclick="chooseSearchType(this);">工作部门</a></li>
+                                <li><a class="search-type" onclick="chooseSearchType(this);">展示所有</a></li>
+                            </ul>
+                          </div>
+                        <input type="text" class="form-control" id="paramInput" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="searchBtn">查找</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-box table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>工号</th>
+                            <th>姓名</th>
+                            <th>电子邮箱</th>
+                            <th>权限</th>
+                            <th>工作部门</th>
+                            <th>上次登录时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!-- 分页框 -->
+            <div class="setPageDiv">
+                <ul class="pagination" id="paginationUserInfoList"></ul>
+            </div>
         </div>
-        <!-- 分页框 -->
-        <div class="setPageDiv">
-            <ul class="pagination" id="paginationUserInfoList"></ul>
-        </div>
-
         <!-- 修改用户信息 -->
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -74,21 +82,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="NewName">新姓名</label>
-                                <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="NewName">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label col-sm-3" for="NewPrivilege">新权限</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="NewPrivilege">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="NewWorkcell">新工作部门</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="NewWorkcell">
+                                    <select class="form-control" id="NewPrivilege">
                                         <option value="初级用户">初级用户</option>
                                         <option value="高级用户">高级用户</option>
                                         <option value="监管员">监管员</option>
@@ -105,7 +101,6 @@
                 </div>
             </div>
         </div>
-
         <!-- 添加用户 -->
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -117,6 +112,12 @@
                     <div class="modal-body" id="modal_body">
                         <div class="form-horizontal">
                             <div class="form-group">
+                                <label class="control-label col-sm-3" for="NewUserUserID">工号</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" id="NewUserUserID">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label col-sm-3" for="NewUserName">姓名</label>
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="NewUserName">
@@ -125,13 +126,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" for="NewUserPrivilege">权限</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="NewUserPrivilege">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3" for="NewUserWorkcell">工作部门</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="NewUserWorkcell">
+                                    <select class="form-control" id="NewUserPrivilege">
                                         <option value="初级用户">初级用户</option>
                                         <option value="高级用户">高级用户</option>
                                         <option value="监管员">监管员</option>
