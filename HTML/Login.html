@@ -47,9 +47,34 @@
             </div>
         </div>
     </div>
-
-    <!-- 重置申请 -->
-    <div class="modal fade" id="resetModal" tabindex="-1">
+    <!-- 首次登录用户需要设置密码 -->
+    <div class="modal fade bs-example-modal-sm" id="setPwModal" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">更改初始密码</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="newPassword">新密码</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="password" id="newPassword" placeholder="6-12位并且必须包含字母与数字" maxlength="12">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="rePassword">确认密码</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="password" id="rePassword" maxlength="12">
+                        </div>
+                    </div>  
+                    <button class="btn btn-primary center-block" id="newPwBtn">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 忘记密码申请重置 -->
+    <div class="modal fade" id="resetPwModal" tabindex="-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,12 +121,14 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">工作部门选择</h4>
                 </div>
-                <div class="modal-body">
-                    <label class="control-label col-md-2" for="Workcell">工作部门</label>
-                    <div class="col-md-10">
-                        <select id="Workcell"></select>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="Workcell">工作部门</label>
+                        <div class="col-md-7">
+                            <select class="form-control" id="Workcell"></select>
+                        </div>
                     </div>
-                    <button class="btn btn-primary" id="workcellSubmitBtn">登录</button>
+                    <button class="btn btn-primary center-block" id="workcellSubmitBtn">登录</button>
                 </div>
             </div>
         </div>

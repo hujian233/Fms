@@ -35,8 +35,10 @@ function validate(){
 //#endregion
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 三种不同情况登录
-$('#loginBtn').click(function(){            //普通登录
+//#region 三种不同情况登录、首次登陆更改初始密码
+
+//普通登录
+$('#loginBtn').click(function(){
     if(validate()){
         var transData = {
             'UserID': $('#UserID').val(),
@@ -53,10 +55,13 @@ $('#loginBtn').click(function(){            //普通登录
                     window.location = '';              //url待改
                 }else if(result.Status == 'choose'){
                     for(let i = 0; i < result.WorkcellList.length; i++){
-                        $('#workcell').append('<option value="' + result.WorkcellList[i]
+                        $('#Workcell').append('<option value="' + result.WorkcellList[i]
                             + '">' + result.WorkcellList[i] + '</option>');
                     }
                     $('#chooseWorkcellModal').modal('show');
+                }
+                else if(result.Status == 'first'){     //用户首次登录，需更改初始密码
+                    $('#setPwModal'),modal('show');
                 }
                 else{
                     alert('登录失败，请稍后重试...');
@@ -68,17 +73,15 @@ $('#loginBtn').click(function(){            //普通登录
         }) */
     }
 })
-$('#visitorLoginBtn').click(function(){         //游客登录
-    //window.location = '';              //url待改
-})
 
-$('#workcellSubmitBtn').click(function(){       //选择工作部门后登录
+//选择工作部门后登录
+$('#workcellSubmitBtn').click(function(){       
     var transData = {
         'UserID': $('#UserID').val(),
         'Password': $('#Password').val(),
         'Workcell': $('Workcell').val()
     };
-    /* $.ajax({                           
+    $.ajax({                           
         type: 'POST',
         dataType: 'JSON',
         contentType: 'application/json',
@@ -88,6 +91,9 @@ $('#workcellSubmitBtn').click(function(){       //选择工作部门后登录
             if(result.Status == 'success'){
                 window.location = '';              //url待改
             }
+            else if(result.Status == 'first'){     //用户首次登录，需更改初始密码
+                $('#setPwModal'),modal('show');
+            }
             else{
                 alert('登录失败，请稍后重试...');
             }
@@ -95,14 +101,83 @@ $('#workcellSubmitBtn').click(function(){       //选择工作部门后登录
         error: function(){
             alert('登录失败，请稍后重试...');
         }
-    }) */
+    })
+})
+
+//游客登录
+$('#visitorLoginBtn').click(function(){         
+    //window.location = '';              //url待改
+})
+//#endregion
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 首次登录更改初始密码
+
+//输入框验证
+var is_password_legel = false;
+var is_rePassword_legal = false;
+var password_reg = new RegExp('^[a-zA-Z0-9]{6,12}$');
+$('#newPassword').change(function(){
+    if(!password_reg.test($(this).val())){
+        is_password_legel = false;
+        $(this).parent().parent().attr('class', 'form-group has-error has-feedback');
+        $(this).parent().children('span').remove();
+        $(this).parent().append('<span class="glyphicon glyphicon-remove form-control-feedback"></span>');
+    }else{
+        is_password_legel = true;
+        $(this).parent().parent().attr('class', 'form-group has-success has-feedback');
+        $(this).parent().children('span').remove();
+        $(this).parent().append('<span class="glyphicon glyphicon-ok form-control-feedback"></span>');
+    }
+});
+
+$('#rePassword').change(function(){
+    if($(this).val() != $('#newPassword').val()){
+        is_rePassword_legel = false;
+        $(this).parent().parent().attr('class', 'form-group has-error has-feedback');
+        $(this).parent().children('span').remove();
+        $(this).parent().append('<span class="glyphicon glyphicon-remove form-control-feedback"></span>');
+    }else{
+        is_rePassword_legel = true;
+        $(this).parent().parent().attr('class', 'form-group has-success has-feedback');
+        $(this).parent().children('span').remove();
+        $(this).parent().append('<span class="glyphicon glyphicon-ok form-control-feedback"></span>');
+    }
+});
+
+//点击提交
+$('#newPwBtn').click(function(){
+    var transData = {
+        'UserID': $('#UserID').val(),
+        'NewPassword': $('#newPassword').val()
+    };
+    if(is_password_legel && is_rePassword_legal){
+      /*$.ajax({                           
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            data: JSON.stringify(transData),
+            url: '',                                   //url待改
+            success: function(result){
+                if(result.Status == 'success'){
+                    window.location = '';              //url待改
+                }
+                else{
+                    alert('登录失败，请稍后重试...');
+                }
+            },
+            error: function(){
+                alert('登录失败，请稍后重试...');
+            }
+        }) */
+    }
 })
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 申请重置密码（模态窗）
 $('#resetPassword').click(function(){
-    $('#resetModal').modal('show');
+    $('#resetPwModal').modal('show');
 });
 
 var _id_is_legal = false;
@@ -143,12 +218,16 @@ $('#getNum').click(function(){
             'UserID': $('#_UserID').val(),
             'Email': $('#Email').val()  
         };
-    /*  $.ajax({              //向后端发送工号与该工号的绑定邮箱（json）
+        $.ajax({              //向后端发送工号与该工号的绑定邮箱（json）
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(json_data),
-            url: ''           //后端action
-        }); */
+            url: '',           //后端action
+            success: function(result){
+                if(result.Status == 'error')
+                    alert('您未绑定该邮箱，请检查邮箱填写或直接联系管理员');
+            }
+        });
 
         var timer = setInterval(function(){
             if(time == 0){
