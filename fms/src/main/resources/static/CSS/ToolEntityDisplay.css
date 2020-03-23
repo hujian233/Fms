@@ -1,0 +1,192 @@
+.nodisplay{
+    display: none;
+}
+/* Modal */
+.attr{
+    display: inline;
+    margin-left: 2rem;
+}
+.repair-btn{
+    width: 150px;
+    margin: 0 auto;
+    display: block;
+}
+.img-box{
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+}
+.infoModal-content{
+    margin-left: 28%;
+}
+#repairImage{
+    max-width: 100%;
+    margin-top: 2rem;
+}
+
+/* Definition-display */
+.table-box{
+    text-align: center;
+}
+.act-btn{
+    margin-right: 2px;
+    margin-top: 0.3rem;
+}
+.table-responsive{
+    overflow-x: auto;
+}
+.table>tbody>tr>td{
+    vertical-align: middle;
+    text-align: center;
+}
+th{
+    text-align: center;
+}
+/* Oper-box */
+.oper-box{
+    display: flex;
+    z-index: 99;
+    padding: 1rem 0;
+}
+.oper-box-sticky{
+    padding: 1rem ;
+    width: 62%;
+    border-radius: 10px;
+    background-color: rgba(200, 200, 200, 0.9);
+    position: fixed;
+    top: 55px;
+}
+.pointer-type{
+    cursor: pointer;
+}
+.bulkoper-box{
+    margin-left: 4rem;
+}
+/* Cache-Box */
+.cache-box{
+    position: fixed;
+    right: 1rem;
+    display: block;
+    float: right;
+    z-index: 101;
+    width: 300px;
+    background-color: rgb(190, 190, 200);
+    border-radius: 10px;
+    box-shadow: -3px 3px 20px 0px;
+}
+.cache-tab-a{
+    height: 35px;
+    width: 75px;
+    float: left;
+    text-align: center;
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
+    text-decoration: none !important;
+    color: rgb(100,100,100) !important;
+    font-size: 1.8rem;
+    line-height: 3.5rem;
+    margin-bottom: 1rem;
+}
+.cache-tab-a:hover{
+    background-color: rgb(250, 250, 250);
+}
+.a-active{
+    background-color: rgb(190, 190, 200);
+    color: #333 !important;
+}
+.a-active:hover{
+    background-color: rgb(190, 190, 200);
+}
+.cache-icon{
+    padding: 2px 10px;
+    zoom: 0.85;
+}
+.cache-title{
+    font-weight: bold;
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+.cache-content{
+    padding: 0 15px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+.cache-remove-icon{
+    float: right;
+    color: rgb(255, 100, 100);
+    zoom: 1.2;
+}
+.cache-remove-icon:hover{
+    color: rgb(255, 30, 30);
+    cursor: pointer;
+}
+.btn-cache{
+    float: right;
+    margin-left: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+/* 悬浮按钮 */
+.dangling-box{
+    position: fixed;
+    bottom: 3rem;
+    right: 2%;
+    display: block;
+    z-index: 101;
+    width: 55px;
+}
+.dangling-icon{
+    cursor: pointer;
+    margin: 0.5rem 0;
+    color: rgb(160, 160, 160);
+    zoom: 2.8;
+}
+.dangling-icon:hover{
+    color: rgb(196, 196, 196);
+}
+
+/* 分页框 */
+.setPageDiv{
+    text-align: center;
+    width: 80%;
+}
+
+@media (max-width: 1050px){
+    #cacheTab{
+        display: none;
+    }
+    #cacheCont{
+        display: none;
+    }
+    #cacheTitl{
+        display: none;
+    }
+    .cache-box{
+        width: 56px;
+    }
+    /* Oper-box */
+    .oper-box{
+        display: block;
+    }
+    .bulkoper-box {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+}
+@media (min-width: 1050px){
+    .main{
+        margin-right: 180px;
+    }
+    #cacheTab{
+        display: block;
+    }
+    #cacheCont{
+        display: block;
+    }
+    #cacheTitl{
+        display: inline;
+    }
+    .cache-box{
+        width: 300px;
+    }
+}

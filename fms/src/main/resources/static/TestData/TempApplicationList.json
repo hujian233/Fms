@@ -1,0 +1,148 @@
+{
+    "Workcell": "JW05",
+    "ApplicantID": "2019001",
+    "ApplicantName": "Zhou Wei",
+    "Out":[
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0790",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        }
+    ],
+    "In":[
+        {
+            "Code": "EF0780",
+            "SeqID": "2",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0789",
+            "SeqID": "9",
+			"Name": "MOD 3XM2 调谐夹具"
+        }
+    ],
+    "Repair":[
+        {
+            "Code": "EF0733",
+            "SeqID": "5",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0701",
+            "SeqID": "1",
+			"Name": "MOD 3XM2 调谐夹具"
+        }
+    ],
+    "Scrap":[
+        {
+            "Code": "EF0764",
+            "SeqID": "7",
+			"Name": "MOD 3XM2 调谐夹具"
+        },
+        {
+            "Code": "EF0799",
+            "SeqID": "9",
+			"Name": "MOD 3XM2 调谐夹具"
+        }
+    ]
+}
