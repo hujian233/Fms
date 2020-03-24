@@ -19,9 +19,11 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     UserDao userDao;
+
     @Override
     public boolean checkUser(long jobNumber) {
-        return false;
+        User user = userDao.selectUser(jobNumber, null, null);
+        return null != user;
     }
 
     @Override

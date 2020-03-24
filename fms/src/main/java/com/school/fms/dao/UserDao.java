@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
     /**
      * 查询用户
-     * @param id 主键
+     * @param jobnumber 工号
      * @param username 用户名
      * @param mailaddress 邮箱
      * @return User
      */
-    public User selectUser(@Param("id") int id, @Param("username") String username,
+    public User selectUser(@Param("jobnumber") long jobnumber, @Param("username") String username,
                            @Param("mailaddress") String mailaddress);
 
     /**

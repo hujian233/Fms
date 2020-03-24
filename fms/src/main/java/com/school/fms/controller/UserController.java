@@ -6,9 +6,7 @@ import com.school.fms.service.UserService;
 import com.school.fms.utils.JsonUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -30,9 +28,9 @@ public class UserController {
      * @param jobNumber 前端请求数据
      * @return String
      */
-    @PostMapping(value = "/checkUser", produces = "application/json;charset=utf-8")
+    @GetMapping(value = "/checkUser", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String checkUser(@RequestBody long jobNumber) {
+    public String checkUser(@RequestParam long jobNumber) {
         String response;
         if (userService.checkUser(jobNumber)) {
             // 员工已注册,返回响应码-1

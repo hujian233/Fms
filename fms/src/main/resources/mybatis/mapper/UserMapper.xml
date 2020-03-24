@@ -22,15 +22,16 @@
         FROM
         user
         WHERE 1 = 1
-        <if test="id != null">
-            AND id = #{id}
+        <if test="jobnumber != null">
+            AND jobnumber = #{jobnumber}
         </if>
         <if test="username != null">
             AND username = #{username}
         </if>
-        <if test="email != null">
+        <if test="mailaddress != null">
             AND mailaddress = #{mailaddress}
         </if>
+        LIMIT 1
     </select>
 
     <insert id="addUser">
