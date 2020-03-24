@@ -34,4 +34,9 @@ public interface UserDao {
      */
     public void changePassword(@Param("username") String username,@Param("newPwd") String newPwd);
 
+    /**
+     * 删除用户
+     * @param jobnumber 工号
+     */
+    public void deleteUser(@Param("jobnumber") String jobnumber);
 }

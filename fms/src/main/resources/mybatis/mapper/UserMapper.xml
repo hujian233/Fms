@@ -34,9 +34,8 @@
     </select>
 
     <insert id="addUser">
-        INSERT INTO user(id, jobnumber, username, password, mailaddress, authority, department, logintime)
-        VALUES (#{id}, #{jobnumber}, #{username}, #{password}, #{mailaddress}, #{authority}, #{department},
-                #{logintime})
+        INSERT INTO user(jobnumber, username, password, mailaddress, authority, department)
+        VALUES (#{jobNumber}, #{userName}, #{password}, #{mailAddress}, #{authority}, #{department})
     </insert>
 
     <update id="changePassword">
@@ -44,5 +43,9 @@
         SET password = #{newPwd}
         WHERE username = #{username}
     </update>
+
+    <delete id="deleteUser">
+        Delete from user where jobnumber = #{jobnumber}
+    </delete>
 
 </mapper>
