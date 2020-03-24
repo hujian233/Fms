@@ -28,12 +28,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User selectUser(Long jobNumber, String username, String mailAddress) {
-        return null;
+        return userDao.selectUser(jobNumber, username, mailAddress);
     }
 
     @Override
     public void addUser(User user) {
         userDao.addUser(user);
+    }
+
+    @Override
+    public void deleteUser(long jobNumber) {
+        userDao.deleteUser(jobNumber);
     }
 
     @Override

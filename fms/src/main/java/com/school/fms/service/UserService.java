@@ -32,6 +32,11 @@ public interface UserService {
     public void addUser(User user);
 
     /**
+     * 删除用户
+     * @param jobNumber 工号
+     */
+    public void deleteUser(long jobNumber);
+    /**
      * 修改密码
      * @param username 用户名
      * @param newPwd 新密码

@@ -38,5 +38,5 @@ public interface UserDao {
      * 删除用户
      * @param jobnumber 工号
      */
-    public void deleteUser(@Param("jobnumber") String jobnumber);
+    public void deleteUser(@Param("jobnumber") long jobnumber);
 }
