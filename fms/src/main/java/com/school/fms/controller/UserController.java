@@ -5,21 +5,13 @@ import com.school.fms.entity.User;
 import com.school.fms.service.UserService;
 import com.school.fms.utils.JsonUtils;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import javax.xml.crypto.Data;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Author: hujian
@@ -54,13 +46,14 @@ public class UserController {
 
     /**
      * 注册,要设置produces,否则回调函数会出现中文乱码
-     * @param userVo user
+     *
+     * @param userVo  user
      * @param session session
      * @return String
      */
-    @PostMapping(value = "/doRegister",produces = "application/json;charset=utf-8")
+    @PostMapping(value = "/doRegister", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String doRegister(@RequestBody User userVo, HttpSession session)  {
+    public String doRegister(@RequestBody User userVo, HttpSession session) {
         String pwd = userVo.getPassword().trim();
         //Sha1加密入库
         pwd = DigestUtils.sha1Hex(pwd);
@@ -74,7 +67,7 @@ public class UserController {
         try {
             userService.addUser(user);
             return JsonUtils.objectToJson(Response.ok("success"));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return JsonUtils.objectToJson(Response.error("fail"));
         }
