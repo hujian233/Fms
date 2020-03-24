@@ -33,6 +33,13 @@
             <version>2.1.2</version>
         </dependency>
 
+        <!--配置@Data注解依赖、需要配合lombok插件使用-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
