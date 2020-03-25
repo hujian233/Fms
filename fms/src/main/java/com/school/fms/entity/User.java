@@ -9,7 +9,6 @@ import java.io.Serializable;
  * @Date: 2020/3/24 12:24
  * @Description: 用户实体类
  */
-@Data
 public class User implements Serializable {
     /**
      *  主键
@@ -36,4 +35,81 @@ public class User implements Serializable {
      */
     private String loginTime;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public long getJobNumber() {
+        return jobNumber;
+    }
+
+    public void setJobNumber(long jobNumber) {
+        this.jobNumber = jobNumber;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getMailAddress() {
+        return mailAddress;
+    }
+
+    public void setMailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(String loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", jobNumber=" + jobNumber +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", mailAddress='" + mailAddress + '\'' +
+                ", authority='" + authority + '\'' +
+                ", department='" + department + '\'' +
+                ", loginTime='" + loginTime + '\'' +
+                '}';
+    }
 }
