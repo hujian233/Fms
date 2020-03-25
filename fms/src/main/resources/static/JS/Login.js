@@ -5,8 +5,8 @@ var pwd_is_legal = false;
 var id_reg = new RegExp('^[0-9]{7}$');
 var password_reg = new RegExp('^[a-zA-Z0-9]{6,12}$');
 
-$('#UserID').change(function(){
-    if(!id_reg.test($('#UserID').val())){
+$('#jobNumber').change(function(){
+    if(!id_reg.test($('#jobNumber').val())){
         id_is_legal = true;
         $('#tip').text("请输入正确格式的工号");
         $('#tip').css('display', 'block');
@@ -15,8 +15,8 @@ $('#UserID').change(function(){
         $('#tip').css('display', 'none');
     }
 });
-$('#Password').change(function(){
-    if(!password_reg.test($('#Password').val())){
+$('#password').change(function(){
+    if(!password_reg.test($('#password').val())){
         pwd_is_legal = true;
         $('#tip').text("请输入正确格式的密码");
         $('#tip').css('display', 'block');
@@ -41,19 +41,22 @@ function validate(){
 $('#loginBtn').click(function(){
     if(validate()){
         var transData = {
-            'UserID': $('#UserID').val(),
-            'Password': $('#Password').val()
+            'jobNumber': $('#jobNumber').val(),
+            'password': $('#password').val()
+            // 'jobNumber': '2',
+            //  'password': '123456'
         }
-        /* $.ajax({                            //url待改
+         $.ajax({                            //url待改
             type: 'POST',
             dataType: 'JSON',
             contentType: 'application/json',
             data: JSON.stringify(transData),
-            url: '',
+            url: '/doLogin',
             success: function(result){
-                if(result.Status == 'success'){
+                if(result.resultCode == 0){
+                    alert('登录成功，欢迎您...');
                     window.location = '';              //url待改
-                }else if(result.Status == 'choose'){
+                }else if(result.resultCode == -1){
                     for(let i = 0; i < result.WorkcellList.length; i++){
                         $('#Workcell').append('<option value="' + result.WorkcellList[i]
                             + '">' + result.WorkcellList[i] + '</option>');
@@ -70,7 +73,7 @@ $('#loginBtn').click(function(){
             error: function(){
                 alert('登录失败，请稍后重试...');
             }
-        }) */
+        })
     }
 })
 
@@ -105,7 +108,7 @@ $('#workcellSubmitBtn').click(function(){
 })
 
 //游客登录
-$('#visitorLoginBtn').click(function(){         
+$('#registerBtn').click(function(){
     //window.location = '';              //url待改
 })
 //#endregion

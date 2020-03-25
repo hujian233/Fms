@@ -136,7 +136,7 @@ html, body{
     text-align: center;
     margin-bottom: 28px;
 }
-#loginBtn, #visitorLoginBtn{
+#loginBtn, #registerBtn{
     margin-top: 1rem;
     width: 100%;
     position: relative;
