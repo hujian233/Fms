@@ -58,9 +58,10 @@ $('#loginBtn').click(function(){
                     //看权限
                     var data=result.data;
                     var authority=data.authority;
+                    var userName=data.userName;
+                    var id=data.id;
                     if(authority==1){
-                        window.location = '/common1?authority='+authority;
-                      //  window.location = '/fms/templates/common1.html';
+                        window.location = '/common1?userName='+userName+"&id="+id;
                     }
                     if(authority==2){
                         window.location = '/common2';
