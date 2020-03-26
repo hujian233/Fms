@@ -106,7 +106,7 @@ public class UserController {
                     CookieUtil.removeCookie(httpServletRequest, httpServletResponse, "password");
                 }
                 //登录成功
-                return JsonUtils.objectToJson(new Response(user1.getAuthority()));
+                return JsonUtils.objectToJson(new Response(user1));
             } else {
                 return JsonUtils.objectToJson(Response.error("登录失败，用户名或密码错误"));
             }
