@@ -107,9 +107,76 @@ $('#workcellSubmitBtn').click(function(){
     })
 })
 
-//游客登录
-$('#registerBtn').click(function(){
-    //window.location = '';              //url待改
+//注册
+$('#registerBtn').click(function () {
+    $('#addRegisterModal').modal('show');
+})
+//点击注册
+$('#AddBtn').click(function () {
+    // if(validate()){
+    if ($('#jobNumber1').val() == "" || $('#jobNumber1').val() == null) {
+        $('#tip1').text("工号不能为空");
+        $('#tip1').css('display', 'block');
+        return;
+    }
+    if ($('#userName').val() == "" || $('#userName').val() == null) {
+        $('#tip1').text("姓名不能为空");
+        $('#tip1').css('display', 'block');
+        return;
+    }
+    if ($('#password1').val() == "" || $('#password1').val() == null) {
+        $('#tip1').text("密码不能为空");
+        $('#tip1').css('display', 'block');
+        return;
+    }
+    if ($('#department').val() == "" || $('#department').val() == null) {
+        $('#tip1').text("部门不能为空");
+        $('#tip1').css('display', 'block');
+        return;
+    }
+    if (!id_reg.test($('#jobNumber1').val())) {
+        $('#tip1').text("工号长度必须为7位");
+        $('#tip1').css('display', 'block');
+        return;
+    }
+    if (!password_reg.test($('#password1').val())) {
+
+        $('#tip').text("请输入正确格式的密码");
+        $('#tip').css('display', 'block');
+        return;
+    }
+    $('#tip1').css('display', 'none');
+    var transData = {
+        'jobNumber': $('#jobNumber1').val(),
+        'password': $('#password1').val(),
+        'mailAddress': $('#mailAddress').val(),
+        'authority': $('#authority').val(),
+        'department': $('#department').val(),
+        'userName': $('#userName').val()
+    }
+    $.ajax({                            //url待改
+        type: 'POST',
+        dataType: 'JSON',
+        contentType: 'application/json',
+        data: JSON.stringify(transData),
+        url: '/doRegister',
+        success: function (result) {
+            if (result.resultCode == 0) {
+                alert('注册成功，欢迎您登录...');
+                window.location = '/fms';              //url待改
+
+            } else if (result.resultCode == -1) {
+                alert('注册失败，请稍后重试...');
+            } else {
+                alert('注册失败，请稍后重试...');
+            }
+        },
+        error: function () {
+            alert('注册失败，请稍后重试...');
+            window.location = '/fms';
+        }
+    })
+    // }
 })
 //#endregion
 
