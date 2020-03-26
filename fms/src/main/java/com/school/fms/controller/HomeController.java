@@ -14,4 +14,29 @@ public class HomeController {
     public String index(){
         return "Login";
     }
+
+    @RequestMapping("/common1")
+    public String gotoPage1() {
+        return "Common1";
+    }
+
+    @RequestMapping("/common2")
+    public String gotoPage2() {
+        return "Common2";
+    }
+
+    @RequestMapping("/common3")
+    public String gotoPage3() {
+        return "Common3";
+    }
+
+    @RequestMapping("/common4")
+    public String gotoPage4() {
+        return "Common4";
+    }
+
+    @RequestMapping("/common5")
+    public String gotoPage5() {
+        return "Common5";
+    }
 }

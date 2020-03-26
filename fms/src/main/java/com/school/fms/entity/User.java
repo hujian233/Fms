@@ -1,5 +1,8 @@
 package com.school.fms.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import java.io.Serializable;
 
 /**
@@ -15,6 +18,7 @@ public class User implements Serializable {
     /**
      *  工号
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private long jobNumber;
 
     private String userName;

@@ -91,7 +91,7 @@ public class UserController {
         long jobNumber = userLoginVo.getJobNumber();
         String password = userLoginVo.getPassword();
         //给一个默认值false
-        boolean rememberme = userLoginVo.getRememberme()!= null ? userLoginVo.getRememberme():false ;
+        boolean rememberme = userLoginVo.getRememberme() != null ? userLoginVo.getRememberme() : false;
 
         String shapwd = DigestUtils.sha1Hex(password);
         User user1 = userService.selectUser(jobNumber, null, null);
@@ -105,6 +105,7 @@ public class UserController {
                     CookieUtil.removeCookie(httpServletRequest, httpServletResponse, "username");
                     CookieUtil.removeCookie(httpServletRequest, httpServletResponse, "password");
                 }
+                //登录成功
                 return JsonUtils.objectToJson(new Response(user1.getAuthority()));
             } else {
                 return JsonUtils.objectToJson(Response.error("登录失败，用户名或密码错误"));
@@ -121,7 +122,7 @@ public class UserController {
         try {
             userService.deleteUser(jobNumber);
             response = JsonUtils.objectToJson(Response.ok("删除成功"));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             response = JsonUtils.objectToJson(Response.error("删除失败"));
         }

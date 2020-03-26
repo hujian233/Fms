@@ -55,12 +55,32 @@ $('#loginBtn').click(function(){
             success: function(result){
                 if(result.resultCode == 0){
                     alert('登录成功，欢迎您...');
-                    window.location = '';              //url待改
+                    //看权限
+                    var data=result.data;
+                    var authority=data.authority;
+                    if(authority==1){
+                        window.location = '/common1';
+                    }
+                    if(authority==2){
+                        window.location = '/common2';
+                    }
+
+                    if(authority==3){
+                        window.location = '/common3';
+                    }
+                    if(authority==4){
+                        window.location = '/common4';
+                    }
+                    if(authority==5){
+                        window.location = '/common5';
+                    }
                 }else if(result.resultCode == -1){
-                    for(let i = 0; i < result.WorkcellList.length; i++){
+                    /*for(let i = 0; i < result.WorkcellList.length; i++){
                         $('#Workcell').append('<option value="' + result.WorkcellList[i]
                             + '">' + result.WorkcellList[i] + '</option>');
-                    }
+                    }*/
+                    alert(result.description);
+                    $('#chooseWorkcellModal').modal('show');
                     $('#chooseWorkcellModal').modal('show');
                 }
                 else if(result.Status == 'first'){     //用户首次登录，需更改初始密码
@@ -141,8 +161,8 @@ $('#AddBtn').click(function () {
     }
     if (!password_reg.test($('#password1').val())) {
 
-        $('#tip').text("请输入正确格式的密码");
-        $('#tip').css('display', 'block');
+        $('#tip1').text("请输入正确格式的密码");
+        $('#tip1').css('display', 'block');
         return;
     }
     $('#tip1').css('display', 'none');
