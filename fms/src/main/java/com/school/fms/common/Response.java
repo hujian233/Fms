@@ -65,6 +65,8 @@ public class Response {
     }
 
     public static void main(String[] args) {
+        String h = "1";
+        System.out.println(JsonUtils.objectToJson(new Response(h)));
         System.out.println(JsonUtils.objectToJson(Response.error("dd")));
     }
 }

@@ -1,7 +1,5 @@
 package com.school.fms.entity;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -23,9 +21,9 @@ public class User implements Serializable {
     private String password;
     private String mailAddress;
     /**
-     *  权限：初级用户、高级用户、监管员、部门经理、系统管理员
+     *  权限：初级用户、高级用户、监管员、经理、系统管理员
      */
-    private String authority;
+    private int authority;
     /**
      *  工作部门
      */
@@ -75,11 +73,11 @@ public class User implements Serializable {
         this.mailAddress = mailAddress;
     }
 
-    public String getAuthority() {
+    public int getAuthority() {
         return authority;
     }
 
-    public void setAuthority(String authority) {
+    public void setAuthority(int authority) {
         this.authority = authority;
     }
 

@@ -71,7 +71,7 @@ public class UserController {
             return JsonUtils.objectToJson(Response.ok("success"));
         } catch (Exception e) {
             e.printStackTrace();
-            return JsonUtils.objectToJson(Response.error("fail"));
+            return JsonUtils.objectToJson(Response.error("注册失败，后台异常"));
         }
     }
 
@@ -105,7 +105,7 @@ public class UserController {
                     CookieUtil.removeCookie(httpServletRequest, httpServletResponse, "username");
                     CookieUtil.removeCookie(httpServletRequest, httpServletResponse, "password");
                 }
-                return JsonUtils.objectToJson(Response.ok("登录成功"));
+                return JsonUtils.objectToJson(new Response(user1.getAuthority()));
             } else {
                 return JsonUtils.objectToJson(Response.error("登录失败，用户名或密码错误"));
             }

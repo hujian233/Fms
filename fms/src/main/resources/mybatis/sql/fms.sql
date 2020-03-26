@@ -19,7 +19,7 @@ CREATE TABLE `user` (
                          `username` VARCHAR(20) NOT NULL UNIQUE COMMENT '用户名',
                          `password` VARCHAR(256) NOT NULL COMMENT '密码',
                          `mailaddress` VARCHAR(50) NOT NULL UNIQUE COMMENT '邮箱',
-                         `authority` VARCHAR(256) NOT NULL COMMENT '权限',
+                         `authority` INT(10) NOT NULL COMMENT '权限',
                          `department` VARCHAR(50) NOT NULL  COMMENT '部门',
                          `logintime` DATE COMMENT '上次登录时间'
 )ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin;
