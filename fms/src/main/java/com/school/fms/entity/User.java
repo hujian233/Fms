@@ -18,7 +18,6 @@ public class User implements Serializable {
     /**
      *  工号
      */
-    @JsonSerialize(using= ToStringSerializer.class)
     private long jobNumber;
 
     private String userName;
