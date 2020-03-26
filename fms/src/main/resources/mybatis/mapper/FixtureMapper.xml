@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.school.fms.dao.FixtureDao">
+
+    <resultMap id="FixtureDefineMap" type="FixtureDefine">
+        <id property="id" column="id"/>
+        <result property="workCell" column="workcell"/>
+        <result property="family" column="family"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="model" column="model"/>
+        <result property="partNo" column="partno"/>
+        <result property="usedFor" column="usedFor"/>
+        <result property="upl" column="upl"/>
+        <result property="owner" column="owner"/>
+        <result property="pmPeriod" column="pmPeriod"/>
+        <result property="recOn" column="recOn"/>
+        <result property="recBy" column="recBy"/>
+        <result property="editOn" column="editOn"/>
+        <result property="editBy" column="editBy"/>
+    </resultMap>
+    <select id="addOneFixtureDefine" parameterType="com.school.fms.entity.FixtureDefine">
+        insert into fixture_define(workcell, family, code, name, model, partno, usedfor, upl, owner, pmperiod,
+                                   rec_on, rec_by, edit_on, edit_by)
+        values (#{fixtureDefine.workCell}, #{fixtureDefine.family}, #{fixtureDefine.code}, #{fixtureDefine.name},
+                #{fixtureDefine.model}, #{fixtureDefine.partNo}, #{fixtureDefine.usedFor}, #{fixtureDefine.upl},
+                #{fixtureDefine.owner}, #{fixtureDefine.pmPeriod}, #{fixtureDefine.recOn}, #{fixtureDefine.recBy},
+                #{fixtureDefine.editOn}, #{fixtureDefine.editBy})
+    </select>
+    <select id="addFixtureDefine" parameterType="com.school.fms.entity.FixtureDefine">
+        <foreach collection="fixtureDefineList" item="fixtureDefine" separator=";">
+            insert into fixture_define(workcell, family, code, name, model, partno, usedfor, upl,owner, pmperiod ,
+            rec_on, rec_by, edit_on, edit_by)
+            values
+            (#{fixtureDefine.workCell},#{fixtureDefine.family},#{fixtureDefine.code},#{fixtureDefine.name},
+            #{fixtureDefine.model},#{fixtureDefine.partNo},#{fixtureDefine.usedFor},#{fixtureDefine.upl},
+            #{fixtureDefine.owner}, #{fixtureDefine.pmPeriod},#{fixtureDefine.recOn},#{fixtureDefine.recBy},
+            #{fixtureDefine.editOn},#{fixtureDefine.editBy})
+        </foreach>
+    </select>
+
+
+</mapper>

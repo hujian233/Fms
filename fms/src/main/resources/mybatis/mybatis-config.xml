@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--每个标签必须按照顺序写，不然就会提示错误-->
 <configuration>
+    <settings>
+        <!--打印sql语句-->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
     <typeAliases>
        <!-- 配置别名包路径，下面所有类的类都将最简类名作为别名-->
         <package name="com.school.fms.entity"/>

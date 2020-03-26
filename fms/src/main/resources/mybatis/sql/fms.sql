@@ -28,17 +28,18 @@ CREATE TABLE `user`
   CHARACTER SET = utf8
   COLLATE = utf8_bin;
 
+# truncate table 表名  //清空所有数据重置主键自增
 CREATE TABLE `fixture_define`
 (
     `id`       int(10)     NOT NULL AUTO_INCREMENT COMMENT '主键自增',
-    `workcell` varchar(50) NOT NULL COMMENT '夹具所属工作部',
-    `code`     varchar(50) DEFAULT NULL COMMENT '夹具代码',
-    `name`     varchar(30) NOT NULL COMMENT '夹具名称',
-    `family`   varchar(20) COMMENT '所属大类',
-    `model`    varchar(30) COMMENT '夹具模组',
-    `partno`   varchar(20) COMMENT '所属料号',
+    `workcell` varchar(256) NOT NULL COMMENT '夹具所属工作部',
+    `code`     varchar(256) DEFAULT NULL COMMENT '夹具代码',
+    `name`     varchar(256) NOT NULL COMMENT '夹具名称',
+    `family`   varchar(256) COMMENT '所属大类',
+    `model`    varchar(256) COMMENT '夹具模组',
+    `partno`   varchar(256) COMMENT '所属料号',
     `upl`      INT(10)     NOT NULL COMMENT '需要的数量',
-    `usedfor`  varchar(20) COMMENT '用途',
+    `usedfor`  varchar(256) COMMENT '用途',
     `pmperiod` INT(10) COMMENT '保养点检周期',
     `owner`    varchar(20) COMMENT '责任人',
     `rec_on`   DATE        DEFAULT NULL COMMENT '录入日期',
