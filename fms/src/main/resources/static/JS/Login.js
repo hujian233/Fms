@@ -56,8 +56,8 @@ $('#loginBtn').click(function(){
                 if(result.resultCode == 0){
                     alert('登录成功，欢迎您...');
                     //看权限
-                    var data=result.data;
-                    var authority=data.authority;
+                   // var data=result.data;
+                    var authority=result.data;
                     if(authority==1){
                         window.location = '/common1';
                     }
