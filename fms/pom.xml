@@ -43,12 +43,12 @@
             <version>1.16.10</version>
         </dependency>
 
-        <!-- 对象转换成json引入如下依赖 -->
-        <dependency>
+        <!-- 对象转换成json引入如下依赖 --><!--该依赖已经包含在springboot-starter-web中-->
+        <!--<dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.7.4</version>
-        </dependency>
+            <version>2.9.5</version>
+        </dependency>-->
 
         <!--密码加密依赖-->
         <dependency>
@@ -57,6 +57,12 @@
             <version>1.10</version>
         </dependency>
 
+        <!--处理Excel的jar包-->
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>2.6.12</version>
+        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -66,12 +72,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
