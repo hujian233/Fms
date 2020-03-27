@@ -57,4 +57,12 @@ public interface FixtureService {
      * @return 夹具定义列表
      */
     List<FixtureDefine> queryDefines(String code, String name, String family, String model);
+
+    /**
+     * 查询夹具实体列表
+     * @param code 夹具代码
+     * @param seqId 序列号
+     * @return 夹具实体list
+     */
+    List<FixtureEntity> queryEntities(String code, String seqId);
 }

@@ -31,21 +31,21 @@ CREATE TABLE `user`
 # truncate table 表名  //清空所有数据重置主键自增
 CREATE TABLE `fixture_define`
 (
-    `id`       int(10)     NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+    `id`       int(10)      NOT NULL AUTO_INCREMENT COMMENT '主键自增',
     `workcell` varchar(256) NOT NULL COMMENT '夹具所属工作部',
     `code`     varchar(256) DEFAULT NULL COMMENT '夹具代码',
     `name`     varchar(256) NOT NULL COMMENT '夹具名称',
     `family`   varchar(256) COMMENT '所属大类',
     `model`    varchar(256) COMMENT '夹具模组',
     `partno`   varchar(256) COMMENT '所属料号',
-    `upl`      INT(10)     NOT NULL COMMENT '需要的数量',
+    `upl`      INT(10)      NOT NULL COMMENT '需要的数量',
     `usedfor`  varchar(256) COMMENT '用途',
     `pmperiod` INT(10) COMMENT '保养点检周期',
     `owner`    varchar(20) COMMENT '责任人',
-    `recOn`   DATE        DEFAULT NULL COMMENT '录入日期',
-    `recBy`   varchar(20) NOT NULL COMMENT '录入人',
-    `editOn`  DATE        DEFAULT NULL COMMENT '修改日期',
-    `editBy`  varchar(20) COMMENT '修改人',
+    `recOn`    DATE         DEFAULT NULL COMMENT '录入日期',
+    `recBy`    varchar(20)  NOT NULL COMMENT '录入人',
+    `editOn`   DATE         DEFAULT NULL COMMENT '修改日期',
+    `editBy`   varchar(20) COMMENT '修改人',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='夹具定义';
@@ -55,9 +55,13 @@ CREATE TABLE `fixture_entity`
     `code`       varchar(20) COMMENT '夹具代码',
     `seqid`      varchar(20) COMMENT '夹具序列号',
     `billno`     varchar(64) COMMENT '采购单据号',
-    `reg_date`   DATE    DEFAULT NULL COMMENT '入库日期',
-    `used_count` INT(10) COMMENT '已使用次数',
+    `regDate`   DATE    DEFAULT NULL COMMENT '入库日期',
+    `usedCount` INT(10) COMMENT '已使用次数',
     `location`   varchar(20) COMMENT '存放库位',
     `status`     INT(10) DEFAULT NULL COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='夹具实体';
+
+# 增加联合索引，确保夹具代码和夹具序列号联合唯一性
+ALTER TABLE fixture_entity
+    ADD INDEX idx2 (`code`, `seqid`);

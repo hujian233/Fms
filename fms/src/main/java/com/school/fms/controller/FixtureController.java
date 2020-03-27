@@ -1,6 +1,7 @@
 package com.school.fms.controller;
 
 import com.school.fms.entity.FixtureDefine;
+import com.school.fms.entity.FixtureEntity;
 import com.school.fms.service.FixtureService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,18 @@ public class FixtureController {
             e.printStackTrace();
         }
         return fixtureDefines;
+    }
+
+    @RequestMapping(value = "/queryEntity", method = {RequestMethod.GET})
+    @ResponseBody
+    public List<FixtureEntity> getFixtureEntities(@RequestParam(value = "code", required = false) String code,
+                                                  @RequestParam(value = "seqId", required = false) String seqId) {
+        List<FixtureEntity> fixtureEntities = new ArrayList<>();
+        try {
+            fixtureEntities = fixtureService.queryEntities(code, seqId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fixtureEntities;
     }
 }

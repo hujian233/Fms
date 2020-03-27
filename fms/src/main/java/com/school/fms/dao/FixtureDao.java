@@ -48,4 +48,12 @@ public interface FixtureDao {
     List<FixtureDefine> queryDefines(@Param("code") String code, @Param("name") String name,
                                      @Param("family") String family, @Param("model") String model);
 
+    /**
+     * 查询夹具实体列表
+     *
+     * @param code   夹具代码
+     * @param seqId   序列号
+     * @return 夹具实体列表
+     */
+    List<FixtureEntity> queryEntities(@Param("code") String code, @Param("seqid")String seqId);
 }

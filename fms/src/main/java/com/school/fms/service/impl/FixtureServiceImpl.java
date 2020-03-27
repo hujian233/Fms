@@ -143,4 +143,9 @@ public class FixtureServiceImpl implements FixtureService {
     public List<FixtureDefine> queryDefines(String code, String name, String family, String model) {
         return fixtureDao.queryDefines(code, name, family, model);
     }
+
+    @Override
+    public List<FixtureEntity> queryEntities(String code, String seqId) {
+        return fixtureDao.queryEntities(code, seqId);
+    }
 }
