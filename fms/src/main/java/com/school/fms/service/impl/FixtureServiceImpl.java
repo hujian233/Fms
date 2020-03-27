@@ -2,6 +2,7 @@ package com.school.fms.service.impl;
 
 import com.school.fms.dao.FixtureDao;
 import com.school.fms.entity.FixtureDefine;
+import com.school.fms.entity.FixtureEntity;
 import com.school.fms.service.FixtureService;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -31,7 +32,7 @@ public class FixtureServiceImpl implements FixtureService {
     FixtureDao fixtureDao;
 
     @Override
-    public List<FixtureDefine> getAllByExcel(String file) {
+    public List<FixtureDefine> getAllDefineByExcel(String file) {
         List<FixtureDefine> list = new ArrayList<>();
         try {
             Workbook rwb = Workbook.getWorkbook(new File(file));
@@ -70,10 +71,48 @@ public class FixtureServiceImpl implements FixtureService {
     }
 
     @Override
+    public List<FixtureEntity> getAllEntityByExcel(String file) {
+        List<FixtureEntity> list = new ArrayList<>();
+        try {
+            Workbook rwb = Workbook.getWorkbook(new File(file));
+            // 或者rwb.getSheet(0)
+            Sheet rs = rwb.getSheet(0);
+            // 得到所有的列
+            int clos = rs.getColumns();
+            // 得到所有的行
+            int rows = rs.getRows();
+            System.out.println("clos:" + clos + " rows:" + rows);
+            for (int i = 1; i < rows; i++) {
+                for (int j = 0; j < clos; j++) {
+                    //默认最左边编号也算一列，所以用j++
+                    FixtureEntity fixtureEntity = new FixtureEntity();
+                    fixtureEntity.setCode(rs.getCell(j++, i).getContents());
+                    fixtureEntity.setSeqId(rs.getCell(j++, i).getContents());
+                    fixtureEntity.setBillNo(rs.getCell(j++, i).getContents());
+                    fixtureEntity.setRegDate(rs.getCell(j++, i).getContents());
+                    fixtureEntity.setUsedCount(Integer.parseInt(rs.getCell(j++, i).getContents()));
+                    fixtureEntity.setLocation(rs.getCell(j++, i).getContents());
+                    list.add(fixtureEntity);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
     public void addFixtureDefines(List<FixtureDefine> fixtureDefineList) {
         //fixtureDao.addFixtureDefine(fixtureDefineList);
         for (FixtureDefine fixtureDefine : fixtureDefineList) {
             fixtureDao.addOneFixtureDefine(fixtureDefine);
+        }
+    }
+
+    @Override
+    public void addFixtureEntities(List<FixtureEntity> fixtureEntityList) {
+        for (FixtureEntity fixtureEntity : fixtureEntityList) {
+            fixtureDao.addOneFixtureEntity(fixtureEntity);
         }
     }
 

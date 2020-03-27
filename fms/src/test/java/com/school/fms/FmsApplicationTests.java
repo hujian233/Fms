@@ -1,6 +1,7 @@
 package com.school.fms;
 
 import com.school.fms.entity.FixtureDefine;
+import com.school.fms.entity.FixtureEntity;
 import com.school.fms.service.FixtureService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,8 +17,8 @@ class FmsApplicationTests {
 
     @Test
     void contextLoads() {
-        List<FixtureDefine> allByExcel = fixtureService.getAllByExcel("D:\\夹具定义.xls");
-        fixtureService.addFixtureDefines(allByExcel);
+        List<FixtureEntity> allByExcel = fixtureService.getAllEntityByExcel("D:\\夹具实体.xls");
+        fixtureService.addFixtureEntities(allByExcel);
     }
 
 }

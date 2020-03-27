@@ -1,6 +1,7 @@
 package com.school.fms.dao;
 
 import com.school.fms.entity.FixtureDefine;
+import com.school.fms.entity.FixtureEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -25,5 +26,11 @@ public interface FixtureDao {
      * @param fixtureDefine 夹具定义
      */
     void addOneFixtureDefine(@Param("fixtureDefine") FixtureDefine fixtureDefine);
+
+    /**
+     * 添加一条夹具实体到数据库
+     * @param fixtureEntity 夹具实体
+     */
+    void addOneFixtureEntity(@Param("fixtureEntity") FixtureEntity fixtureEntity);
 
 }

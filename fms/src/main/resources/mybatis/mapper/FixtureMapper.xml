@@ -41,5 +41,10 @@
         </foreach>
     </select>
 
+    <select id="addOneFixtureEntity" parameterType="com.school.fms.entity.FixtureEntity">
+        insert into fixture_entity(code, seqid, billno, reg_date, used_count, location, status)
+        values (#{fixtureEntity.code}, #{fixtureEntity.seqId}, #{fixtureEntity.billNo}, #{fixtureEntity.regDate},
+                #{fixtureEntity.usedCount}, #{fixtureEntity.location}, #{fixtureEntity.status})
+    </select>
 
 </mapper>

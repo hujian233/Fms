@@ -54,7 +54,7 @@ CREATE TABLE `fixture_entity`
 (
     `code`       varchar(20) COMMENT '夹具代码',
     `seqid`      varchar(20) COMMENT '夹具序列号',
-    `billno`     varchar(20) COMMENT '采购单据号',
+    `billno`     varchar(64) COMMENT '采购单据号',
     `reg_date`   DATE    DEFAULT NULL COMMENT '入库日期',
     `used_count` INT(10) COMMENT '已使用次数',
     `location`   varchar(20) COMMENT '存放库位',

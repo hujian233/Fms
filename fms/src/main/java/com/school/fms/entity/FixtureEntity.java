@@ -1,11 +1,13 @@
 package com.school.fms.entity;
 
+import java.io.Serializable;
+
 /**
  * @Author: hujian
  * @Date: 2020/3/26 11:09
  * @Description: 夹具实体类
  */
-public class FixtureEntity {
+public class FixtureEntity implements Serializable {
     private String code;
     private String seqId;
     private String billNo;
@@ -22,4 +24,60 @@ public class FixtureEntity {
      * 0:已入库，1:已出库，2:已报修，3:已报废
      */
     private int status;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getSeqId() {
+        return seqId;
+    }
+
+    public void setSeqId(String seqId) {
+        this.seqId = seqId;
+    }
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
+    }
+
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    public int getUsedCount() {
+        return usedCount;
+    }
+
+    public void setUsedCount(int usedCount) {
+        this.usedCount = usedCount;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }
