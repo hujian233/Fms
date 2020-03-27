@@ -17,8 +17,8 @@ class FmsApplicationTests {
 
     @Test
     void contextLoads() {
-        List<FixtureEntity> allByExcel = fixtureService.getAllEntityByExcel("D:\\夹具实体.xls");
-        fixtureService.addFixtureEntities(allByExcel);
+        List<FixtureDefine> allByExcel = fixtureService.getAllDefineByExcel("D:\\夹具定义.xls");
+        fixtureService.addFixtureDefines(allByExcel);
     }
 
 }

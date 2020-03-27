@@ -23,17 +23,17 @@
     </resultMap>
     <select id="addOneFixtureDefine" parameterType="com.school.fms.entity.FixtureDefine">
         insert into fixture_define(workcell, family, code, name, model, partno, usedfor, upl, owner, pmperiod,
-                                   rec_on, rec_by, edit_on, edit_by)
+                                   recOn, recBy, editOn, editBy)
         values (#{fixtureDefine.workCell}, #{fixtureDefine.family}, #{fixtureDefine.code}, #{fixtureDefine.name},
                 #{fixtureDefine.model}, #{fixtureDefine.partNo}, #{fixtureDefine.usedFor}, #{fixtureDefine.upl},
                 #{fixtureDefine.owner}, #{fixtureDefine.pmPeriod}, #{fixtureDefine.recOn}, #{fixtureDefine.recBy},
                 #{fixtureDefine.editOn}, #{fixtureDefine.editBy})
     </select>
-    <select id="addFixtureDefine" parameterType="com.school.fms.entity.FixtureDefine">
-        <foreach collection="fixtureDefineList" item="fixtureDefine" separator=";">
-            insert into fixture_define(workcell, family, code, name, model, partno, usedfor, upl,owner, pmperiod ,
-            rec_on, rec_by, edit_on, edit_by)
-            values
+    <select id="addFixtureDefines" parameterType="com.school.fms.entity.FixtureDefine">
+        insert into fixture_define(workcell, family, code, name, model, partno, usedfor, upl,owner, pmperiod ,
+        recOn, recBy, editOn, editBy)
+        values
+        <foreach collection="fixtureDefineList" item="fixtureDefine" separator=",">
             (#{fixtureDefine.workCell},#{fixtureDefine.family},#{fixtureDefine.code},#{fixtureDefine.name},
             #{fixtureDefine.model},#{fixtureDefine.partNo},#{fixtureDefine.usedFor},#{fixtureDefine.upl},
             #{fixtureDefine.owner}, #{fixtureDefine.pmPeriod},#{fixtureDefine.recOn},#{fixtureDefine.recBy},
@@ -45,6 +45,16 @@
         insert into fixture_entity(code, seqid, billno, reg_date, used_count, location, status)
         values (#{fixtureEntity.code}, #{fixtureEntity.seqId}, #{fixtureEntity.billNo}, #{fixtureEntity.regDate},
                 #{fixtureEntity.usedCount}, #{fixtureEntity.location}, #{fixtureEntity.status})
+    </select>
+    <select id="queryDefines" resultType="com.school.fms.entity.FixtureDefine">
+        select *
+        from fixture_define
+        where 1=1
+        <if test="code!=null and code!=''">and code = #{code}</if>
+        <if test="name!=null and name!=''">and name = #{name}</if>
+        <if test="family!=null and family!=''">and family =#{family}</if>
+        <if test="model!=null and model!=''">and model = #{model}</if>
+        ORDER BY id
     </select>
 
 </mapper>

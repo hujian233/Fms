@@ -42,10 +42,10 @@ CREATE TABLE `fixture_define`
     `usedfor`  varchar(256) COMMENT '用途',
     `pmperiod` INT(10) COMMENT '保养点检周期',
     `owner`    varchar(20) COMMENT '责任人',
-    `rec_on`   DATE        DEFAULT NULL COMMENT '录入日期',
-    `rec_by`   varchar(20) NOT NULL COMMENT '录入人',
-    `edit_on`  DATE        DEFAULT NULL COMMENT '修改日期',
-    `edit_by`  varchar(20) COMMENT '修改人',
+    `recOn`   DATE        DEFAULT NULL COMMENT '录入日期',
+    `recBy`   varchar(20) NOT NULL COMMENT '录入人',
+    `editOn`  DATE        DEFAULT NULL COMMENT '修改日期',
+    `editBy`  varchar(20) COMMENT '修改人',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='夹具定义';

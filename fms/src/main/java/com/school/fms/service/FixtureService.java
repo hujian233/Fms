@@ -48,4 +48,13 @@ public interface FixtureService {
      */
     List<String> upLoadFile(HttpServletRequest request, MultipartFile file);
 
+    /**
+     * 查询夹具定义列表
+     * @param code 夹具代码
+     * @param name 夹具名称
+     * @param family 所属大类
+     * @param model 夹具模组
+     * @return 夹具定义列表
+     */
+    List<FixtureDefine> queryDefines(String code, String name, String family, String model);
 }

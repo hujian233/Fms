@@ -103,7 +103,7 @@ public class FixtureServiceImpl implements FixtureService {
 
     @Override
     public void addFixtureDefines(List<FixtureDefine> fixtureDefineList) {
-        //fixtureDao.addFixtureDefine(fixtureDefineList);
+        //fixtureDao.addFixtureDefines(fixtureDefineList);
         for (FixtureDefine fixtureDefine : fixtureDefineList) {
             fixtureDao.addOneFixtureDefine(fixtureDefine);
         }
@@ -137,5 +137,10 @@ public class FixtureServiceImpl implements FixtureService {
         lst.add(filePath);
         lst.add(dt);
         return lst;
+    }
+
+    @Override
+    public List<FixtureDefine> queryDefines(String code, String name, String family, String model) {
+        return fixtureDao.queryDefines(code, name, family, model);
     }
 }
