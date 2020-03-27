@@ -118,10 +118,10 @@ $('#EditBtn').click(function(){
 function delUser(e){
     var userID = $(e).parent().parent().children().eq(0).text();
     if(confirm('是否需要删除工号为' + userID + '用户？')){
-        /* $.ajax({
-            type: 'POST',
+         $.ajax({
+            type: 'get',
             dataType: 'JSON',
-            url: '',               //待填  ?UserID=userID
+            url: '/deleteUser?jobNumber='+userID,               //待填  ?UserID=userID
             success: function(result){
                 if(result.Status == 'success'){
                     alert('删除成功！');
@@ -133,7 +133,7 @@ function delUser(e){
             error: function(){
                 alert('删除失败，请稍后重试...')
             }
-        }); */
+        });
     }
 }
 //#endregion
@@ -144,21 +144,46 @@ $('#showAddModalBtn').click(function(){
     $('#addModal').modal('show');
 });
 $('#AddBtn').click(function(){
+    if ($('#NewUserUserID').val() == "" || $('#NewUserUserID').val() == null) {
+        $('#tip1').text("工号不能为空");
+        $('#tip1').css('display', 'block');
+        return;
+    }
+    if ($('#NewUserName').val() == "" || $('#NewUserName').val() == null) {
+        $('#tip1').text("姓名不能为空");
+        $('#tip1').css('display', 'block');
+        return;
+    }
+    if ($('#mailAddress').val() == "" || $('#mailAddress').val() == null) {
+        $('#tip1').text("邮箱不能为空");
+        $('#tip1').css('display', 'block');
+        return;
+    }
+    if ($('#department').val() == "" || $('#department').val() == null) {
+        $('#tip1').text("部门不能为空");
+        $('#tip1').css('display', 'block');
+        return;
+    }
+    $('#tip1').css('display', 'none');
     var transData = {
-        'UserID': $('#NewUserUserID').val(),
-        'Name': $('#NewUserName').val(),
-        'Privilege': $('#NewUserPrivilege').val()
+        'jobNumber': $('#NewUserUserID').val(),
+        'userName': $('#NewUserName').val(),
+        'password': $('#pwd').val(),
+        'mailAddress': $('#mailAddress').val(),
+        'department': $('#department').val(),
+        'authority': $('#NewUserPrivilege').val()
     };
-    /* $.ajax({
+     $.ajax({
         type: 'POST',
         dataType: 'JSON',
         contentType: 'application/json',
-        data: transData,
-        url: '',                      //待填
+        data:  JSON.stringify(transData),
+        url: '/doRegister',                      //待填
         success: function(result){
-            if(result.Status == 'success'){
+            if(result.resultCode == 0){
                 alert('添加成功！');
                 refleshTable();
+                $('#addModal').modal('hide');
             }else{
                 alert('添加失败，请稍后重试...');
             }
@@ -166,7 +191,7 @@ $('#AddBtn').click(function(){
         error: function(){
             alert('添加失败，请稍后重试...')
         }
-    }); */
+    });
 });
 //#endregion
 

@@ -18,7 +18,7 @@ $.ajax({                            //url待改
     }
 })*/
 $('#content').empty();
-$('#content').load('../HTML/TempApplicationManage1.html');
+$('#content').load('../HTML/OldDataLoad.html');
 //$('#content').load('../HTML/ToolEntityDisplay.html');
 //$('#content').load('../HTML/ToolDefinitionDisplay.html');
 //$('#content').load('../HTML/AdminToolDefinitionDisplay.html');
@@ -33,23 +33,16 @@ var userName=canshu.substring(0,mark);
 $("#name").html(userName+" 欢迎");
 
 //跳转
-//夹具管理
-$('#apply1').click(function(){
-    $('#content').empty();
-    $('#content').load('../HTML/TempApplicationManage1.html');
-})
-//租借记录
-$('#inout').click(function(){
-    $('#content').empty();
-    $('#content').load('../HTML/ToolEntityDisplay.html');
-})
-//高级功能
-$('#function').click(function(){
-    $('#content').empty();
-    $('#content').load('../HTML/ToolDefinitionDisplay.html');
-})
+
 //用户信息
 $('#user').click(function(){
     $('#content').empty();
     $('#content').load('../HTML/UserManage.html');
 })
+
+//高级功能
+$('#function').click(function(){
+    $('#content').empty();
+    $('#content').load('../HTML/OldDataLoad.html');
+})
+
