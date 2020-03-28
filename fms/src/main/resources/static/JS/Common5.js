@@ -18,7 +18,7 @@ $.ajax({                            //url待改
     }
 })*/
 $('#content').empty();
-$('#content').load('../HTML/OldDataLoad.html');
+$('#content').load('../HTML/UserManage.html');
 //$('#content').load('../HTML/ToolEntityDisplay.html');
 //$('#content').load('../HTML/ToolDefinitionDisplay.html');
 //$('#content').load('../HTML/AdminToolDefinitionDisplay.html');
@@ -40,9 +40,22 @@ $('#user').click(function(){
     $('#content').load('../HTML/UserManage.html');
 })
 
-//高级功能
-$('#function').click(function(){
+
+//导入
+$('#import').click(function(){
     $('#content').empty();
     $('#content').load('../HTML/OldDataLoad.html');
 })
+//夹具定义
+$('#manage').click(function(){
+    $('#content').empty();
+    $('#content').load('../HTML/AdminToolDefinitionDisplay.html');
+})
 
+/*
+//家居实体管理
+entity
+$('#entity').click(function(){
+    $('#content').empty();
+    $('#content').load('../HTML/AdminToolDefinitionDisplay.html');
+})*/

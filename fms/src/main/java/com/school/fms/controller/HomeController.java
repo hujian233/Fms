@@ -39,4 +39,9 @@ public class HomeController {
     public String gotoPage5() {
         return "Common5";
     }
+
+    @RequestMapping("/displayToolEntity")
+    public String gotoPageToolEntity() {
+        return "ToolEntityDisplay";
+    }
 }

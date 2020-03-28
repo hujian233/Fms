@@ -64,17 +64,17 @@ $('#loginBtn').click(function(){
                         window.location = '/common1?userName='+userName+"&id="+id;
                     }
                     if(authority==2){
-                        window.location = '/common2';
+                        window.location = '/common2?userName='+userName+"&id="+id;
                     }
 
                     if(authority==3){
-                        window.location = '/common3';
+                        window.location = '/common3?userName='+userName+"&id="+id;
                     }
                     if(authority==4){
-                        window.location = '/common4';
+                        window.location = '/common4?userName='+userName+"&id="+id;
                     }
                     if(authority==5){
-                        window.location = '/common5';
+                        window.location = '/common5?userName='+userName+"&id="+id;
                     }
                 }else if(result.resultCode == -1){
                     /*for(let i = 0; i < result.WorkcellList.length; i++){

@@ -82,22 +82,44 @@ function submit(){
                 'List': modInitData
             }
             break;
-    }   
-    /* $.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(transData),
-        url: ,                                  //后端url待填
-        success: function(result){
-            if(result.Status == 'error'){
-                alert('导入失败，请稍后重试...');
-            }else{
-                alert('导入成功！');
-                refreshTable();
+    }
+    //0自定义；1：实体类
+    if(displayType=='definition'){
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(transData),
+            url: '/upload/0',                                  //后端url待填
+            success: function(result){
+                if(result.Status == 'error'){
+                    alert('导入失败，请稍后重试...');
+                }else{
+                    alert('导入成功！');
+                    refreshTable();
+                }
             }
-        } 
-    }); */
+        });
+    }
+    if(displayType=='model'){
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(transData),
+            url: '/upload/1',                                  //后端url待填
+            success: function(result){
+                if(result.Status == 'error'){
+                    alert('导入失败，请稍后重试...');
+                }else{
+                    alert('导入成功！');
+                    refreshTable();
+                }
+            }
+        });
+    }
+
+
 }
 //#endregion
 

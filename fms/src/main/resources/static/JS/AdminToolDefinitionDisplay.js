@@ -1,5 +1,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //定义全局变量
+
+debugger;
+$.ajax({                    //获取夹具定义数据
+    type: 'GET',
+    dataType: 'JSON',
+    url: '/fixture/queryDefine',  //后端Url，待改
+    success: function (result) {
+        displayTable(result);
+        initData = result;
+    },
+    error: function () {
+        alert('获取信息失败，请刷新重试...');
+    }
+});
 var initData = [];                 //全体数据
 var pageSize = 16;              //一页最多显示16条信息
 var filterBy = {                //存放筛选条件
@@ -25,12 +39,12 @@ function displayTable(data){
             $('tbody').empty();
             var begin = (num - 1) * pageSize;
             for(var i = begin; i < data.length && i < begin + pageSize; i++){
-                $('tbody').append('<tr><td>' + data[i].Code
-                + '</td><td>' + data[i].Name
-                + '</td><td>' + data[i].Family
-                + '</td><td>' + data[i].Model
-                + '</td><td>' + data[i].PartNo
-                + '</td><td>' + data[i].OwnerID + '&nbsp&nbsp&nbsp' + data[i].OwnerName
+                $('tbody').append('<tr><td>' + data[i].code
+                + '</td><td>' + data[i].name
+                + '</td><td>' + data[i].family
+                + '</td><td>' + data[i].model
+                + '</td><td>' + data[i].partNo
+                + '</td><td>' + data[i].owner + '&nbsp&nbsp&nbsp'
                 + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>'
                 + '<button class="btn act-btn" onclick="getEntity(this);">查看实体</button>'
                 + '</td></tr>');
@@ -147,29 +161,31 @@ $(window).scroll(function(){
 //#region 获取夹具定义的详细信息
 function getInfo(e){
     var code = $(e).parent().parent().children().eq(0).text();
+    //alert(code);
     $.ajax({
         type: 'GET',
         dataType: 'JSON',
-        url: '../TestData/ToolDefinitionInfo.json',  //code附在url后  "...?code=' + code
+       // url: '../TestData/ToolDefinitionInfo.json',  //code附在url后  "...?code=' + code
+        url: '/fixture/queryDefineDetail?code='+code,  //code附在url后  "...?code=' + code
         success: function(result){
-            $('#Code').val(result.Code);
-            $('#Name').val(result.Name);
-            $('#Family').val(result.Family)
-            $('#Model').val(result.Model);
-            $('#PartNo').val(result.PartNo);
-            $('#UPL').val(result.UPL);
-            $('#UsedFor').val(result.UsedFor);
-            $('#PMPeriod').val(result.PMPeriod);
-            $('#PMContent').val(result.PMContent);
-            $('#OwnerID').val(result.OwnerID);
-            $('#OwnerName').val(result.OwnerName);
-            $('#RecOn').val(result.RecOn);
-            $('#RecorderID').val(result.RecorderID);
-            $('#RecorderName').val(result.RecorderName);
-            $('#EditOn').val(result.EditOn);
-            $('#EditorID').val(result.EditorID);
-            $('#EditorName').val(result.EditorName);
-            $('#Workcell').val(result.Workcell);
+            $('#Code').val(result.code);
+            $('#Name').val(result.name);
+            $('#Family').val(result.family)
+            $('#Model').val(result.model);
+            $('#PartNo').val(result.partNo);
+            $('#UPL').val(result.upl);
+            $('#UsedFor').val(result.usedFor);
+            $('#PMPeriod').val(result.pmPeriod);
+          /*  $('#PMContent').val(result.PMContent);*///点检内容   待定
+            $('#OwnerID').val(result.owner);
+          /*  $('#OwnerName').val(result.OwnerName);*/
+            $('#RecOn').val(result.recOn);
+            $('#RecorderID').val(result.recBy);//录入人工号  待定
+           /* $('#RecorderName').val(result.RecorderName);//责任人姓名  待定*/
+            $('#EditOn').val(result.editOn);
+            $('#EditorID').val(result.editBy);
+            /*  $('#EditorName').val(result.EditorName);*/
+            $('#Workcell').val(result.workCell);
         },
         error: function(){
             alert('获取数据失败，请稍后重试...')
@@ -227,7 +243,7 @@ $('#EditBtn').click(function(){
 //#region 获取夹具实体列表
 function getEntity(e){
     var code = $(e).parent().parent().children().eq(0).text();
-    window.location = '../HTML/DisplayToolEntity.html?code=' + code;
+    window.location = '/displayToolEntity?code='+code;
 }
 //#endregion
 

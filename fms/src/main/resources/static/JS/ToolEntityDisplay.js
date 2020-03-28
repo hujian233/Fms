@@ -8,17 +8,18 @@ var pageSize = 20;              //一页最多显示16条信息
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 获取定义列表、刷新待申请列表（函数）
 $(window).on('load', function(){
-    var code = getUrlVars()['Code'];
+    var code = getUrlVars()['code'];
     $.ajax({
         type: 'GET',
         dataType: 'JSON',
-        url: '../TestData/ToolEntityList.json',  //后端Url，附加code参数
+       // url: '../TestData/ToolEntityList.json',  //后端Url，附加code参数
+       url: '/fixture/queryEntity?code='+code,
         success: function(result){
             function compare(a, b){
-                if(a.State == '可用' && b.State == '可用')  return 0;
-                else if(a.State == '可用')  return -5;
-                else if(b.State == '可用')  return 5;
-                else    return a.State.localeCompare(b.State);
+                if(a.status == '0' && b.status == '0')  return 0;
+                else if(a.status == '0')  return -5;
+                else if(b.status == '0')  return 5;
+                else    return a.status.localeCompare(b.status);
             }
             initData = result.sort(compare);    //将实体数据按照状态排序  可用放最前
             displayTable(initData);
@@ -30,7 +31,7 @@ $(window).on('load', function(){
     refleshCache();
 });
 
-function displayTable(data){                                                
+function displayTable(data){
     $('#paginationToolEntity').jqPaginator({
         first: '<li class="first"><a href="javascript:;">首页</a></li>',
         prev: '<li class="prev"><a href="javascript:;"><<</a></li>',
@@ -45,23 +46,23 @@ function displayTable(data){
             var begin = (num - 1) * pageSize;
             var n = 1;
             for(var i = begin; i < data.length && i < begin + pageSize; i++){
-                var appendData = 
+                var appendData =
                     '<tr><th>' + n
-                    + '</th><td>' + data[i].Code
-                    + '</td><td>' + data[i].SeqID
-                    + '</td><td>' + data[i].RegDate
-                    + '</td><td>' + data[i].UsedCount
-                    + '</td><td>' + data[i].State
+                    + '</th><td>' + data[i].code
+                    + '</td><td>' + data[i].seqID
+                    + '</td><td>' + data[i].regDate
+                    + '</td><td>' + data[i].usedCount
+                    + '</td><td>' + data[i].status
                     + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>';
-                
-                switch(data[i].State){    //根据夹具不同状态设定不同的操作
-                    case '可用':
+
+                switch(data[i].status){    //根据夹具不同状态设定不同的操作
+                    case 0:
                         appendData += '<button class="btn act-btn" onclick="addToOut(this);">出库</button>'
                         + '<button class="btn act-btn" onclick="addToRepair(this);">报修</button>'
                         + '<button class="btn act-btn" onclick="addToScrap(this);">报废</button></td></tr>';
                         $('#definitionTbody').append(appendData);
                         break;
-                    case '已出库':
+                   /* case '已出库':
                         appendData += '<button class="btn act-btn" onclick="addToIn(this);">入库</button>'
                         + '<button class="btn act-btn" onclick="addToRepair(this);">报修</button>'
                         + '<button class="btn act-btn" onclick="addToScrap(this);">报废</button></td></tr>';
@@ -85,7 +86,7 @@ function displayTable(data){
                         appendData += '<button class="btn act-btn" onclick="addToRepair(this);">报修</button>'
                         + '<button class="btn act-btn" onclick="addToScrap(this);">报废</button></td></tr>';
                         $('#definitionTbody').append(appendData);
-                        break;
+                        break;*/
                 }
                 n++;   //当前页面序号
             }
@@ -106,7 +107,7 @@ function refleshCache(){
             function addToCacheTbody(tbodyID, len, array){    //将数据分类归入不同表格
                 for(var i = 0; i < len; i++){
                     $('#' + tbodyID).append('<tr><td>' + array[i].Code
-                    + '</td><td>' + array[i].SeqID
+                    + '</td><td>' + array[i].seqId
                     + '</td><td><i class="glyphicon glyphicon-remove cache-remove-icon" onclick="remove(this);"></i></td></tr>')
                 }
             }
@@ -154,7 +155,7 @@ function submitByAjax(data){          //url待填
         dataType: 'JSON',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(data),
-        url: '',  
+        url: '',
         success: function(result){
             if(result.Status == 'error'){
                 alert('操作失败，请稍后重试...');
@@ -162,7 +163,7 @@ function submitByAjax(data){          //url待填
                 alert('操作成功！');
                 refreshTable();
             }
-        } 
+        }
     });
 }
 function chooseBulkOperType(e){
@@ -220,7 +221,7 @@ $('#bulkOperBtn').click(function(){
     }
     catch(err){
         alert(err + '，请重新填写...');
-    } 
+    }
 })
 //#endregion
 
@@ -234,7 +235,7 @@ function getInfo(e){
         dataType: 'JSON',
         url: '../TestData/ToolEntityInfo.json',  //code附在url后  '...?Code=' + code + '&SeqID=' + seqID
         success: function(result){
-            
+
             $('#Code').text(result.Code);
             $('#SeqID').text(result.SeqID);
             $('#RegDate').text(result.RegDate);
@@ -306,9 +307,9 @@ function addToScrap(e){
     var transData = [];
     transData.push({'Code': code, 'SeqID': seqID, 'Type': 'Scrap'});
     //submitByAjax(transData)
-    
+
     refleshCache();
-} 
+}
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -360,7 +361,7 @@ function changeTab(e){
 }
 
 //缓存窗单个清除按钮
-function remove(e){ 
+function remove(e){
     var code = $(e).parent().parent().children().eq(0).text();
     var seqID = $(e).parent().parent().children().eq(1).text();
     var transData = [];

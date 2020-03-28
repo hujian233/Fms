@@ -38,7 +38,7 @@ $('#apply1').click(function(){
     $('#content').empty();
     $('#content').load('../HTML/TempApplicationManage1.html');
 })
-//租借记录
+/*//租借记录
 $('#inout').click(function(){
     $('#content').empty();
     $('#content').load('../HTML/ToolEntityDisplay.html');
@@ -52,4 +52,5 @@ $('#function').click(function(){
 $('#user').click(function(){
     $('#content').empty();
     $('#content').load('../HTML/UserManage.html');
-})
+})*/
+
