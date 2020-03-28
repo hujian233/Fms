@@ -36,6 +36,14 @@ public class FixtureController {
         return map;
     }
 
+    /**
+     * 查看夹具定义列表
+     * @param code 代码
+     * @param name 名称
+     * @param family 大类
+     * @param model 模组
+     * @return list<FixtureDefine>
+     */
     @RequestMapping(value = "/queryDefine", method = {RequestMethod.GET})
     @ResponseBody
     public List<FixtureDefine> getFixtureDefines(@RequestParam(value = "code", required = false) String code,
@@ -51,6 +59,29 @@ public class FixtureController {
         return fixtureDefines;
     }
 
+    /**
+     * 查看夹具定义详情,获取一条记录信息
+     * @param code 夹具代码，在定义表中具有唯一性
+     * @return define
+     */
+    @RequestMapping(value = "/queryDefineDetail", method = {RequestMethod.GET})
+    @ResponseBody
+    public FixtureDefine getFixtureDefineDetail(@RequestParam(value = "code") String code) {
+        FixtureDefine fixtureDefine = new FixtureDefine();
+        try {
+            fixtureDefine = fixtureService.queryDefineDetail(code);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fixtureDefine;
+    }
+
+    /**
+     * 查看夹具实体列表或者详情,查看列表不带参数，查看详情带两个参数，查看夹具定义下的实体只带一个参数code
+     * @param code 夹具代码
+     * @param seqId 夹具序列号
+     * @return list
+     */
     @RequestMapping(value = "/queryEntity", method = {RequestMethod.GET})
     @ResponseBody
     public List<FixtureEntity> getFixtureEntities(@RequestParam(value = "code", required = false) String code,

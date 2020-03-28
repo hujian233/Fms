@@ -52,13 +52,14 @@ CREATE TABLE `fixture_define`
 
 CREATE TABLE `fixture_entity`
 (
-    `code`       varchar(20) COMMENT '夹具代码',
-    `seqid`      varchar(20) COMMENT '夹具序列号',
-    `billno`     varchar(64) COMMENT '采购单据号',
+    `code`      varchar(20) UNIQUE COMMENT '夹具代码',
+    `seqid`     varchar(20) COMMENT '夹具序列号',
+    `billno`    varchar(64) COMMENT '采购单据号',
     `regDate`   DATE    DEFAULT NULL COMMENT '入库日期',
     `usedCount` INT(10) COMMENT '已使用次数',
-    `location`   varchar(20) COMMENT '存放库位',
-    `status`     INT(10) DEFAULT NULL COMMENT '状态'
+    `location`  varchar(20) COMMENT '存放库位',
+    `status`    INT(10) DEFAULT NULL COMMENT '状态',
+    `checkTime`   DATE    DEFAULT NULL COMMENT '上次点检日期'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='夹具实体';
 

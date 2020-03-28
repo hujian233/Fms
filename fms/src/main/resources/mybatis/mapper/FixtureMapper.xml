@@ -64,4 +64,8 @@
         <if test="seqid!=null and seqid!=''">and seqid = #{seqid}</if>
     </select>
 
+    <select id="queryDefineDetail" resultType="com.school.fms.entity.FixtureDefine">
+        select * from fixture_define where code = #{code} LIMIT 1
+    </select>
+
 </mapper>

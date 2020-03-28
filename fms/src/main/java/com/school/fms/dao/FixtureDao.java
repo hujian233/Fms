@@ -56,4 +56,11 @@ public interface FixtureDao {
      * @return 夹具实体列表
      */
     List<FixtureEntity> queryEntities(@Param("code") String code, @Param("seqid")String seqId);
+
+    /**
+     * 查询一条夹具定义
+     * @param code 夹具代码
+     * @return FixtureDefine
+     */
+    FixtureDefine queryDefineDetail(@Param("code") String code);
 }

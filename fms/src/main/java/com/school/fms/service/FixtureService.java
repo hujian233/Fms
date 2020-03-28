@@ -65,4 +65,11 @@ public interface FixtureService {
      * @return 夹具实体list
      */
     List<FixtureEntity> queryEntities(String code, String seqId);
+
+    /**
+     * 查询一条夹具定义
+     * @param code 夹具代码
+     * @return FixtureDefine
+     */
+    FixtureDefine queryDefineDetail(String code);
 }
