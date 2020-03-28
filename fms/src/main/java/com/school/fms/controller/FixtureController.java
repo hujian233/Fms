@@ -3,6 +3,7 @@ package com.school.fms.controller;
 import com.school.fms.entity.FixtureDefine;
 import com.school.fms.entity.FixtureEntity;
 import com.school.fms.service.FixtureService;
+import com.school.fms.vo.WaitSubmitVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,9 +27,18 @@ public class FixtureController {
     @Resource
     private FixtureService fixtureService;
 
-    @PostMapping("/upload")
+    /**
+     * 上传文件
+     *
+     * @param file    file
+     * @param request request
+     * @param type    0表示定义表，1表示实体表
+     * @return map
+     */
+    @PostMapping("/upload/{type}")
     @ResponseBody
-    public Map<String, Object> upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    public Map<String, Object> upload(@RequestParam("file") MultipartFile file, HttpServletRequest request,
+                                      @PathVariable int type) {
 
         Map<String, Object> map = new HashMap<>(5);
         fixtureService.upLoadFile(request, file);
@@ -38,10 +48,11 @@ public class FixtureController {
 
     /**
      * 查看夹具定义列表
-     * @param code 代码
-     * @param name 名称
+     *
+     * @param code   代码
+     * @param name   名称
      * @param family 大类
-     * @param model 模组
+     * @param model  模组
      * @return list<FixtureDefine>
      */
     @RequestMapping(value = "/queryDefine", method = {RequestMethod.GET})
@@ -61,6 +72,7 @@ public class FixtureController {
 
     /**
      * 查看夹具定义详情,获取一条记录信息
+     *
      * @param code 夹具代码，在定义表中具有唯一性
      * @return define
      */
@@ -78,7 +90,8 @@ public class FixtureController {
 
     /**
      * 查看夹具实体列表或者详情,查看列表不带参数，查看详情带两个参数，查看夹具定义下的实体只带一个参数code
-     * @param code 夹具代码
+     *
+     * @param code  夹具代码
      * @param seqId 夹具序列号
      * @return list
      */
@@ -88,10 +101,28 @@ public class FixtureController {
                                                   @RequestParam(value = "seqId", required = false) String seqId) {
         List<FixtureEntity> fixtureEntities = new ArrayList<>();
         try {
-            fixtureEntities = fixtureService.queryEntities(code, seqId);
+            fixtureEntities = fixtureService.queryEntities(code, seqId, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return fixtureEntities;
+    }
+
+    /**
+     * 查询待提交申请
+     *
+     * @param status 类型 1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废
+     * @return list
+     */
+    @RequestMapping(value = "/querywaitsubmit", method = {RequestMethod.GET})
+    @ResponseBody
+    public List<WaitSubmitVo> getWaitSubmit(@RequestParam(value = "type", required = false) int status) {
+        List<WaitSubmitVo> waitSubmitVos = new ArrayList<>();
+        try {
+            waitSubmitVos = fixtureService.queryWaitSubmit(status);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return waitSubmitVos;
     }
 }

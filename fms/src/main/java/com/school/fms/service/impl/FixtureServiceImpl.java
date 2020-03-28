@@ -4,6 +4,7 @@ import com.school.fms.dao.FixtureDao;
 import com.school.fms.entity.FixtureDefine;
 import com.school.fms.entity.FixtureEntity;
 import com.school.fms.service.FixtureService;
+import com.school.fms.vo.WaitSubmitVo;
 import jxl.Sheet;
 import jxl.Workbook;
 import org.springframework.stereotype.Service;
@@ -145,8 +146,13 @@ public class FixtureServiceImpl implements FixtureService {
     }
 
     @Override
-    public List<FixtureEntity> queryEntities(String code, String seqId) {
-        return fixtureDao.queryEntities(code, seqId);
+    public List<FixtureEntity> queryEntities(String code, String seqId, Integer status) {
+        return fixtureDao.queryEntities(code, seqId, status);
+    }
+
+    @Override
+    public List<WaitSubmitVo> queryWaitSubmit(Integer status) {
+        return fixtureDao.queryWaitSubmit(status);
     }
 
     @Override

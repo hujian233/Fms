@@ -21,6 +21,7 @@
         <result property="editOn" column="editOn"/>
         <result property="editBy" column="editBy"/>
     </resultMap>
+
     <select id="addOneFixtureDefine" parameterType="com.school.fms.entity.FixtureDefine">
         insert into fixture_define(workcell, family, code, name, model, partno, usedfor, upl, owner, pmperiod,
                                    recOn, recBy, editOn, editBy)
@@ -62,10 +63,26 @@
         select * from fixture_entity where 1=1
         <if test="code!=null and code!=''">and code = #{code}</if>
         <if test="seqid!=null and seqid!=''">and seqid = #{seqid}</if>
+        <if test="status!=null">and status = #{status}</if>
     </select>
 
     <select id="queryDefineDetail" resultType="com.school.fms.entity.FixtureDefine">
-        select * from fixture_define where code = #{code} LIMIT 1
+        select *
+        from fixture_define
+        where code = #{code}
+        LIMIT 1
+    </select>
+    <select id="queryWaitSubmit" resultType="com.school.fms.vo.WaitSubmitVo">
+        select fe.code, fe.seqid, fd.name
+        from fixture_entity fe
+                 left join fixture_define fd on fe.code = fd.code
+        where fe.status = #{status}
     </select>
 
+    <update id="updateStatus">
+        update fixture_entity
+        set status=#{status}
+        WHERE code = #{code}
+          AND seqid = #{seqid}
+    </update>
 </mapper>

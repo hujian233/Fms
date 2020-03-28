@@ -2,6 +2,7 @@ package com.school.fms.dao;
 
 import com.school.fms.entity.FixtureDefine;
 import com.school.fms.entity.FixtureEntity;
+import com.school.fms.vo.WaitSubmitVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -51,16 +52,34 @@ public interface FixtureDao {
     /**
      * 查询夹具实体列表
      *
-     * @param code   夹具代码
-     * @param seqId   序列号
+     * @param code  夹具代码
+     * @param seqId 序列号
      * @return 夹具实体列表
      */
-    List<FixtureEntity> queryEntities(@Param("code") String code, @Param("seqid")String seqId);
+    List<FixtureEntity> queryEntities(@Param("code") String code, @Param("seqid") String seqId,
+                                      @Param("status") int status);
 
     /**
      * 查询一条夹具定义
+     *
      * @param code 夹具代码
      * @return FixtureDefine
      */
     FixtureDefine queryDefineDetail(@Param("code") String code);
+
+    /**
+     * 修改夹具状态
+     *
+     * @param code   夹具代码
+     * @param seqId  序列号
+     * @param status 0:可用，1:不可用
+     */
+    void updateStatus(@Param("code") String code, @Param("seqid") String seqId, @Param("status") int status);
+
+    /**
+     * 查询待提交申请
+     * @param status 状态 1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废
+     * @return list
+     */
+    List<WaitSubmitVo> queryWaitSubmit(Integer status);
 }
