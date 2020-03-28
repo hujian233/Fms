@@ -1,8 +1,10 @@
 package com.school.fms.controller;
 
+import com.school.fms.common.Response;
 import com.school.fms.entity.FixtureDefine;
 import com.school.fms.entity.FixtureEntity;
 import com.school.fms.service.FixtureService;
+import com.school.fms.utils.JsonUtils;
 import com.school.fms.vo.WaitSubmitVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,22 +30,24 @@ public class FixtureController {
     private FixtureService fixtureService;
 
     /**
-     * 上传文件
+     * 上传夹具定义表
      *
-     * @param file    file
-     * @param request request
-     * @param type    0表示定义表，1表示实体表
      * @return map
      */
-    @PostMapping("/upload/{type}")
+    @PostMapping("/upload/define")
     @ResponseBody
-    public Map<String, Object> upload(@RequestParam("file") MultipartFile file, HttpServletRequest request,
-                                      @PathVariable int type) {
-
+    public String upload1(@RequestBody List<FixtureDefine> fixtureDefines) {
         Map<String, Object> map = new HashMap<>(5);
-        fixtureService.upLoadFile(request, file);
-        map.put("code", 200);
-        return map;
+        fixtureService.addFixtureDefines(fixtureDefines);
+        return JsonUtils.objectToJson(Response.ok("上传成功"));
+    }
+
+    @PostMapping("/upload/entity")
+    @ResponseBody
+    public String upload2(@RequestBody List<FixtureEntity> fixtureEntities) {
+        Map<String, Object> map = new HashMap<>(5);
+        fixtureService.addFixtureEntities(fixtureEntities);
+        return JsonUtils.objectToJson(Response.ok("上传成功"));
     }
 
     /**
