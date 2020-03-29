@@ -21,9 +21,13 @@ public class FixtureEntity implements Serializable {
      */
     private String location;
     /**
-     * 0:已入库（可用），1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废
+     * 0:已入库（可用），1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废，6:已出库，7:已报修，8:已报废
      */
     private int status;
+    /**
+     * 图片路径
+     */
+    private String photoPath;
 
     public String getCode() {
         return code;
@@ -79,5 +83,13 @@ public class FixtureEntity implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 }

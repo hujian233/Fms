@@ -105,6 +105,12 @@ public class FixtureController {
                                                   @RequestParam(value = "seqId", required = false) String seqId) {
         List<FixtureEntity> fixtureEntities = new ArrayList<>();
         try {
+            if (null == code){
+                code = "";
+            }
+            if (null == seqId){
+                seqId = "";
+            }
             fixtureEntities = fixtureService.queryEntities(code, seqId, null);
         } catch (Exception e) {
             e.printStackTrace();
