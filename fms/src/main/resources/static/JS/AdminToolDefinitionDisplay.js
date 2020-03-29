@@ -202,19 +202,19 @@ function findKey(obj, value, compare = (a, b) => a === b) {  //根据value查找
     return Object.keys(obj).find(k => compare(obj[k], value))
 }
 $('#EditBtn').click(function(){
-    var familyID = findKey(fmDict['Family'], $('#Family').val());
-    var modelID = findKey(fmDict['Model'], $('#Model').val());
+    var familyID = findKey(fmDict['family'], $('#Family').val());
+    var modelID = findKey(fmDict['model'], $('#Model').val());
     var transData = {
-        'Code': $('#Code').val(),
-        'Name': $('#Name').val(),
-        'FamilyID': familyID,
-        'ModelID': modelID,
-        'PartNo': $('#PartNo').val(),
-        'UPL': $('#UPL').val(),
-        'UsedFor': $('#UsedFor').val(),
-        'PMPeriod': $('#PMPeriod').val(),
+        'code': $('#Code').val(),
+        'name': $('#Name').val(),
+        'family': familyID,
+        'model': modelID,
+        'partNo': $('#PartNo').val(),
+        'upl': $('#UPL').val(),
+        'usedFor': $('#UsedFor').val(),
+        'pmPeriod': $('#PMPeriod').val(),
         'PMContent': $('#PMContent').val(),
-        'OwnerID': $('#OwnerID').val()
+        'owner': $('#OwnerID').val()
     };
     $.ajax({
         type: 'POST',
