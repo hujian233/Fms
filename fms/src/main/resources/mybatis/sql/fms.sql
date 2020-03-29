@@ -1,9 +1,8 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
-
 -- ----------------------------
--- database for form
+-- database for fms
 -- ----------------------------
 DROP DATABASE IF EXISTS `fmsdb`;
 CREATE DATABASE `fmsdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
@@ -59,10 +58,58 @@ CREATE TABLE `fixture_entity`
     `usedCount` INT(10) COMMENT '已使用次数',
     `location`  varchar(20) COMMENT '存放库位',
     `status`    INT(10) DEFAULT NULL COMMENT '状态',
-    `checkTime`   DATE    DEFAULT NULL COMMENT '上次点检日期'
+    `checkTime` DATE    DEFAULT NULL COMMENT '上次点检日期'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='夹具实体';
 
 # 增加联合索引，确保夹具代码和夹具序列号联合唯一性
 ALTER TABLE fixture_entity
     ADD INDEX idx2 (`code`, `seqid`);
+
+CREATE TABLE `inbound`
+(
+    `orderId`  varchar(64) UNIQUE COMMENT '订单编号',
+    `codeList` varchar(256) COMMENT '夹具列表',
+    `note` varchar(256) COMMENT '备注',
+    `applicant` varchar(64) COMMENT '申请人',
+    `applicantTime` DATE COMMENT '申请时间',
+    `status`    INT(10) DEFAULT NULL COMMENT '状态'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT ='入库申请表';
+
+CREATE TABLE `outbound`
+(
+    `orderId`  varchar(64) UNIQUE COMMENT '订单编号',
+    `codeList` varchar(256) COMMENT '夹具列表',
+    `employer`  varchar(64) UNIQUE COMMENT '领用人姓名',
+    `proLine` varchar(64) COMMENT '产线',
+    `ifCheck` boolean COMMENT '是否点检',
+    `note` varchar(256) COMMENT '备注',
+    `applicant` varchar(64) COMMENT '申请人',
+    `applicantTime` DATE COMMENT '申请时间',
+    `status`    INT(10) DEFAULT NULL COMMENT '状态'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT ='出库申请表';
+
+CREATE TABLE `repair`
+(
+    `orderId`  varchar(64) UNIQUE COMMENT '订单编号',
+    `codeList` varchar(256) COMMENT '夹具列表',
+    `failureType` varchar(64) COMMENT '故障类别',
+    `failureDesc` varchar(256) COMMENT '故障描述',
+    `applicant` varchar(64) COMMENT '申请人',
+    `applicantTime` DATE COMMENT '申请时间',
+    `status`    INT(10) DEFAULT NULL COMMENT '状态'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT ='报修申请表';
+
+CREATE TABLE `scrap`
+(
+    `orderId`  varchar(64) UNIQUE COMMENT '订单编号',
+    `codeList` varchar(256) COMMENT '夹具列表',
+    `reason` varchar(256) COMMENT '报废原因',
+    `applicant` varchar(64) COMMENT '申请人',
+    `applicantTime` DATE COMMENT '申请时间',
+    `status`    INT(10) DEFAULT NULL COMMENT '状态'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT ='报废申请表';
