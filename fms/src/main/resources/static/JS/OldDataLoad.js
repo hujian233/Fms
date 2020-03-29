@@ -47,14 +47,14 @@ function changeTab(e, type){
     displayType = type;
 
     switch(type){       //刷新操作
-        case 'Definition':
+        case 'Model':
             $('#download').text('点击下载夹具实体EXCEL模板');
             $('#download').attr('href', '../EXCEL/夹具实体模板.xlsx');
             $('#download').attr('download', '夹具实体模板.xlsx');
             $('#ModelTable').hide();
             $('#DefinitionTable').show();
             break;
-        case 'Model':
+        case 'Definition':
             $('#download').text('点击下载夹具定义EXCEL模板');
             $('#download').attr('href', '../EXCEL/夹具定义模板.xlsx');
             $('#download').attr('download', '夹具定义模板.xlsx');
@@ -68,6 +68,7 @@ function changeTab(e, type){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 提交（批量导入）
 function submit(){
+    debugger;
     var transData;
     switch(displayType){
         case 'Definition':
@@ -84,13 +85,13 @@ function submit(){
             break;
     }
     //0自定义；1：实体类
-    if(displayType=='definition'){
+    if(displayType=='Definition'){
         $.ajax({
             type: 'POST',
             dataType: 'JSON',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(transData),
-            url: '/upload/0',                                  //后端url待填
+            url: '/fixture/upload/define',                                  //后端url待填
             success: function(result){
                 if(result.Status == 'error'){
                     alert('导入失败，请稍后重试...');
@@ -101,13 +102,13 @@ function submit(){
             }
         });
     }
-    if(displayType=='model'){
+    if(displayType=='Model'){
         $.ajax({
             type: 'POST',
             dataType: 'JSON',
             contentType: 'application/json;charset=UTF-8',
             data: JSON.stringify(transData),
-            url: '/upload/1',                                  //后端url待填
+            url: '/fixture/upload/entity',                                  //后端url待填
             success: function(result){
                 if(result.Status == 'error'){
                     alert('导入失败，请稍后重试...');
