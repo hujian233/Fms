@@ -4,6 +4,7 @@ import com.school.fms.common.Response;
 import com.school.fms.entity.FixtureDefine;
 import com.school.fms.entity.FixtureEntity;
 import com.school.fms.service.FixtureService;
+import com.school.fms.service.OperationService;
 import com.school.fms.utils.JsonUtils;
 import com.school.fms.vo.WaitSubmitVo;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class FixtureController {
 
     @Resource
     private FixtureService fixtureService;
+
+    @Resource
+    private OperationService operationService;
 
     /**
      * 上传夹具定义表
@@ -134,5 +138,24 @@ public class FixtureController {
             e.printStackTrace();
         }
         return waitSubmitVos;
+    }
+
+    /**
+     * 删除待提交申请，删除该申请就是将夹具实体状态改成0：已入库，可用
+     * @param code 夹具代码
+     * @param seqId 夹具序列号
+     * @return response
+     */
+    @RequestMapping(value = "/deletewaitsubmit", method = {RequestMethod.GET})
+    @ResponseBody
+    public String deleteWaitSubmit(@RequestParam(value = "code", required = false) String code,
+                                               @RequestParam(value = "seqId", required = false) String seqId) {
+        try {
+            operationService.updateStatus(code, seqId, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonUtils.objectToJson(Response.error("操作失败"));
+        }
+        return JsonUtils.objectToJson(Response.ok("删除成功"));
     }
 }
