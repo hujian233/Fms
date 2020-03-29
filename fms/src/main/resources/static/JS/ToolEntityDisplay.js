@@ -228,24 +228,28 @@ $('#bulkOperBtn').click(function(){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 获取夹具定义的详细信息
 function getInfo(e){
-    var code = $(e).parent().parent().children().eq(0).text();
-    var seqID = $(e).parent().parent().children().eq(1).text();
+    var code = $(e).parent().parent().children().eq(1).text();
+    var seqID = $(e).parent().parent().children().eq(2).text();
     $.ajax({
         type: 'GET',
         dataType: 'JSON',
-        url: '../TestData/ToolEntityInfo.json',  //code附在url后  '...?Code=' + code + '&SeqID=' + seqID
-        success: function(result){
-
-            $('#Code').text(result.Code);
-            $('#SeqID').text(result.SeqID);
-            $('#RegDate').text(result.RegDate);
-            $('#UsedCount').text(result.UsedCount);
-            $('#State').text(result.State);
-            $('#BillNo').text(result.BillNo);
-            $('#StoreHouse').text(result.StoreHouse);
-            $('#LastTestTime').text(result.LastTestTime);
-            $('#TotalUsedTime').text(result.TotalUsedTime);
-            //$('#Image').attr('src', result.Image);
+     //   url: '../TestData/ToolEntityInfo.json',  //code附在url后  '...?Code=' + code + '&SeqID=' + seqID
+        url: '/fixture/queryEntity?code='+code,  //code附在url后  '...?Code=' + code + '&SeqID=' + seqID
+        success: function(result1){
+           // alert(result.code);
+           // result= JSON.stringify(result);
+            //alert(result[0].code);
+            result=result1[0];
+            $('#Code').text(result.code);
+            $('#SeqID').text(result.seqId);
+            $('#RegDate').text(result.regDate);
+            $('#UsedCount').text(result.usedCount);
+            $('#State').text(result.status);
+            $('#BillNo').text(result.billNo);
+            $('#StoreHouse').text(result.location);
+          /*  $('#LastTestTime').text(result.lastTestTime);
+            $('#TotalUsedTime').text(result.totalUsedTime);*/
+            $('#Image').attr('src', result.photoPath);
         },
         error: function(){
             alert('获取数据失败，请稍后重试...')
