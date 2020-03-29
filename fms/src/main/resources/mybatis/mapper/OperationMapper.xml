@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.school.fms.dao.OperationDao">
+
+
+    <insert id="addToInbound">
+        insert into inbound (codeList, note, applicant, applicantTime, status)
+        values (#{codeList}, #{note}, #{applicant}, #{applicantTime}, 0);
+    </insert>
+
+    <insert id="addToOutbound">
+        insert into outbound(codeList, employer, proLine, ifCheck, note, applicant, applicantTime, status)
+        values (#{codeList}, #{employer}, #{proLine}, #{ifCheck}, #{note}, #{applicant}, #{applicantTime}, 0)
+    </insert>
+
+    <insert id="addToRepair">
+        insert into repair(codeList, failureType, failureDesc, applicant, applicantTime, status)
+        values (#{codeList}, #{failureType}, #{failureDesc}, #{applicant}, #{applicantTime}, 0)
+    </insert>
+
+    <insert id="addToScrap">
+        insert into scrap(codeList, reason, applicant, applicantTime, status)
+        values (#{codeList}, #{reason}, #{applicant}, #{applicantTime}, 0)
+    </insert>
+</mapper>

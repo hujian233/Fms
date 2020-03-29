@@ -1,6 +1,10 @@
 package com.school.fms.controller;
 
 import com.school.fms.common.Response;
+import com.school.fms.entity.Inbound;
+import com.school.fms.entity.Outbound;
+import com.school.fms.entity.Repair;
+import com.school.fms.entity.Scrap;
 import com.school.fms.service.OperationService;
 import com.school.fms.utils.JsonUtils;
 import org.springframework.stereotype.Controller;
@@ -22,7 +26,8 @@ public class OperationController {
 
     /**
      * 用户操作 type 1:采购入库操作，2:入库操作，3:出库操作，4:报修操作，5:报废操作，修改夹具的状态
-     * @param code 夹具代码
+     *
+     * @param code  夹具代码
      * @param seqId 夹具序列号
      * @return list
      */
@@ -32,7 +37,7 @@ public class OperationController {
                             @RequestParam(value = "seqId", required = false) String seqId, @PathVariable int type) {
         try {
             //修改夹具状态
-            operationService.updateStatus(code, seqId,type);
+            operationService.updateStatus(code, seqId, type);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,9 +46,11 @@ public class OperationController {
 
     /**
      * 采购入库
-     * @param code 夹具代码
+     *
+     * @param code  夹具代码
      * @param seqId 夹具序列号
      * @return list
+     * TODO 这个先放着最后做，看在入库的基础上怎么修改
      */
     @RequestMapping(value = "/purchase  ", method = {RequestMethod.POST})
     @ResponseBody
@@ -59,73 +66,65 @@ public class OperationController {
 
     /**
      * 入库
-     * @param code 夹具代码
-     * @param seqId 夹具序列号
-     * @return list
+     *
+     * @return response
      */
     @RequestMapping(value = "/inbound", method = {RequestMethod.POST})
     @ResponseBody
-    public String inbound(@RequestParam(value = "code", required = false) String code,
-                           @RequestParam(value = "seqId", required = false) String seqId) {
+    public String inbound(@RequestBody Inbound inbound) {
         try {
-
+            operationService.addToInbound(inbound);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return JsonUtils.objectToJson(Response.ok("入库申请成功"));
     }
 
     /**
      * 出库
-     * @param code 夹具代码
-     * @param seqId 夹具序列号
-     * @return list
+     *
+     * @return response
      */
     @RequestMapping(value = "/outbound", method = {RequestMethod.POST})
     @ResponseBody
-    public String outbound(@RequestParam(value = "code", required = false) String code,
-                           @RequestParam(value = "seqId", required = false) String seqId) {
+    public String outbound(@RequestBody Outbound outbound) {
         try {
-
+            operationService.addToOutbound(outbound);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return JsonUtils.objectToJson(Response.ok("出库申请成功"));
     }
 
     /**
      * 报修
-     * @param code 夹具代码
-     * @param seqId 夹具序列号
+     *
      * @return list
      */
     @RequestMapping(value = "/repair", method = {RequestMethod.POST})
     @ResponseBody
-    public String repair(@RequestParam(value = "code", required = false) String code,
-                           @RequestParam(value = "seqId", required = false) String seqId) {
+    public String repair(@RequestBody Repair repair) {
         try {
-
+            operationService.addToRepair(repair);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return JsonUtils.objectToJson(Response.ok("报修申请成功"));
     }
 
     /**
      * 报废
-     * @param code 夹具代码
-     * @param seqId 夹具序列号
+     *
      * @return list
      */
     @RequestMapping(value = "/scrapped", method = {RequestMethod.POST})
     @ResponseBody
-    public String scrapped(@RequestParam(value = "code", required = false) String code,
-                           @RequestParam(value = "seqId", required = false) String seqId) {
+    public String scrapped(@RequestBody Scrap scrap) {
         try {
-
+            operationService.addToScrap(scrap);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return JsonUtils.objectToJson(Response.ok("报废申请成功"));
     }
 }

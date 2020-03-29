@@ -1,6 +1,6 @@
 package com.school.fms.dao;
 
-import com.school.fms.entity.FixtureEntity;
+import com.school.fms.entity.*;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,5 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OperationDao {
 
-    void add(FixtureEntity fixtureEntity, int i);
+    void addToInbound(Inbound inbound);
+
+    void addToOutbound(Outbound outbound);
+
+    void addToRepair(Repair repair);
+
+    void addToScrap(Scrap scrap);
 }

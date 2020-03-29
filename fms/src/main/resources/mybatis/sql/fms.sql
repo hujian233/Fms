@@ -68,48 +68,48 @@ ALTER TABLE fixture_entity
 
 CREATE TABLE `inbound`
 (
-    `orderId`  varchar(64) UNIQUE COMMENT '订单编号',
-    `codeList` varchar(256) COMMENT '夹具列表',
-    `note` varchar(256) COMMENT '备注',
-    `applicant` varchar(64) COMMENT '申请人',
+    `orderId`       INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE COMMENT '订单编号',
+    `codeList`      varchar(256) COMMENT '夹具列表',
+    `note`          varchar(256) COMMENT '备注',
+    `applicant`     varchar(64) COMMENT '申请人',
     `applicantTime` DATE COMMENT '申请时间',
-    `status`    INT(10) DEFAULT NULL COMMENT '状态'
+    `status`        INT(10) DEFAULT NULL COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='入库申请表';
 
 CREATE TABLE `outbound`
 (
-    `orderId`  varchar(64) UNIQUE COMMENT '订单编号',
-    `codeList` varchar(256) COMMENT '夹具列表',
-    `employer`  varchar(64) UNIQUE COMMENT '领用人姓名',
-    `proLine` varchar(64) COMMENT '产线',
-    `ifCheck` boolean COMMENT '是否点检',
-    `note` varchar(256) COMMENT '备注',
-    `applicant` varchar(64) COMMENT '申请人',
+    `orderId`       INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE COMMENT '订单编号',
+    `codeList`      varchar(256) COMMENT '夹具列表',
+    `employer`      varchar(64) UNIQUE COMMENT '领用人姓名',
+    `proLine`       varchar(64) COMMENT '产线',
+    `ifCheck`       boolean COMMENT '是否点检',
+    `note`          varchar(256) COMMENT '备注',
+    `applicant`     varchar(64) COMMENT '申请人',
     `applicantTime` DATE COMMENT '申请时间',
-    `status`    INT(10) DEFAULT NULL COMMENT '状态'
+    `status`        INT(10) DEFAULT NULL COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='出库申请表';
 
 CREATE TABLE `repair`
 (
-    `orderId`  varchar(64) UNIQUE COMMENT '订单编号',
-    `codeList` varchar(256) COMMENT '夹具列表',
-    `failureType` varchar(64) COMMENT '故障类别',
-    `failureDesc` varchar(256) COMMENT '故障描述',
-    `applicant` varchar(64) COMMENT '申请人',
+    `orderId`       INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE COMMENT '订单编号',
+    `codeList`      varchar(256) COMMENT '夹具列表',
+    `failureType`   varchar(64) COMMENT '故障类别',
+    `failureDesc`   varchar(256) COMMENT '故障描述',
+    `applicant`     varchar(64) COMMENT '申请人',
     `applicantTime` DATE COMMENT '申请时间',
-    `status`    INT(10) DEFAULT NULL COMMENT '状态'
+    `status`        INT(10) DEFAULT NULL COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='报修申请表';
 
 CREATE TABLE `scrap`
 (
-    `orderId`  varchar(64) UNIQUE COMMENT '订单编号',
-    `codeList` varchar(256) COMMENT '夹具列表',
-    `reason` varchar(256) COMMENT '报废原因',
-    `applicant` varchar(64) COMMENT '申请人',
+    `orderId`       INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE COMMENT '订单编号',
+    `codeList`      varchar(256) COMMENT '夹具列表',
+    `reason`        varchar(256) COMMENT '报废原因',
+    `applicant`     varchar(64) COMMENT '申请人',
     `applicantTime` DATE COMMENT '申请时间',
-    `status`    INT(10) DEFAULT NULL COMMENT '状态'
+    `status`        INT(10) DEFAULT NULL COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='报废申请表';

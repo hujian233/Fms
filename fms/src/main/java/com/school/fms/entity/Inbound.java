@@ -6,18 +6,18 @@ package com.school.fms.entity;
  * @Description: 入库申请表
  */
 public class Inbound {
-    private String orderId;
+    private Integer orderId;
     private String codeList;
     private String note;
     private String applicant;
     private String applicantTime;
     private int status;
 
-    public String getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 

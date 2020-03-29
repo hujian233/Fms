@@ -6,7 +6,7 @@ package com.school.fms.entity;
  * @Description: 出库申请表
  */
 public class Outbound {
-    private String orderId;
+    private Integer orderId;
     private String codeList;
     private String employer;
     /**
@@ -19,11 +19,11 @@ public class Outbound {
     private String applicantTime;
     private int status;
 
-    public String getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 

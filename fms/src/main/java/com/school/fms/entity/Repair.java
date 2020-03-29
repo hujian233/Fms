@@ -6,7 +6,7 @@ package com.school.fms.entity;
  * @Description: 报修申请表
  */
 public class Repair {
-    private String orderId;
+    private Integer orderId;
     private String codeList;
     private String failureType;
     private String failureDesc;
@@ -14,11 +14,11 @@ public class Repair {
     private String applicantTime;
     private int status;
 
-    public String getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
