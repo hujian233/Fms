@@ -31,7 +31,7 @@ public class OperationController {
      * @param seqId 夹具序列号
      * @return list
      */
-    @RequestMapping(value = "/operation/{type}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/operation/{type}/update", method = {RequestMethod.GET})
     @ResponseBody
     public String operation(@RequestParam(value = "code", required = false) String code,
                             @RequestParam(value = "seqId", required = false) String seqId, @PathVariable int type) {
@@ -74,6 +74,7 @@ public class OperationController {
     public String inbound(@RequestBody Inbound inbound) {
         try {
             operationService.addToInbound(inbound);
+            //TODO 原来的夹具实体的状态需要更改
         } catch (Exception e) {
             e.printStackTrace();
         }

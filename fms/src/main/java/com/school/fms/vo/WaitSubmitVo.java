@@ -10,14 +10,9 @@ public class WaitSubmitVo {
     private String code;
     private String seqId;
     private String name;
+    private int status;
 
     public WaitSubmitVo() {
-    }
-
-    public WaitSubmitVo(String code, String seqId, String name) {
-        this.code = code;
-        this.seqId = seqId;
-        this.name = name;
     }
 
     public String getCode() {
@@ -44,5 +39,11 @@ public class WaitSubmitVo {
         this.name = name;
     }
 
+    public int getStatus() {
+        return status;
+    }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }

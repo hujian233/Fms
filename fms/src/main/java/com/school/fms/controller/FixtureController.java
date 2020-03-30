@@ -130,7 +130,7 @@ public class FixtureController {
      */
     @RequestMapping(value = "/querywaitsubmit", method = {RequestMethod.GET})
     @ResponseBody
-    public List<WaitSubmitVo> getWaitSubmit(@RequestParam(value = "type", required = false) int status) {
+    public List<WaitSubmitVo> getWaitSubmit(@RequestParam(value = "type", required = false) Integer status) {
         List<WaitSubmitVo> waitSubmitVos = new ArrayList<>();
         try {
             waitSubmitVos = fixtureService.queryWaitSubmit(status);

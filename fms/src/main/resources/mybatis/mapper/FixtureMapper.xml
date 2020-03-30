@@ -73,10 +73,11 @@
         LIMIT 1
     </select>
     <select id="queryWaitSubmit" resultType="com.school.fms.vo.WaitSubmitVo">
-        select fe.code, fe.seqid, fd.name
+        select fe.code, fe.seqid, fd.name,fe.status
         from fixture_entity fe
-                 left join fixture_define fd on fe.code = fd.code
-        where fe.status = #{status}
+        left join fixture_define fd on fe.code = fd.code
+        where fe.status &lt; 6 and fe.status &gt; 0
+        <if test="status!=null">and fe.status = #{status}</if>
     </select>
 
     <update id="updateStatus">

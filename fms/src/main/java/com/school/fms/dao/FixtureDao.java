@@ -81,5 +81,5 @@ public interface FixtureDao {
      * @param status 状态 1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废
      * @return list
      */
-    List<WaitSubmitVo> queryWaitSubmit(Integer status);
+    List<WaitSubmitVo> queryWaitSubmit(@Param("status")Integer status);
 }
