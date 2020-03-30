@@ -7,10 +7,12 @@ import com.school.fms.entity.Repair;
 import com.school.fms.entity.Scrap;
 import com.school.fms.service.OperationService;
 import com.school.fms.utils.JsonUtils;
+import com.school.fms.vo.CodeListVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: hujian
@@ -73,8 +75,11 @@ public class OperationController {
     @ResponseBody
     public String inbound(@RequestBody Inbound inbound) {
         try {
+            List<CodeListVo> codeListVos = inbound.getCodeListVo();
+            for (CodeListVo vo: codeListVos){
+                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 2);
+            }
             operationService.addToInbound(inbound);
-            //TODO 原来的夹具实体的状态需要更改
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,6 +95,10 @@ public class OperationController {
     @ResponseBody
     public String outbound(@RequestBody Outbound outbound) {
         try {
+            List<CodeListVo> codeListVos = outbound.getCodeListVo();
+            for (CodeListVo vo: codeListVos){
+                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 3);
+            }
             operationService.addToOutbound(outbound);
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,6 +115,10 @@ public class OperationController {
     @ResponseBody
     public String repair(@RequestBody Repair repair) {
         try {
+            List<CodeListVo> codeListVos = repair.getCodeListVo();
+            for (CodeListVo vo: codeListVos){
+                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 4);
+            }
             operationService.addToRepair(repair);
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,6 +135,10 @@ public class OperationController {
     @ResponseBody
     public String scrapped(@RequestBody Scrap scrap) {
         try {
+            List<CodeListVo> codeListVos = scrap.getCodeListVo();
+            for (CodeListVo vo: codeListVos){
+                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 5);
+            }
             operationService.addToScrap(scrap);
         } catch (Exception e) {
             e.printStackTrace();

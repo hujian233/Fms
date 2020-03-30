@@ -1,5 +1,10 @@
 package com.school.fms.entity;
 
+import com.school.fms.utils.JsonUtils;
+import com.school.fms.vo.CodeListVo;
+
+import java.util.List;
+
 /**
  * @Author: hujian
  * @Date: 2020/3/29 19:20
@@ -7,6 +12,7 @@ package com.school.fms.entity;
  */
 public class Inbound {
     private Integer orderId;
+    private List<CodeListVo> codeListVo;
     private String codeList;
     private String note;
     private String applicant;
@@ -19,6 +25,14 @@ public class Inbound {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public List<CodeListVo> getCodeListVo() {
+        return codeListVo;
+    }
+
+    public void setCodeListVo(List<CodeListVo> codeListVo) {
+        this.codeListVo = codeListVo;
     }
 
     public String getCodeList() {

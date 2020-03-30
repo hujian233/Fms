@@ -1,5 +1,9 @@
 package com.school.fms.entity;
 
+import com.school.fms.vo.CodeListVo;
+
+import java.util.List;
+
 /**
  * @Author: hujian
  * @Date: 2020/3/29 19:24
@@ -7,6 +11,7 @@ package com.school.fms.entity;
  */
 public class Outbound {
     private Integer orderId;
+    private List<CodeListVo> codeListVo;
     private String codeList;
     private String employer;
     /**
@@ -25,6 +30,14 @@ public class Outbound {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public List<CodeListVo> getCodeListVo() {
+        return codeListVo;
+    }
+
+    public void setCodeListVo(List<CodeListVo> codeListVo) {
+        this.codeListVo = codeListVo;
     }
 
     public String getCodeList() {
