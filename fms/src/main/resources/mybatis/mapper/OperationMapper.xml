@@ -47,4 +47,18 @@
     <select id="queryScrap" resultType="com.school.fms.entity.Scrap">
         select * from scrap where orderId = #{orderId}
     </select>
+
+    <select id="queryInboundList" resultType="com.school.fms.vo.CheckListVo">
+        select orderId,applicant,applicantTime from inbound;
+    </select>
+    <select id="queryOutboundList" resultType="com.school.fms.vo.CheckListVo">
+        select orderId,applicant,applicantTime from outbound;
+    </select>
+    <select id="queryRepairList" resultType="com.school.fms.vo.CheckListVo">
+        select orderId,applicant,applicantTime from repair;
+    </select>
+    <select id="queryScrapList" resultType="com.school.fms.vo.CheckListVo">
+        select orderId,applicant,applicantTime from scrap;
+    </select>
+
 </mapper>

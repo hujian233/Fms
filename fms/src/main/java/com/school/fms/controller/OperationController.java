@@ -8,11 +8,14 @@ import com.school.fms.entity.Scrap;
 import com.school.fms.service.OperationService;
 import com.school.fms.utils.JsonUtils;
 import com.school.fms.vo.ApprovalVo;
+import com.school.fms.vo.CheckListVo;
 import com.school.fms.vo.CodeListVo;
+import com.school.fms.vo.WaitSubmitVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -145,6 +148,35 @@ public class OperationController {
             e.printStackTrace();
         }
         return JsonUtils.objectToJson(Response.ok("报废申请成功"));
+    }
+
+    /**
+     * 查询待审批申请
+     *
+     * @param status 类型 1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废，不传值就是查询所有的状态
+     * @return list
+     */
+    @RequestMapping(value = "/querysubmit", method = {RequestMethod.GET})
+    @ResponseBody
+    public String getSubmit(@RequestParam(value = "type", required = false) Integer status) {
+        List<CheckListVo> checkListVos = new ArrayList<>();
+        switch (status) {
+            case 2:
+                checkListVos = operationService.queryInboundList();
+                break;
+            case 3:
+                checkListVos = operationService.queryOutboundList();
+                break;
+            case 4:
+                checkListVos = operationService.queryRepairList();
+                break;
+            case 5:
+                checkListVos = operationService.queryScrapList();
+                break;
+            default:
+                return JsonUtils.objectToJson(Response.error("操作失败，无此类型"));
+        }
+        return JsonUtils.objectToJson(new Response(checkListVos));
     }
 
     /**

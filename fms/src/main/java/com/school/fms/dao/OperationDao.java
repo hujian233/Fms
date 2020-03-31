@@ -1,8 +1,11 @@
 package com.school.fms.dao;
 
 import com.school.fms.entity.*;
+import com.school.fms.vo.CheckListVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @Author: hujian
@@ -22,7 +25,7 @@ public interface OperationDao {
 
     void addToScrap(Scrap scrap);
 
-    //修改状态
+    //审批，修改状态
 
     void updateInbound(@Param("id") int id, @Param("result") int result);
 
@@ -32,7 +35,7 @@ public interface OperationDao {
 
     void updateScrap(@Param("id")int id, @Param("result")int result);
 
-    //查询数据
+    //查询详情
 
     Inbound queryInbound(@Param("orderId")int orderId);
 
@@ -42,4 +45,13 @@ public interface OperationDao {
 
     Scrap queryScrap(@Param("orderId")int orderId);
 
+    //显示列表
+
+    List<CheckListVo> queryInboundList();
+
+    List<CheckListVo> queryOutboundList();
+
+    List<CheckListVo> queryRepairList();
+
+    List<CheckListVo> queryScrapList();
 }

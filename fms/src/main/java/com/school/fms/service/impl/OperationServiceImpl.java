@@ -5,6 +5,7 @@ import com.school.fms.dao.OperationDao;
 import com.school.fms.entity.*;
 import com.school.fms.service.OperationService;
 import com.school.fms.utils.JsonUtils;
+import com.school.fms.vo.CheckListVo;
 import com.school.fms.vo.CodeListVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -174,5 +175,25 @@ public class OperationServiceImpl implements OperationService {
     @Override
     public Scrap queryScrap(int orderId) {
         return operationDao.queryScrap(orderId);
+    }
+
+    @Override
+    public List<CheckListVo> queryInboundList() {
+        return operationDao.queryInboundList();
+    }
+
+    @Override
+    public List<CheckListVo> queryOutboundList() {
+        return operationDao.queryOutboundList();
+    }
+
+    @Override
+    public List<CheckListVo> queryRepairList() {
+        return operationDao.queryRepairList();
+    }
+
+    @Override
+    public List<CheckListVo> queryScrapList() {
+        return operationDao.queryScrapList();
     }
 }

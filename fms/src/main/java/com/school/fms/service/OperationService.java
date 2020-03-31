@@ -4,6 +4,7 @@ import com.school.fms.entity.Inbound;
 import com.school.fms.entity.Outbound;
 import com.school.fms.entity.Repair;
 import com.school.fms.entity.Scrap;
+import com.school.fms.vo.CheckListVo;
 
 import java.util.List;
 
@@ -42,4 +43,12 @@ public interface OperationService {
     Repair queryRepair(int orderId);
 
     Scrap queryScrap(int orderId);
+
+    List<CheckListVo> queryInboundList();
+
+    List<CheckListVo> queryOutboundList();
+
+    List<CheckListVo> queryRepairList();
+
+    List<CheckListVo> queryScrapList();
 }
