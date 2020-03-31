@@ -153,7 +153,7 @@ public class OperationController {
     /**
      * 查询待审批申请
      *
-     * @param status 类型 1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废，不传值就是查询所有的状态
+     * @param status 类型 1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废
      * @return list
      */
     @RequestMapping(value = "/querysubmit", method = {RequestMethod.GET})

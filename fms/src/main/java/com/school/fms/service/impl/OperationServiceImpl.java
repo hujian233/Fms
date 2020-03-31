@@ -64,14 +64,14 @@ public class OperationServiceImpl implements OperationService {
             Inbound inbound = operationDao.queryInbound(id);
             String codeList = inbound.getCodeList();
             List<CodeListVo> codeListVos = JsonUtils.jsonToList(codeList, CodeListVo.class);
-            if (result == 0) {
+            if (result == 1) {
                 //同意入库申请
                 if (codeListVos != null) {
                     for (CodeListVo vo : codeListVos) {
                         fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 0);
                     }
                 }
-            } else if (result == 1) {
+            } else if (result == 2) {
                 //驳回入库申请
                 if (codeListVos != null) {
                     for (CodeListVo vo : codeListVos) {
@@ -89,14 +89,14 @@ public class OperationServiceImpl implements OperationService {
             Outbound outbound = operationDao.queryOutbound(id);
             String codeList = outbound.getCodeList();
             List<CodeListVo> codeListVos = JsonUtils.jsonToList(codeList, CodeListVo.class);
-            if (result == 0) {
+            if (result == 1) {
                 //同意出库申请
                 if (codeListVos != null) {
                     for (CodeListVo vo : codeListVos) {
                         fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 6);
                     }
                 }
-            } else if (result == 1) {
+            } else if (result == 2) {
                 //驳回出库申请
                 if (codeListVos != null) {
                     for (CodeListVo vo : codeListVos) {
@@ -114,14 +114,14 @@ public class OperationServiceImpl implements OperationService {
             Repair repair = operationDao.queryRepair(id);
             String codeList = repair.getCodeList();
             List<CodeListVo> codeListVos = JsonUtils.jsonToList(codeList, CodeListVo.class);
-            if (result == 0) {
+            if (result == 1) {
                 //同意报修申请
                 if (codeListVos != null) {
                     for (CodeListVo vo : codeListVos) {
                         fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 7);
                     }
                 }
-            } else if (result == 1) {
+            } else if (result == 2) {
                 //驳回报修申请
                 if (codeListVos != null) {
                     for (CodeListVo vo : codeListVos) {
@@ -139,14 +139,14 @@ public class OperationServiceImpl implements OperationService {
             Scrap scrap = operationDao.queryScrap(id);
             String codeList = scrap.getCodeList();
             List<CodeListVo> codeListVos = JsonUtils.jsonToList(codeList, CodeListVo.class);
-            if (result == 0) {
+            if (result == 1) {
                 //同意报废申请
                 if (codeListVos != null) {
                     for (CodeListVo vo : codeListVos) {
                         fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 8);
                     }
                 }
-            } else if (result == 1) {
+            } else if (result == 2) {
                 //驳回报废申请
                 if (codeListVos != null) {
                     for (CodeListVo vo : codeListVos) {

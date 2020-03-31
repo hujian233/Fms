@@ -19,7 +19,6 @@ public class ApprovalVo {
     private List<Integer> orderIds;
     /**
      * 审批结果，1：同意，2：驳回
-     * TODO 审批结束后是否要删除内容
      */
     private int result;
 
