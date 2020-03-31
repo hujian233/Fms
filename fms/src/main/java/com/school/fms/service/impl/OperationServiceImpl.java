@@ -5,10 +5,12 @@ import com.school.fms.dao.OperationDao;
 import com.school.fms.entity.*;
 import com.school.fms.service.OperationService;
 import com.school.fms.utils.JsonUtils;
+import com.school.fms.vo.CodeListVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: hujian
@@ -52,5 +54,125 @@ public class OperationServiceImpl implements OperationService {
     public void addToScrap(Scrap scrap) {
         scrap.setCodeList(JsonUtils.objectToJson(scrap.getCodeListVo()));
         operationDao.addToScrap(scrap);
+    }
+
+    @Override
+    public void approvalInbound(List<Integer> orderIds, int result) {
+        for (int id : orderIds) {
+            operationDao.updateInbound(id, result);
+            Inbound inbound = operationDao.queryInbound(id);
+            String codeList = inbound.getCodeList();
+            List<CodeListVo> codeListVos = JsonUtils.jsonToList(codeList, CodeListVo.class);
+            if (result == 0) {
+                //同意入库申请
+                if (codeListVos != null) {
+                    for (CodeListVo vo : codeListVos) {
+                        fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 0);
+                    }
+                }
+            } else if (result == 1) {
+                //驳回入库申请
+                if (codeListVos != null) {
+                    for (CodeListVo vo : codeListVos) {
+                        fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 9);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void approvalOutbound(List<Integer> orderIds, int result) {
+        for (int id : orderIds) {
+            operationDao.updateOutbound(id, result);
+            Outbound outbound = operationDao.queryOutbound(id);
+            String codeList = outbound.getCodeList();
+            List<CodeListVo> codeListVos = JsonUtils.jsonToList(codeList, CodeListVo.class);
+            if (result == 0) {
+                //同意出库申请
+                if (codeListVos != null) {
+                    for (CodeListVo vo : codeListVos) {
+                        fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 6);
+                    }
+                }
+            } else if (result == 1) {
+                //驳回出库申请
+                if (codeListVos != null) {
+                    for (CodeListVo vo : codeListVos) {
+                        fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 0);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void approvalRepair(List<Integer> orderIds, int result) {
+        for (int id : orderIds) {
+            operationDao.updateRepair(id, result);
+            Repair repair = operationDao.queryRepair(id);
+            String codeList = repair.getCodeList();
+            List<CodeListVo> codeListVos = JsonUtils.jsonToList(codeList, CodeListVo.class);
+            if (result == 0) {
+                //同意报修申请
+                if (codeListVos != null) {
+                    for (CodeListVo vo : codeListVos) {
+                        fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 7);
+                    }
+                }
+            } else if (result == 1) {
+                //驳回报修申请
+                if (codeListVos != null) {
+                    for (CodeListVo vo : codeListVos) {
+                        fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 0);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void approvalScrap(List<Integer> orderIds, int result) {
+        for (int id : orderIds) {
+            operationDao.updateScrap(id, result);
+            Scrap scrap = operationDao.queryScrap(id);
+            String codeList = scrap.getCodeList();
+            List<CodeListVo> codeListVos = JsonUtils.jsonToList(codeList, CodeListVo.class);
+            if (result == 0) {
+                //同意报废申请
+                if (codeListVos != null) {
+                    for (CodeListVo vo : codeListVos) {
+                        fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 8);
+                    }
+                }
+            } else if (result == 1) {
+                //驳回报废申请
+                if (codeListVos != null) {
+                    for (CodeListVo vo : codeListVos) {
+                        fixtureDao.updateStatus(vo.getCode(), vo.getSeqId(), 0);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public Inbound queryInbound(int orderId) {
+        return operationDao.queryInbound(orderId);
+    }
+
+    @Override
+    public Outbound queryOutbound(int orderId) {
+        return operationDao.queryOutbound(orderId);
+    }
+
+    @Override
+    public Repair queryRepair(int orderId) {
+        return operationDao.queryRepair(orderId);
+    }
+
+    @Override
+    public Scrap queryScrap(int orderId) {
+        return operationDao.queryScrap(orderId);
     }
 }

@@ -9,10 +9,8 @@ import com.school.fms.utils.JsonUtils;
 import com.school.fms.vo.WaitSubmitVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -125,7 +123,7 @@ public class FixtureController {
     /**
      * 查询待提交申请
      *
-     * @param status 类型 1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废
+     * @param status 类型 1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废，不传值就是查询所有的状态
      * @return list
      */
     @RequestMapping(value = "/querywaitsubmit", method = {RequestMethod.GET})

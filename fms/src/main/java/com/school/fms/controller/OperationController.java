@@ -7,6 +7,7 @@ import com.school.fms.entity.Repair;
 import com.school.fms.entity.Scrap;
 import com.school.fms.service.OperationService;
 import com.school.fms.utils.JsonUtils;
+import com.school.fms.vo.ApprovalVo;
 import com.school.fms.vo.CodeListVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -76,7 +77,7 @@ public class OperationController {
     public String inbound(@RequestBody Inbound inbound) {
         try {
             List<CodeListVo> codeListVos = inbound.getCodeListVo();
-            for (CodeListVo vo: codeListVos){
+            for (CodeListVo vo : codeListVos) {
                 operationService.updateStatus(vo.getCode(), vo.getSeqId(), 2);
             }
             operationService.addToInbound(inbound);
@@ -96,7 +97,7 @@ public class OperationController {
     public String outbound(@RequestBody Outbound outbound) {
         try {
             List<CodeListVo> codeListVos = outbound.getCodeListVo();
-            for (CodeListVo vo: codeListVos){
+            for (CodeListVo vo : codeListVos) {
                 operationService.updateStatus(vo.getCode(), vo.getSeqId(), 3);
             }
             operationService.addToOutbound(outbound);
@@ -116,7 +117,7 @@ public class OperationController {
     public String repair(@RequestBody Repair repair) {
         try {
             List<CodeListVo> codeListVos = repair.getCodeListVo();
-            for (CodeListVo vo: codeListVos){
+            for (CodeListVo vo : codeListVos) {
                 operationService.updateStatus(vo.getCode(), vo.getSeqId(), 4);
             }
             operationService.addToRepair(repair);
@@ -136,7 +137,7 @@ public class OperationController {
     public String scrapped(@RequestBody Scrap scrap) {
         try {
             List<CodeListVo> codeListVos = scrap.getCodeListVo();
-            for (CodeListVo vo: codeListVos){
+            for (CodeListVo vo : codeListVos) {
                 operationService.updateStatus(vo.getCode(), vo.getSeqId(), 5);
             }
             operationService.addToScrap(scrap);
@@ -144,5 +145,59 @@ public class OperationController {
             e.printStackTrace();
         }
         return JsonUtils.objectToJson(Response.ok("报废申请成功"));
+    }
+
+    /**
+     * 对用户操作进行审批
+     *
+     * @param approvalVo 审批请求
+     * @return response
+     */
+    @PostMapping(value = "/approval")
+    @ResponseBody
+    public String approval(@RequestBody ApprovalVo approvalVo) {
+        int type = approvalVo.getType();
+        List<Integer> orderIds = approvalVo.getOrderIds();
+        int result = approvalVo.getResult();
+        switch (type) {
+            case 2:
+                operationService.approvalInbound(orderIds, result);
+                break;
+            case 3:
+                operationService.approvalOutbound(orderIds, result);
+                break;
+            case 4:
+                operationService.approvalRepair(orderIds, result);
+                break;
+            case 5:
+                operationService.approvalScrap(orderIds, result);
+                break;
+            default:
+                return JsonUtils.objectToJson(Response.error("操作失败，无此类型"));
+        }
+        return JsonUtils.objectToJson(Response.ok("操作成功"));
+    }
+
+    @GetMapping(value = "/seeDetail")
+    @ResponseBody
+    public String seeDetail(@RequestParam int type, @RequestParam int orderId) {
+        Object response;
+        switch (type) {
+            case 2:
+                response = operationService.queryInbound(orderId);
+                break;
+            case 3:
+                response = operationService.queryOutbound(orderId);
+                break;
+            case 4:
+                response = operationService.queryRepair(orderId);
+                break;
+            case 5:
+                response = operationService.queryScrap(orderId);
+                break;
+            default:
+                return JsonUtils.objectToJson(Response.error("操作失败，无此类型"));
+        }
+        return JsonUtils.objectToJson(new Response(response));
     }
 }

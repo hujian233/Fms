@@ -9,19 +9,42 @@
         insert into inbound (codeList, note, applicant, applicantTime, status)
         values (#{codeList}, #{note}, #{applicant}, #{applicantTime}, 0);
     </insert>
-
     <insert id="addToOutbound">
         insert into outbound(codeList, employer, proLine, ifCheck, note, applicant, applicantTime, status)
         values (#{codeList}, #{employer}, #{proLine}, #{ifCheck}, #{note}, #{applicant}, #{applicantTime}, 0)
     </insert>
-
     <insert id="addToRepair">
         insert into repair(codeList, failureType, failureDesc, applicant, applicantTime, status)
         values (#{codeList}, #{failureType}, #{failureDesc}, #{applicant}, #{applicantTime}, 0)
     </insert>
-
     <insert id="addToScrap">
         insert into scrap(codeList, reason, applicant, applicantTime, status)
         values (#{codeList}, #{reason}, #{applicant}, #{applicantTime}, 0)
     </insert>
+
+    <update id="updateInbound">
+        update inbound set status=#{result} WHERE orderId = #{id}
+    </update>
+    <update id="updateOutbound">
+        update inbound set status=#{result} WHERE orderId = #{id}
+    </update>
+    <update id="updateRepair">
+        update inbound set status=#{result} WHERE orderId = #{id}
+    </update>
+    <update id="updateScrap">
+        update inbound set status=#{result} WHERE orderId = #{id}
+    </update>
+
+    <select id="queryInbound" resultType="com.school.fms.entity.Inbound">
+        select * from inbound where orderId = #{orderId}
+    </select>
+    <select id="queryOutbound" resultType="com.school.fms.entity.Outbound">
+        select * from outbound where orderId = #{orderId}
+    </select>
+    <select id="queryRepair" resultType="com.school.fms.entity.Repair">
+        select * from repair where orderId = #{orderId}
+    </select>
+    <select id="queryScrap" resultType="com.school.fms.entity.Scrap">
+        select * from scrap where orderId = #{orderId}
+    </select>
 </mapper>

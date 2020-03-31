@@ -22,6 +22,7 @@ public class FixtureEntity implements Serializable {
     private String location;
     /**
      * 0:已入库（可用），1:待采购入库，2:待入库，3:待出库，4:待报修，5:待报废，6:已出库，7:已报修，8:已报废
+     * 9:驳回入库
      */
     private int status;
     /**
