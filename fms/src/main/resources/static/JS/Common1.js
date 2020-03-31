@@ -27,14 +27,15 @@ $('#content').load('../HTML/TempApplicationManage1.html');
 //$('#content').load('../HTML/UserInfoDisplay.html');
 //$('#content').load('../HTML/OldDataLoad.html');
 var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-var canshu= window.location.search.substr(10);
-var mark=canshu.indexOf("&");
-var userName=canshu.substring(0,mark);
-$("#name").html(userName+" 欢迎");
+var canshu = window.location.search.substr(10);
+var mark = canshu.indexOf("&");
+var userName = canshu.substring(0, mark);
+userName = decodeURIComponent(userName);
+$("#name").html(userName + " 欢迎");
 
 //跳转
 //夹具管理
-$('#apply1').click(function(){
+$('#apply1').click(function () {
     $('#content').empty();
     $('#content').load('../HTML/TempApplicationManage1.html');
 })

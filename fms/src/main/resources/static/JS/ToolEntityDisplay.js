@@ -55,7 +55,7 @@ function displayTable(data) {
                 var appendData =
                     '<tr><th>' + n
                     + '</th><td>' + data[i].code
-                    + '</td><td>' + data[i].seqID
+                    + '</td><td>' + data[i].seqId
                     + '</td><td>' + data[i].regDate
                     + '</td><td>' + data[i].usedCount
                     + '</td><td>' + data[i].status
@@ -159,11 +159,12 @@ function refleshCache() {
                         Scrap.push(result[i]);
                     }
                 }
+                addToCacheTbody('outTbody', out.length, out);
+                addToCacheTbody('inTbody', ins.length, ins);
+                addToCacheTbody('repairTbody', Repair.length, Repair);
+                addToCacheTbody('scrapTbody', Scrap.length, Scrap);
             }
-            addToCacheTbody('outTbody', out.length, out);
-            addToCacheTbody('inTbody', ins.length, ins);
-            addToCacheTbody('repairTbody', Repair.length, Repair);
-            addToCacheTbody('scrapTbody', Scrap.length, Scrap);
+
         },
         error: function () {
             alert('待提交申请中，部分夹具被其他用户操作，系统已自动将其去除');
@@ -246,6 +247,8 @@ function submitByAjax(data) {          //url待填
 
                         initData = result.sort(compare);    //将实体数据按照状态排序  可用放最前
                         displayTable(initData);
+                        //重新刷新小框数据
+                        refleshCache();
                     },
                     error: function () {
                         alert('获取信息失败，请稍后重试...');
@@ -354,30 +357,30 @@ function getInfo(e) {
 //#region  加入临时申请列表
 // 加入出库单  type=3出库操作
 function addToOut(e) {
-    var code = $(e).parent().parent().children().eq(0).text();
-    var seqId = $(e).parent().parent().children().eq(1).text();
+    var code = $(e).parent().parent().children().eq(1).text();
+    var seqId = $(e).parent().parent().children().eq(2).text();
     var transData = [];
     transData.push({'code': code, 'seqId': seqId, 'type': 3});
     submitByAjax(transData)
 
-    refleshCache();
+    // refleshCache();
 }
 
 //加入入库单  type=1:入库操作
 function addToIn(e) {
-    var code = $(e).parent().parent().children().eq(0).text();
-    var seqId = $(e).parent().parent().children().eq(1).text();
+    var code = $(e).parent().parent().children().eq(1).text();
+    var seqId = $(e).parent().parent().children().eq(2).text();
     var transData = [];
     transData.push({'code': code, 'seqId': seqId, 'type': 1});
     submitByAjax(transData)
-
-    refleshCache();
+    //放到后面刷新，此处注释掉
+    // refleshCache();
 }
 
 // 加入报修单
 function addToRepair(e) {
-    var code = $(e).parent().parent().children().eq(0).text();
-    var seqId = $(e).parent().parent().children().eq(1).text();
+    var code = $(e).parent().parent().children().eq(1).text();
+    var seqId = $(e).parent().parent().children().eq(2).text();
     $('#repairCode').val(code);
     $('#repairSeqID').val(seqId);
     $('#RepairModal').modal('show');
@@ -396,14 +399,14 @@ $('#repairImageInput').change(function () {
 
 // 加入报废单  type=5报废操作
 function addToScrap(e) {
-    var code = $(e).parent().parent().children().eq(0).text();
-    var seqId = $(e).parent().parent().children().eq(1).text();
+    var code = $(e).parent().parent().children().eq(1).text();
+    var seqId = $(e).parent().parent().children().eq(2).text();
     var transData = [];
     //transData.push({'Code': code, 'SeqID': seqID, 'Type': 'Scrap'});
     transData.push({'code': code, 'seqId': seqId, 'type': 5});
     submitByAjax(transData)
-
-    refleshCache();
+    //放到后面刷新，此处注释掉
+    // refleshCache();
 }
 
 //报修提交  后面增加的    4：待报修状态
@@ -411,15 +414,16 @@ function submitBaoxiu() {
     /* var code = $(e).parent().parent().children().eq(0).text();
      var seqId = $(e).parent().parent().children().eq(1).text();*/
     var code = $("#repairCode").val();
-    alert("code=" + code);
+    // alert("code=" + code);
     var seqId = $("#repairSeqID").val();
-    alert("seqId=" + seqId);
+    // alert("seqId=" + seqId);
     var transData = [];
     //transData.push({'Code': code, 'SeqID': seqID, 'Type': 'Scrap'});
     transData.push({'code': code, 'seqId': seqId, 'type': 4});
     submitByAjax(transData)
 
-    refleshCache();
+//放到后面刷新，此处注释掉
+    // refleshCache();
 
 }
 

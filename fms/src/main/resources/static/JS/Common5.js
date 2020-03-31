@@ -30,6 +30,7 @@ var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 var canshu= window.location.search.substr(10);
 var mark=canshu.indexOf("&");
 var userName=canshu.substring(0,mark);
+userName = decodeURIComponent(userName);
 $("#name").html(userName+" 欢迎");
 
 //跳转
