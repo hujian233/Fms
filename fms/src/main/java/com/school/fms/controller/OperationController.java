@@ -87,7 +87,7 @@ public class OperationController {
             List<CodeListVo> codeListVos = inbound.getCodeListVo();
             inbound.setApplicantTime(current);
             for (CodeListVo vo : codeListVos) {
-                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 2);
+                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 11);
             }
             operationService.addToInbound(inbound);
         } catch (Exception e) {
@@ -111,7 +111,7 @@ public class OperationController {
             outbound.setApplicantTime(current);
             List<CodeListVo> codeListVos = outbound.getCodeListVo();
             for (CodeListVo vo : codeListVos) {
-                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 3);
+                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 12);
             }
             operationService.addToOutbound(outbound);
         } catch (Exception e) {
@@ -135,7 +135,7 @@ public class OperationController {
             repair.setApplicantTime(current);
             List<CodeListVo> codeListVos = repair.getCodeListVo();
             for (CodeListVo vo : codeListVos) {
-                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 4);
+                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 13);
             }
             operationService.addToRepair(repair);
         } catch (Exception e) {
@@ -159,7 +159,7 @@ public class OperationController {
             scrap.setApplicantTime(current);
             List<CodeListVo> codeListVos = scrap.getCodeListVo();
             for (CodeListVo vo : codeListVos) {
-                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 5);
+                operationService.updateStatus(vo.getCode(), vo.getSeqId(), 14);
             }
             operationService.addToScrap(scrap);
         } catch (Exception e) {

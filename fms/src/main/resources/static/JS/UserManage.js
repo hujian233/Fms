@@ -6,6 +6,7 @@ var searchType = '';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 展示表格  
 function displayTable(data){
+    $('tbody').empty();
     $('#paginationUserInfoList').jqPaginator({
         first: '<li class="first"><a href="javascript:;">首页</a></li>',
         prev: '<li class="prev"><a href="javascript:;"><<</a></li>',
@@ -18,12 +19,12 @@ function displayTable(data){
         onPageChange: function(num){
             var begin = (num - 1) * pageSize;
             for(var i = begin; i < data.length && i < begin + pageSize; i++){
-                $('tbody').append('<tr><td>' + data[i]['UserID']
-                + '</td><td>' + data[i]['Name']
-                + '</td><td>' + data[i]['Email']
-                + '</td><td>' + data[i]['Privilege']
-                + '</td><td>' + data[i]['Workcell']
-                + '</td><td>' + data[i]['LastLogin']
+                $('tbody').append('<tr><td>' + data[i]['jobNumber']
+                + '</td><td>' + data[i]['userName']
+                + '</td><td>' + data[i]['mailAddress']
+                + '</td><td>' + data[i]['authority']
+                + '</td><td>' + data[i]['department']
+                + '</td><td>' + data[i]['loginTime']
                 + '</td><td><button class="btn act-btn" onclick="showEditModal(this);">修改</button>'
                 + '<button class="btn act-btn" onclick="delUser(this);">删除</button>'
                 + '</td></tr>');
@@ -36,10 +37,12 @@ function refleshTable(){
     $.ajax({
         type: "GET",
         dataType: "JSON",
-        url: "../TestData/UserInfoList.json",
+     //   url: "../TestData/UserInfoList.json",
+        url: "/queryUser",
         success: function(result){
-            displayTable(result);
-            jData = result;
+            debugger;
+            displayTable(result.data);
+            jData = result.data;
         },
         error: function(){
             alert('获取信息失败，请稍后刷新重试...');
@@ -56,21 +59,22 @@ $(window).on('load', refleshTable());
         searchType = $(e).text();
         $('#paramInput').focus();
     }
-    
+
     $('#searchBtn').click(function(){
+        debugger;
         var param = $('#paramInput').val();
         switch(searchType){
-            case 'UserID':
-                displayTable(jData.filter(item => { return item.UserID == param}));
+            case '工号':
+                displayTable(jData.filter(function(item) { return item.jobNumber == param}));
                 break;
-            case 'Name':
-                displayTable(jData.filter(item => { return item.Name == param}));
+            case '姓名':
+                displayTable(jData.filter(function(item)  { return item.userName == param}));
                 break;
-            case 'Privilege':
-                displayTable(jData.filter(item => { return item.Privilege == param}));
+            case '权限':
+                displayTable(jData.filter(function(item)  { return item.authority == param}));
                 break;
-            case 'Workcell':
-                displayTable(jData.filter(item => { return item.Workcell == param}));
+            case '工作部门':
+                displayTable(jData.filter(function(item)  { return item.department == param}));
                 break;
             default:
                 $('#paramInput').val('');
@@ -123,7 +127,8 @@ function delUser(e){
             dataType: 'JSON',
             url: '/deleteUser?jobNumber='+userID,               //待填  ?UserID=userID
             success: function(result){
-                if(result.Status == 'success'){
+                debugger;
+                if(result.resultCode == 0){
                     alert('删除成功！');
                     refleshTable();
                 }else{
