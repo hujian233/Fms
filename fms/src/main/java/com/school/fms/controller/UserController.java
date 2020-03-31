@@ -128,4 +128,23 @@ public class UserController {
         }
         return response;
     }
+
+    /**
+     * 查询当前用户
+     * @param jobNumber 工号
+     * @return user
+     */
+    @GetMapping(value = "/queryUser", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String queryLogin(@RequestParam long jobNumber) {
+        String response;
+        try {
+            User user = userService.selectUser(jobNumber, null, null);
+            response = JsonUtils.objectToJson(new Response(user));
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = JsonUtils.objectToJson(Response.error("后台错误"));
+        }
+        return response;
+    }
 }
