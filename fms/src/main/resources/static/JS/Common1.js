@@ -33,8 +33,22 @@ var userName = canshu.substring(0, mark);
 userName = decodeURIComponent(userName);
 $("#name").html(userName + " 欢迎");
 
+var idindex=find(canshu,'=',2);
+var id=canshu.substring(idindex+1,idindex+2);
+
+
+
+function find(str,cha,num){
+    var x=str.indexOf(cha);
+    for(var i=0;i<num;i++){
+        x=str.indexOf(cha,x+1);
+    }
+    return x;
+}
+
+
 //跳转
-//夹具管理
+//夹具管理  需要将当前用户Id带过去
 $('#apply1').click(function () {
     $('#content').empty();
     $('#content').load('../HTML/TempApplicationManage1.html');

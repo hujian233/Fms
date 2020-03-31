@@ -62,7 +62,8 @@ $('#loginBtn').click(function () {
                     var authority = data.authority;
 
                     var userName = encodeURIComponent(data.userName);
-                    var id = data.id;
+                    //工号
+                    var id = encodeURIComponent(data.jobNumber);
                     if (authority == 1) {
                         window.location = '/common1?userName=' + userName + "&id=" + id;
                     }
