@@ -4,21 +4,44 @@ var initData = {};
 var displayType = 'Out';                //当前展示的申请类型
 var searchType = '';                    //搜索类型
 var selectedToolModel = [];             //已选择的夹具实体
+refreshTable();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 获取待提交申请列表、刷新待申请列表（函数）
 function refreshTable(){
+    var type = 0;
+    //待采购入库，为新加状态
+    if (displayType == 'purchaseIn') {
+        type = 1;
+    }
+    if (displayType == 'Out') {
+        type = 3;
+    }
+    if (displayType == 'In') {
+        type = 2;
+    }
+    if (displayType == 'Repair') {
+        type = 4;
+    }
+    if (displayType == 'Scrap') {
+        type = 5;
+    }
     $.ajax({
         type: 'GET',
         dataType: 'JSON',
-        url: '../TestData/TempApplicationList.json',  //后端Url，附加code参数
+        // url: '../TestData/TempApplicationList.json',  //后端Url，附加code参数
+        url:'/fixture/querywaitsubmit?type='+type,
         success: function(result){
             initData = result;
-            
-            $('#Workcell').val(initData['Workcell']);        //将申请人信息绑定至申请单
-            $('#ApplicantID').val(initData['ApplicantID']);
-            $('#ApplicantName').val(initData['ApplicantName']);
+            debugger;
+            /*
+                        $('#Workcell').val(initData['Workcell']);        //将申请人信息绑定至申请单
+                        $('#ApplicantID').val(initData['ApplicantID']);
+                        $('#ApplicantName').val(initData['ApplicantName']);
 
-            displayTable(initData[displayType]);
+                        displayTable(initData[displayType]);*/
+            //TODO将用户信息查询出来绑定至申请单
+
+            displayTable(initData);
         },
         error: function(){
             alert('获取信息失败，请稍后重试...');
@@ -30,14 +53,14 @@ function displayTable(data){
     for(let i = 0; i < data.length; i++){
         $('tbody').append(
             '<tr><td><input class="checkbox" onchange="selectOne(this);" type="checkbox">'
-            + '</td><td>' + data[i].Code
-            + '</td><td>' + data[i].SeqID
-            + '</td><td>' + data[i].Name
+            + '</td><td>' + data[i].code
+            + '</td><td>' + data[i].seqId
+            + '</td><td>' + data[i].name
             + '</td><td><i class="glyphicon glyphicon-remove remove-icon" onclick="remove(this);"></i></td></tr>');
     }
 }
 
-$(window).on('load', function(){
+/*$(window).on('load', function(){
     refreshTable();
     $.ajax({                //获取故障类型与产线的字典
         type: 'GET',
@@ -45,11 +68,11 @@ $(window).on('load', function(){
         url: '../TestData/LinePMDict.json',  //后端Url，附加code参数
         success: function(result){
             for(let p in result['Line']){            //将产线、故障字典绑定至下拉框
-                $('#LineID').append('<option value="' 
+                $('#LineID').append('<option value="'
                     + p + '">' + result['Line'][p] + '</option>');
             }
             for(let p in result['PMContent']){
-                $('#PMContentID').append('<option value="' 
+                $('#PMContentID').append('<option value="'
                     + p + '">' + result['PMContent'][p] + '</option>');
             }
         },
@@ -57,7 +80,7 @@ $(window).on('load', function(){
             alert('获取信息失败，请稍后重试...');
         }
     });
-});
+});*/
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +90,9 @@ function changeTab(e, type){
     $(e).addClass('a-tab-active');
     $('#selectAll').prop('checked', false);
     displayType = type;
-    displayTable(initData[displayType]);
+    //切换tab的时候查询一下
+    refreshTable();
+    // displayTable(initData[displayType]);
 }
 //#endregion
 
@@ -104,25 +129,31 @@ function remove(e){
     var seqID = $(e).parent().parent().children().eq(2).text();
     var transData = [];
     transData.push({'Code': code, 'SeqID': seqID, 'Type': displayType});
-    /* $.ajax({
-        type: 'POST',
+     $.ajax({
+        type: 'get',
         dataType: 'JSON',
         contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(transData),
-        url: '',  //待改  后端接口
-        success: function(result){
+       // data: JSON.stringify(transData),
+       // url: '',  //待改  后端接口
+         url: '/fixture/deletewaitsubmit?code=' + code + "&seqId=" + seqID,
+         success: function(result){
             if(result.Status == 'error'){
                 alert('操作失败，请稍后重试...');
+            }else{
+                alert("删除成功");
+                refreshTable();
             }
-        } 
-    }); */
-    displayTable(initData[displayType]);
+
+        }
+    });
+    //displayTable(initData[displayType]);
 }
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 查找
 function chooseSearchType(e, type){
+    debugger;
     $('#searchTypeBtn').text($(e).text());
     searchType = type;
     $('#paramInput').focus();
@@ -132,14 +163,14 @@ $('#searchBtn').click(function(){
     var param = $('#paramInput').val();
     switch(searchType){
         case 'Code':
-            displayTable(initData[displayType].filter(item => { return item.Code == param}));
+            displayTable(initData.filter(function(item) { return item.code == param}));
             break;
         case 'Name':
-            displayTable(initData[displayType].filter(item => { return item.Name == param}));
+            displayTable(initData.filter(function(item){ return item.name == param}));
             break;
         default:
             $('#paramInput').val('');
-            displayTable(initData[displayType]);
+            displayTable(initData);
     }
 });
 //#endregion
@@ -167,7 +198,7 @@ function showFillInModal(){
     $('#repairInput').hide();
     $('#scrapInput').hide();
     switch(displayType){                         //更改模态窗内容
-        case 'Out': 
+        case 'Out':
             $('#modalTitle').text('填写出库申请单');
             $('#UserName').val('');
             $('#LineID').val('');
@@ -191,16 +222,21 @@ function showFillInModal(){
             $('#ScrapReason').val('');
             $('#scrapInput').show();
             break;
+        case 'purchaseIn':
+            $('#modalTitle').text('填写报废申请单');
+            $('#puchaseInRemarks').val('');
+            $('#purchaseinInput').show();
+            break;
     }
 
-    $('#selectedModelTextarea').text('');                       //清空富文本框显示夹具  
+    $('#selectedModelTextarea').text('');                       //清空富文本框显示夹具
     for(let i = 0; i < selectedToolModel.length; i++){          //刷新富文本框显示夹具
         let temp = $('#selectedModelTextarea').text();
-        $('#selectedModelTextarea').text(temp + 'No.' + (i + 1) + '    ' 
-            + selectedToolModel[i].Code + '    ' 
+        $('#selectedModelTextarea').text(temp + 'No.' + (i + 1) + '    '
+            + selectedToolModel[i].Code + '    '
             + selectedToolModel[i].SeqID + '\n');
     }
-    
+
     $('#fillInModal').modal('show');
 }
 
@@ -241,7 +277,7 @@ function SubmitByAjax(data, url){
         dataType: 'JSON',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(data),
-        url: url,  
+        url: url,
         success: function(result){
             if(result.Status == 'error'){
                 alert('提交失败，请稍后重试...');
@@ -249,7 +285,7 @@ function SubmitByAjax(data, url){
                 alert('提交成功！');
                 refreshTable();
             }
-        } 
+        }
     });
 }
 //#endregion

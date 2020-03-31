@@ -1,184 +1,201 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
+<head>
     <title>TempApplicationManage</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="../IMG/favicon.ico">
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../node_modules/normalize.css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="../node_modules/normalize.css/normalize.css"/>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../node_modules/font-awesome/css/font-awesome.min.css">
-  </head>
-    <body>
-        <!--悬浮按钮-->
-        <div class="dangling-box">
-            <a id="danglingBack" style="display: none;"><i class="dangling-icon fa fa-arrow-up" aria-hidden="true"></i></a>
-            <a id="danglingShow" onclick="showFillInModal();"><i class="dangling-icon fa fa-pencil-square-o" aria-hidden="true"></i></a>
-        </div>
-        <!-- 主体 -->
-        <div class="main">
-            <div class="page-header">
-                <h2 class="page-title">待提交申请处理</h2>
-                <div class="oper-box">
-                    <button class="btn btn-primary" onclick="showFillInModal();">填写申请</button>
-                    <!-- 查找 -->
-                    <div class="search-box input-group col-xs-9">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle" id="searchTypeBtn" data-toggle="dropdown">
-                                查找方式
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="pointer-type" onclick="chooseSearchType(this, 'Code');">按夹具代码</a></li>
-                                <li><a class="pointer-type" onclick="chooseSearchType(this, 'Name');">按夹具名称</a></li>
-                                <li><a class="pointer-type" onclick="chooseSearchType(this, '');">展示所有</a></li>
-                            </ul>
-                        </div>
-                        <input type="text" class="form-control" id="paramInput">
-                        <span class="input-group-btn">
+</head>
+<body>
+<!--悬浮按钮-->
+<div class="dangling-box">
+    <a id="danglingBack" style="display: none;"><i class="dangling-icon fa fa-arrow-up" aria-hidden="true"></i></a>
+    <a id="danglingShow" onclick="showFillInModal();"><i class="dangling-icon fa fa-pencil-square-o"
+                                                         aria-hidden="true"></i></a>
+</div>
+<!-- 主体 -->
+<div class="main">
+    <div class="page-header">
+        <h2 class="page-title">待提交申请处理</h2>
+        <div class="oper-box">
+            <button class="btn btn-primary" onclick="showFillInModal();">填写申请</button>
+            <!-- 查找 -->
+            <div class="search-box input-group col-xs-9">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" id="searchTypeBtn"
+                            data-toggle="dropdown">
+                        查找方式
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="pointer-type" onclick="chooseSearchType(this, 'Code');">按夹具代码</a></li>
+                        <li><a class="pointer-type" onclick="chooseSearchType(this, 'Name');">按夹具名称</a></li>
+                        <li><a class="pointer-type" onclick="chooseSearchType(this, '');">展示所有</a></li>
+                    </ul>
+                </div>
+                <input type="text" class="form-control" id="paramInput">
+                <span class="input-group-btn">
                             <button class="btn btn-default" type="button" id="searchBtn">查找</button>
                         </span>
-                    </div>
-                </div>
-                
-            </div> 
-            <!-- 申请类别选择 -->
-            <div class="tab-box">
-                <!--<a class="a-tab a-tab-active" id="purchaseInTab" onclick="changeTab(this, 'purchaseIn');">采购入库</a>-->
-                <a class="a-tab " id="OutTab" onclick="changeTab(this, 'Out');">出库</a>
-                <a class="a-tab" id="InTab" onclick="changeTab(this, 'In');">入库</a>
-                <a class="a-tab" id="RepairTab" onclick="changeTab(this, 'Repair');">报修</a>
-                <a class="a-tab" id="ScrapTab" onclick="changeTab(this, 'Scrap');">报废</a>
-            </div>
-            <!-- 申请表格展示 -->
-            <div class="table-box table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th><input class="checkbox" id="selectAll" type="checkbox"></th>
-                            <th>夹具代码</th>
-                            <th>夹具序列号</th>
-                            <th>夹具名称</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
             </div>
         </div>
 
-        <!-- 提交申请单 -->
-        <div class="modal fade" id="fillInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="modalTitle">填写申请单</h4>
+    </div>
+    <!-- 申请类别选择 -->
+    <div class="tab-box">
+        <a class="a-tab a-tab-active" id="OutTab" onclick="changeTab(this, 'Out');">出库</a>
+        <a class="a-tab" id="purchaseInTab" onclick="changeTab(this, 'purchaseIn');">待采购入库</a>
+        <a class="a-tab" id="InTab" onclick="changeTab(this, 'In');">入库</a>
+        <a class="a-tab" id="RepairTab" onclick="changeTab(this, 'Repair');">报修</a>
+        <a class="a-tab" id="ScrapTab" onclick="changeTab(this, 'Scrap');">报废</a>
+    </div>
+    <!-- 申请表格展示 -->
+    <div class="table-box table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><input class="checkbox" id="selectAll" type="checkbox"></th>
+                <th>夹具代码</th>
+                <th>夹具序列号</th>
+                <th>夹具名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 提交申请单 -->
+<div class="modal fade" id="fillInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalTitle">填写申请单</h4>
+            </div>
+            <div class="modal-body" id="modal_body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="selectedModelTextarea">已选夹具</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="6" id="selectedModelTextarea" disabled></textarea>
+                        </div>
                     </div>
-                    <div class="modal-body" id="modal_body">
-                        <div class="form-horizontal">
+                    <!-- 输入类型根据申请类型变化 -->
+                    <div class="variable-box">
+                        <!-- 出库填写 -->
+                        <div id="outInput" style="display: none;">
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="selectedModelTextarea">已选夹具</label>
+                                <label class="control-label col-sm-3" for="UserName">领用人姓名</label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" rows="6" id="selectedModelTextarea" disabled></textarea>
-                                </div>
-                            </div>
-                            <!-- 输入类型根据申请类型变化 -->
-                            <div class="variable-box">
-                                <!-- 出库填写 -->
-                                <div id="outInput" style="display: none;">
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-3" for="UserName">领用人姓名</label>
-                                        <div class="col-sm-8">
-                                            <input class="form-control" id="UserName"></input>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-3" for="LineID">产线</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" id="LineID">
-                                                <option value="">请选择产线</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-3" for="Check">是否为点检</label>
-                                        <input id="Check" type="checkbox">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-3" for="OutRemarks">备注</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" rows="4" id="OutRemarks"  maxlength="100" placeholder="最多输入100个字符"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 入库填写 -->
-                                <div id="inInput" style="display: none;">
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-3" for="InRemarks">备注</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" rows="4" id="InRemarks"  maxlength="100" placeholder="最多输入100个字符"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 报修填写 -->
-                                <div id="repairInput" style="display: none;">
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-3" for="PMContentID">故障类别</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" id="PMContentID">
-                                                <option value="">请选择故障类别</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-3" for="RepairReason">故障描述</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" rows="4" id="RepairReason"  maxlength="100"  placeholder="最多输入100个字符"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 报废填写 -->
-                                <div id="scrapInput" style="display: none;">
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-3" for="ScrapReason">报废原因</label>
-                                        <div class="col-sm-8">
-                                            <textarea class="form-control" rows="4" id="ScrapReason" maxlength="100" placeholder="最多输入100个字符"></textarea>
-                                        </div>
-                                    </div>
+                                    <input class="form-control" id="UserName"></input>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="Workcell">工作部门</label>
+                                <label class="control-label col-sm-3" for="LineID">产线</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="Workcell" disabled>
+                                    <select class="form-control" id="LineID">
+                                        <option value="">请选择产线</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="ApplicantID">申请人工号</label>
+                                <label class="control-label col-sm-3" for="Check">是否为点检</label>
+                                <input id="Check" type="checkbox">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="OutRemarks">备注</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="ApplicantID" disabled>
+                                    <textarea class="form-control" rows="4" id="OutRemarks" maxlength="100"
+                                              placeholder="最多输入100个字符"></textarea>
                                 </div>
                             </div>
+                        </div>
+                        <!-- 待采购入库填写 -->
+                        <div id="purchaseinInput" style="display: none;">
                             <div class="form-group">
-                                <label class="control-label col-sm-3" for="ApplicantName">申请人姓名</label>
+                                <label class="control-label col-sm-3" for="puchaseInRemarks">备注</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="ApplicantName" disabled>
+                                    <textarea class="form-control" rows="4" id="puchaseInRemarks" maxlength="100"
+                                              placeholder="最多输入100个字符"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 入库填写 -->
+                        <div id="inInput" style="display: none;">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="InRemarks">备注</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" rows="4" id="InRemarks" maxlength="100"
+                                              placeholder="最多输入100个字符"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 报修填写 -->
+                        <div id="repairInput" style="display: none;">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="PMContentID">故障类别</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="PMContentID">
+                                        <option value="">请选择故障类别</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary center-block" id="SubmitBtn">确认提交</button>
+                                <label class="control-label col-sm-3" for="RepairReason">故障描述</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" rows="4" id="RepairReason" maxlength="100"
+                                              placeholder="最多输入100个字符"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 报废填写 -->
+                        <div id="scrapInput" style="display: none;">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="ScrapReason">报废原因</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" rows="4" id="ScrapReason" maxlength="100"
+                                              placeholder="最多输入100个字符"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="Workcell">工作部门</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" id="Workcell" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="ApplicantID">申请人工号</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" id="ApplicantID" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="ApplicantName">申请人姓名</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" id="ApplicantName" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary center-block" id="SubmitBtn">确认提交</button>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <script src="../JS/TempApplicationManage1.js"></script>
-        <link href="../CSS/TempApplicationManage.css" rel="stylesheet" type="text/css">
-    </body>
+<script src="../JS/TempApplicationManage1.js"></script>
+<link href="../CSS/TempApplicationManage.css" rel="stylesheet" type="text/css">
+</body>
 </html>

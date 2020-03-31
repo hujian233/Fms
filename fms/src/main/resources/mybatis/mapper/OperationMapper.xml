@@ -49,16 +49,16 @@
     </select>
 
     <select id="queryInboundList" resultType="com.school.fms.vo.CheckListVo">
-        select orderId,applicant,applicantTime from inbound;
+        select orderId,applicant,applicantTime from inbound where status=0;
     </select>
     <select id="queryOutboundList" resultType="com.school.fms.vo.CheckListVo">
-        select orderId,applicant,applicantTime from outbound;
+        select orderId,applicant,applicantTime from outbound where status=0;;
     </select>
     <select id="queryRepairList" resultType="com.school.fms.vo.CheckListVo">
-        select orderId,applicant,applicantTime from repair;
+        select orderId,applicant,applicantTime from repair where status=0;;
     </select>
     <select id="queryScrapList" resultType="com.school.fms.vo.CheckListVo">
-        select orderId,applicant,applicantTime from scrap;
+        select orderId,applicant,applicantTime from scrap where status=0;
     </select>
 
 </mapper>
