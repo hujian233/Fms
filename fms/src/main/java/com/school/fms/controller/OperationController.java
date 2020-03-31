@@ -15,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,7 +81,11 @@ public class OperationController {
     @ResponseBody
     public String inbound(@RequestBody Inbound inbound) {
         try {
+            Date time = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String current = sdf.format(time);
             List<CodeListVo> codeListVos = inbound.getCodeListVo();
+            inbound.setApplicantTime(current);
             for (CodeListVo vo : codeListVos) {
                 operationService.updateStatus(vo.getCode(), vo.getSeqId(), 2);
             }
@@ -99,6 +105,10 @@ public class OperationController {
     @ResponseBody
     public String outbound(@RequestBody Outbound outbound) {
         try {
+            Date time = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String current = sdf.format(time);
+            outbound.setApplicantTime(current);
             List<CodeListVo> codeListVos = outbound.getCodeListVo();
             for (CodeListVo vo : codeListVos) {
                 operationService.updateStatus(vo.getCode(), vo.getSeqId(), 3);
@@ -119,6 +129,10 @@ public class OperationController {
     @ResponseBody
     public String repair(@RequestBody Repair repair) {
         try {
+            Date time = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String current = sdf.format(time);
+            repair.setApplicantTime(current);
             List<CodeListVo> codeListVos = repair.getCodeListVo();
             for (CodeListVo vo : codeListVos) {
                 operationService.updateStatus(vo.getCode(), vo.getSeqId(), 4);
@@ -139,6 +153,10 @@ public class OperationController {
     @ResponseBody
     public String scrapped(@RequestBody Scrap scrap) {
         try {
+            Date time = new Date(System.currentTimeMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String current = sdf.format(time);
+            scrap.setApplicantTime(current);
             List<CodeListVo> codeListVos = scrap.getCodeListVo();
             for (CodeListVo vo : codeListVos) {
                 operationService.updateStatus(vo.getCode(), vo.getSeqId(), 5);

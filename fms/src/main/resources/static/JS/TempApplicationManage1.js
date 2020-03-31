@@ -12,7 +12,7 @@ userName = decodeURIComponent(userName);
 $("#name").html(userName + " 欢迎");*/
 
 var idindex=find(canshu,'=',2);
-var id=decodeURIComponent(canshu.substring(idindex+1,idindex+2));
+var id=decodeURIComponent(canshu.substring(idindex+1));
 
 function find(str,cha,num){
     var x=str.indexOf(cha);
@@ -75,9 +75,9 @@ function getUser(){
         url:'/queryUser?jobNumber='+id,
         success: function(result){
             debugger;
-            $('#Workcell').val(result.data.department);//工作部门
-            $('#ApplicantID').val(result.data.jobNumber);
-            $('#ApplicantName').val(result.data.userName);
+            $('#Workcell').val(result.data[0].department);//工作部门
+            $('#ApplicantID').val(result.data[0].jobNumber);
+            $('#ApplicantName').val(result.data[0].userName);
         },
         error: function(){
            // alert('获取信息失败，请稍后重试...');
@@ -305,7 +305,7 @@ $('#SubmitBtn').click(function(){               //提交申请单
             }
             debugger;
             //夹具
-            transData['codeList'] =selectedJiaju;
+            transData['codeListVo'] =selectedJiaju;
             //备注
             transData['note'] = $('#OutRemarks').val();
             //领用人姓名
@@ -336,7 +336,7 @@ $('#SubmitBtn').click(function(){               //提交申请单
                 object.seqId=selectedToolModel[i].SeqID;
                 selectedJiaju.push(object);
             }
-            transData['codeList'] =selectedJiaju;
+            transData['codeListVo'] =selectedJiaju;
             SubmitByAjax(transData, '/do/inbound');
             break;
         case 'Repair':
@@ -355,7 +355,7 @@ $('#SubmitBtn').click(function(){               //提交申请单
                 object.seqId=selectedToolModel[i].SeqID;
                 selectedJiaju.push(object);
             }
-            transData['codeList'] =selectedJiaju;
+            transData['codeListVo'] =selectedJiaju;
             SubmitByAjax(transData, '/do/repair');
             break;
         case 'Scrap':
@@ -372,7 +372,7 @@ $('#SubmitBtn').click(function(){               //提交申请单
                 object.seqId=selectedToolModel[i].SeqID;
                 selectedJiaju.push(object);
             }
-            transData['codeList'] =selectedJiaju;
+            transData['codeListVo'] =selectedJiaju;
             SubmitByAjax(transData, '/do/scrapped');
             break;
         case 'purchaseIn':
@@ -395,6 +395,8 @@ function SubmitByAjax(data, url){
                 alert('提交失败，请稍后重试...');
             }else{
                 alert('提交成功！');
+                //关闭小窗
+                $('#fillInModal').modal('hide');
                 refreshTable();
             }
         }
