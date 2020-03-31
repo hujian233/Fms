@@ -14,6 +14,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.sun.xml.internal.ws.api.model.wsdl.WSDLBoundOperation.ANONYMOUS.required;
 
 /**
  * @Author: hujian
@@ -92,9 +96,10 @@ public class UserController {
         String password = userLoginVo.getPassword();
         //给一个默认值false
         boolean rememberme = userLoginVo.getRememberme() != null ? userLoginVo.getRememberme() : false;
-
         String shapwd = DigestUtils.sha1Hex(password);
-        User user1 = userService.selectUser(jobNumber, null, null);
+        List<User> userList;
+        userList = userService.selectUser(jobNumber, null, null, null);
+        User user1 = userList.get(0);
         if (user1 != null) {
             if (shapwd.equals(user1.getPassword())) {
                 session.setAttribute("loginUser", user1);
@@ -131,16 +136,20 @@ public class UserController {
 
     /**
      * 查询当前用户
+     *
      * @param jobNumber 工号
      * @return user
      */
     @GetMapping(value = "/queryUser", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String queryLogin(@RequestParam long jobNumber) {
+    public String queryLogin(@RequestParam(required = false) Long jobNumber,
+                             @RequestParam(required = false) String username,
+                             @RequestParam(required = false) Integer authority,
+                             @RequestParam(required = false) String department) {
         String response;
         try {
-            User user = userService.selectUser(jobNumber, null, null);
-            response = JsonUtils.objectToJson(new Response(user));
+            List<User> users = userService.selectUser(jobNumber, username, authority, department);
+            response = JsonUtils.objectToJson(new Response(users));
         } catch (Exception e) {
             e.printStackTrace();
             response = JsonUtils.objectToJson(Response.error("后台错误"));

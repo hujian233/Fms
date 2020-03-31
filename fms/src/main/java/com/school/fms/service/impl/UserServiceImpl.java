@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: hujian
@@ -22,13 +23,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkUser(long jobNumber) {
-        User user = userDao.selectUser(jobNumber, null, null);
+        List<User> user = userDao.selectUser(jobNumber, null, null, null);
         return null != user;
     }
 
     @Override
-    public User selectUser(Long jobNumber, String username, String mailAddress) {
-        return userDao.selectUser(jobNumber, username, mailAddress);
+    public List<User> selectUser(Long jobNumber, String username, Integer authority, String department) {
+        return userDao.selectUser(jobNumber, username, authority, department);
     }
 
     @Override

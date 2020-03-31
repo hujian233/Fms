@@ -4,6 +4,8 @@ import com.school.fms.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @Author: hujian
  * @Date: 2020/3/24 12:36
@@ -15,11 +17,12 @@ public interface UserDao {
      * 查询用户
      * @param jobnumber 工号
      * @param username 用户名
-     * @param mailaddress 邮箱
+     * @param authority 权限
+     * @param department 部门
      * @return User
      */
-    public User selectUser(@Param("jobnumber") long jobnumber, @Param("username") String username,
-                           @Param("mailaddress") String mailaddress);
+    public List<User> selectUser(@Param("jobnumber") Long jobnumber, @Param("username") String username,
+                           @Param("authority") Integer authority, @Param("department") String department);
 
     /**
      * 添加用户

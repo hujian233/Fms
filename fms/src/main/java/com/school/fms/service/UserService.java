@@ -2,6 +2,8 @@ package com.school.fms.service;
 
 import com.school.fms.entity.User;
 
+import java.util.List;
+
 /**
  * @Author: hujian
  * @Date: 2020/3/24 14:26
@@ -20,10 +22,11 @@ public interface UserService {
      * 查询用户
      * @param jobNumber 工号
      * @param username 用户名
-     * @param mailAddress 邮箱地址
-     * @return User
+     * @param authority 权限
+     * @param department 部门
+     * @return User list
      */
-    public User selectUser(Long jobNumber, String username, String mailAddress);
+    public List<User> selectUser(Long jobNumber, String username, Integer authority, String department);
 
     /**
      * 添加用户

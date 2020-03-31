@@ -28,10 +28,12 @@
         <if test="username != null">
             AND username = #{username}
         </if>
-        <if test="mailaddress != null">
-            AND mailaddress = #{mailaddress}
+        <if test="authority != null">
+            AND authority = #{authority}
         </if>
-        LIMIT 1
+        <if test="department != null">
+            AND department = #{department}
+        </if>
     </select>
 
     <insert id="addUser">
