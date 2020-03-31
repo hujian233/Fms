@@ -4,6 +4,23 @@ var initData = {};
 var displayType = 'Out';                //当前展示的申请类型
 var searchType = '';                    //搜索类型
 var selectedToolModel = [];             //已选择的夹具实体
+
+var canshu = window.location.search.substr(10);
+/*var mark = canshu.indexOf("&");
+var userName = canshu.substring(0, mark);
+userName = decodeURIComponent(userName);
+$("#name").html(userName + " 欢迎");*/
+
+var idindex=find(canshu,'=',2);
+var id=decodeURIComponent(canshu.substring(idindex+1,idindex+2));
+
+function find(str,cha,num){
+    var x=str.indexOf(cha);
+    for(var i=0;i<num;i++){
+        x=str.indexOf(cha,x+1);
+    }
+    return x;
+}
 refreshTable();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 获取待提交申请列表、刷新待申请列表（函数）
@@ -40,7 +57,7 @@ function refreshTable(){
 
                         displayTable(initData[displayType]);*/
             //TODO将用户信息查询出来绑定至申请单
-
+           // getUser();
             displayTable(initData);
         },
         error: function(){
@@ -48,6 +65,26 @@ function refreshTable(){
         }
     });
 }
+
+
+//根据jobnumber查询user信息
+function getUser(){
+    $.ajax({
+        type: 'GET',
+        dataType: 'JSON',
+        url:'/queryUser?jobNumber='+id,
+        success: function(result){
+            debugger;
+            $('#Workcell').val(result.data.department);//工作部门
+            $('#ApplicantID').val(result.data.jobNumber);
+            $('#ApplicantName').val(result.data.userName);
+        },
+        error: function(){
+           // alert('获取信息失败，请稍后重试...');
+        }
+    });
+}
+
 function displayTable(data){
     $('tbody').empty();
     for(let i = 0; i < data.length; i++){
@@ -178,6 +215,8 @@ $('#searchBtn').click(function(){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 填写申请单
 function showFillInModal(){
+    //获取用户信息绑定申请表
+    getUser();
     selectedToolModel = [];
     var selectedCount = 0;        //选中夹具数
     for(let i = 0; i < $('tbody').children().length; i++){    //将选中的夹具添加入变量数组
@@ -223,7 +262,7 @@ function showFillInModal(){
             $('#scrapInput').show();
             break;
         case 'purchaseIn':
-            $('#modalTitle').text('填写报废申请单');
+            $('#modalTitle').text('填写待采购入库申请单');
             $('#puchaseInRemarks').val('');
             $('#purchaseinInput').show();
             break;
@@ -241,32 +280,105 @@ function showFillInModal(){
 }
 
 $('#SubmitBtn').click(function(){               //提交申请单
-    var transData = {
+   /* var transData = {
         'ToolModel': selectedToolModel,
-        'Workcell': initData['Workcell'],
-        'ApplicantID': initData['ApplicantID'],
-        'ApplicantName': initData['ApplicantName']
-    };
+        'Workcell': $("#Workcell").val(),
+        'ApplicantID': $("#ApplicantID").val(),
+        'ApplicantName': $("#ApplicantName").val()
+    };*/
+    var transData = {};
     switch(displayType){
         case 'Out':
-            transData['UserName'] = $('#UserName').val();
+           /* transData['UserName'] = $('#UserName').val();
             transData['LineID'] = $('#LineID').val();
             transData['Check'] = $('#Check').prop('checked');
-            transData['Remarks'] = $('#OutRemarks').val();
-            //SubmitByAjax(transData, '');
+            transData['Remarks'] = $('#OutRemarks').val();*/
+            var applicant=$('#ApplicantID').val()+" "+$('#ApplicantName').val();
+            transData['applicant'] = applicant;
+            var selectedJiaju=[];
+            debugger;
+            for(var i=0;i<selectedToolModel.length;i++){
+                var object={};
+                object.code=selectedToolModel[i].Code;
+                object.seqId=selectedToolModel[i].SeqID;
+                selectedJiaju.push(object);
+            }
+            debugger;
+            //夹具
+            transData['codeList'] =selectedJiaju;
+            //备注
+            transData['note'] = $('#OutRemarks').val();
+            //领用人姓名
+            transData['employer']=$('#UserName').val();
+            //产线
+            transData['proLine']=$('#LineID').val();
+            //是否为点检
+            var check=$("#checkbox").is(':checked');
+            if(check==true){
+                transData['ifCheck']=true;
+            }else{
+                transData['ifCheck']=false;
+            }
+
+            //
+            SubmitByAjax(transData, '/do/outbound');
             break;
         case 'In':
-            transData['Remarks'] = $('#InRemarks').val();
-            //SubmitByAjax(transData, '');
+            //applicant:工号+姓名  note:备注
+            var applicant=$('#ApplicantID').val()+" "+$('#ApplicantName').val();
+            transData['applicant'] = applicant;
+            transData['note'] = $('#InRemarks').val();
+            var selectedJiaju=[];
+            debugger;
+            for(var i=0;i<selectedToolModel.length;i++){
+                var object={};
+                object.code=selectedToolModel[i].Code;
+                object.seqId=selectedToolModel[i].SeqID;
+                selectedJiaju.push(object);
+            }
+            transData['codeList'] =selectedJiaju;
+            SubmitByAjax(transData, '/do/inbound');
             break;
         case 'Repair':
-            transData['PMContentID'] = $('#PMContentID').val();
-            transData['Reason'] = $('#RepairReason').val();
-            //SubmitByAjax(transData, '');
+            //故障类别
+            transData['failureType'] = $('#PMContentID').val();
+            //故障描述
+            transData['failureDesc'] = $('#RepairReason').val();
+            //applicant:工号+姓名  note:备注
+            var applicant=$('#ApplicantID').val()+" "+$('#ApplicantName').val();
+            transData['applicant'] = applicant;
+            var selectedJiaju=[];
+            debugger;
+            for(var i=0;i<selectedToolModel.length;i++){
+                var object={};
+                object.code=selectedToolModel[i].Code;
+                object.seqId=selectedToolModel[i].SeqID;
+                selectedJiaju.push(object);
+            }
+            transData['codeList'] =selectedJiaju;
+            SubmitByAjax(transData, '/do/repair');
             break;
         case 'Scrap':
-            transData['Reason'] = $('#ScrapReason').val();
-            //SubmitByAjax(transData, '');
+            //报废原因
+            transData['reason'] = $('#ScrapReason').val();
+            //applicant:工号+姓名  note:备注
+            var applicant=$('#ApplicantID').val()+" "+$('#ApplicantName').val();
+            transData['applicant'] = applicant;
+            var selectedJiaju=[];
+            debugger;
+            for(var i=0;i<selectedToolModel.length;i++){
+                var object={};
+                object.code=selectedToolModel[i].Code;
+                object.seqId=selectedToolModel[i].SeqID;
+                selectedJiaju.push(object);
+            }
+            transData['codeList'] =selectedJiaju;
+            SubmitByAjax(transData, '/do/scrapped');
+            break;
+        case 'purchaseIn':
+            transData['Reason'] = $('#puchaseInRemarks').val();
+            //todo 后台逻辑还没写好
+           // SubmitByAjax(transData, '/do/purchase');
             break;
     }
 });
