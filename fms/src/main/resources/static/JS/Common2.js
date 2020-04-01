@@ -18,7 +18,7 @@ $.ajax({                            //url待改
     }
 })*/
 $('#content').empty();
-$('#content').load('../HTML/TempApplicationManage2.html');
+/*$('#content').load('../HTML/TempApplicationManage2.html');*/
 //$('#content').load('../HTML/ToolEntityDisplay.html');
 //$('#content').load('../HTML/ToolDefinitionDisplay.html');
 //$('#content').load('../HTML/AdminToolDefinitionDisplay.html');
@@ -34,15 +34,15 @@ userName = decodeURIComponent(userName);
 $("#name").html(userName+" 欢迎");
 
 //跳转
-//夹具管理
+//审批页面
 $('#apply1').click(function(){
     $('#content').empty();
-    $('#content').load('../HTML/TempApplicationManage2.html');
+    $('#content').load('../HTML/ApplicationReview.html');
 })
 
-//高级功能
+/*//高级功能
 $('#function').click(function(){
     $('#content').empty();
     $('#content').load('../HTML/OldDataLoad.html');
-})
+})*/
 

@@ -64,7 +64,7 @@ $('#apply2').click(function () {
 
 $('#apply3').click(function () {
     $('#content').empty();
-    $('#content').load('../HTML/ToolEntityDisplay.html');
+    $('#content').load('../HTML/ToolEntityDisplay1.html');
 })
 /*//租借记录
 $('#inout').click(function(){

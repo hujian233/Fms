@@ -1,43 +1,38 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 var selectedApplication = [];   //已选择的申请
 var displayType = 'Out';                //当前展示的申请类型
-var initData = {};
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 获取待审核申请列表、刷新列表（函数）
-function refreshTable(){
-    $.ajax({
+refreshTable(3);
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//#region 展示表格、刷新
+function refreshTable(type){
+    $('tbody').empty();
+    debugger;
+    //type=3:出库
+    $.ajax({ 
         type: 'GET',
         dataType: 'JSON',
-        url: '../TestData/ApplicationList.json',  //后端Url待改
-        success: function(result){
-            if(result.Status == 'error'){
-                alert('获取数据失败，请稍后重试..');
-            }else{
-                initData = result;
-                displayTable(initData[displayType]);
+      //  url: '../TestData/PwResetApplicationList.json',  //后端Url，待改
+        url: '/do/querysubmit?type='+type,
+        success: function(result1){
+            var result=result1.data;
+            $('tbody').empty();
+            for(let i = 0; i < result.length; i++){
+                $('tbody').append(
+                    '<tr><td><input class="checkbox" onchange="selectOne(this);" type="checkbox">'
+                    + '</td><td>' + result[i].orderId
+                    + '</td><td>' + result[i].applicant
+                    + '</td><td>' + result[i].applicantTime
+                    + '</td><td><button class="btn act-btn" onclick="accept(this);">同意</button>'
+                    + '<button class="btn act-btn" onclick="reject(this);">拒绝</button>'
+                    + '</td></tr>');
             }
         },
         error: function(){
-            alert('获取信息失败，请稍后重试...');
+            alert('获取信息失败，请刷新重试...');
         }
     });
 }
-function displayTable(data){
-    $('tbody').empty();
-    for(let i = 0; i < data.length; i++){
-        $('tbody').append(
-            '<tr><td><input class="checkbox" onchange="selectOne(this);" type="checkbox">'
-            + '</td><td>' + data[i].OrderID
-            + '</td><td>' + data[i].ApplicantID + '&nbsp&nbsp&nbsp' + data[i].ApplicantName
-            + '</td><td>' + data[i].ApplicationTime
-            + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>'
-            + '<button class="btn act-btn" onclick="accept(this);">同意</button>'
-            + '<button class="btn act-btn" onclick="reject(this);">驳回</button>'
-            + '</td></tr>');
-    }
-}
-
-$(window).on('load', refreshTable());
+/*$(window).on('load', refreshTable);*/
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,85 +42,19 @@ function changeTab(e, type){
     $(e).addClass('a-tab-active');
     $('#selectAll').prop('checked', false);
     displayType = type;
-    displayTable(initData[displayType]);
-}
-//#endregion
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 点击查看详情、模态窗显示、模态窗提交
-function getInfo(e){
-    var OrderID = $(e).parent().parent().children().eq(1).text()
-    $('#OrderID').text(OrderID);
-    $('#Applicant').text($(e).parent().parent().children().eq(2).text());
-    $('#ApplicationTime').text($(e).parent().parent().children().eq(3).text());
-    $.ajax({
-        type: 'GET',
-        contentType: 'application/json;charset=UTF-8',
-        url: '../TestData/ApplicationInfo.json'/*  + '?OrderID=' + OrderID */,      //url待改 后附OrderID参数
-        success: function(result){
-            if(result.Status == 'error'){
-                alert('获取信息失败，请稍后重试...');
-            }else{
-                $('#outBox').hide();
-                $('#inBox').hide();
-                $('#repairBox').hide();
-                $('#scrapBox').hide();
-                switch(displayType){                         //更改模态窗内容
-                    case 'Out': 
-                        $('#modalTitle').text('出库申请单详情');
-                        $('#UserName').text(result.UserName);
-                        $('#LineName').text(result.LineName);
-                        $('#Check').text(result.Check);
-                        $('#OutRemarks').text(result.Remarks);
-                        $('#outBox').show();
-                        break;
-                    case 'In':
-                        $('#modalTitle').text('入库申请单详情');
-                        $('#InRemarks').text(result.Remarks);
-                        $('#inBox').show();
-                        break;
-                    case 'Repair':
-                        $('#modalTitle').text('报修申请单详情');
-                        $('#PMContent').text(result.PMContent);
-                        $('#RepairReason').text(result.Reason);
-                        $('#repairBox').show();
-                        break;
-                    case 'Scrap':
-                        $('#modalTitle').text('报废申请单详情');
-                        $('#ScrapReason').text(result.Reason);
-                        $('#scrapBox').show();
-                        break;
-                }
-
-                $('#ToolList').text('');                       //清空富文本框显示夹具  
-                for(let i = 0; i < result.ToolList.length; i++){          //刷新富文本框显示夹具
-                    let temp = $('#ToolList').text();
-                    $('#ToolList').text(temp + 'No.' + (i + 1) + '    ' 
-                        + result.ToolList[i].Code + '    ' 
-                        + result.ToolList[i].SeqID + '\n');
-                }
-                $('#applicationInfoModal').modal('show');
-            }
-        } 
-    });
-}
-function acceptInModal(e){
-    var transData = {
-        'Type': 'accept',
-        'OrderID': [
-            $(e).parent().children().eq(0).children().eq(1).text()
-        ]
+    //displayTable(initData[displayType]);
+    if(type=='Out'){
+        refreshTable(3);
     }
-    //SubmitByAjax(transData, '');
-}
-function rejectInModal(e){
-    var transData = {
-        'Type': 'reject',
-        'OrderID': [
-            $(e).parent().children().eq(0).children().eq(1).text()
-        ]
+    if(type=='In'){
+        refreshTable(2);
     }
-    //SubmitByAjax(transData, '');
+    if(type=='Repair'){
+        refreshTable(4);
+    }
+    if(type=='Scrap'){
+        refreshTable(5);
+    }
 }
 //#endregion
 
@@ -156,34 +85,88 @@ function selectOne(e){
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 单个同意、驳回
+//#region 单个同意、拒绝
 function accept(e){
-    var transData = {
-        'Type': 'accept',
-        'OrderID': [
-            $(e).parent().parent().children().eq(1).text()
-        ]
+    var type=1;
+    if(displayType=='Out'){
+        type=3;
     }
-    //SubmitByAjax(transData, '');
+    if(displayType=='In'){
+        type=2;
+    }
+    if(displayType=='Repair'){
+        type=4;
+    }
+    if(displayType=='Scrap'){
+        type=5;
+    }
+    debugger;
+    //订单编号
+    var orderId=$(e).parent().parent().children().eq(1).text();
+    //申请人
+    var applicant=$(e).parent().parent().children().eq(2).text();
+
+    var transData = {
+        'result': 1,
+        'type': type,
+        orderIds:[parseInt(orderId)]
+    }
+
+    //1:同意；2;驳回result
+  /*  var transData = {
+        'result': 1,
+        'type': type
+    }*/
+    SubmitByAjax(transData, '/do/approval');
 }
 function reject(e){
-    var transData = {
+   /* var transData = {
         'Type': 'reject',
-        'OrderID': [
-            $(e).parent().parent().children().eq(1).text()
+        'Application': [
+            {   
+                'UserID': $(e).parent().parent().children().eq(1).text(),
+                'Workcell': $(e).parent().parent().children().eq(3).text()
+            }
         ]
+    }*/
+    var type=1;
+    if(displayType=='Out'){
+        type=3;
     }
-    //SubmitByAjax(transData, '');
+    if(displayType=='In'){
+        type=2;
+    }
+    if(displayType=='Repair'){
+        type=4;
+    }
+    if(displayType=='Scrap'){
+        type=5;
+    }
+    debugger;
+    //订单编号
+    var orderId=$(e).parent().parent().children().eq(1).text();
+    //申请人
+    var applicant=$(e).parent().parent().children().eq(2).text();
+
+    var transData = {
+        'result': 2,
+        'type': type,
+        orderIds:[parseInt(orderId)]
+    }
+    SubmitByAjax(transData, '/do/approval');
 }
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//#region 批量同意、驳回
+//#region 批量同意、拒绝
 function AddToSelectedApplication(){
     selectedApplication = [];
     for(let i = 0; i < $('tbody').children().length; i++){    //将选中的夹具添加入变量数组
         if($('tbody').children().eq(i).children().eq(0).children().eq(0).prop('checked')){
-            selectedApplication.push($('tbody').children().eq(i).children().eq(1).text());
+            selectedApplication.push({
+                'orderId': $('tbody').children().eq(i).children().eq(1).text(),
+                'applicant': $('tbody').children().eq(i).children().eq(2).text()
+            });
         }
     }
 }
@@ -195,37 +178,80 @@ function SubmitByAjax(data, url){
         data: JSON.stringify(data),
         url: url,  
         success: function(result){
-            if(result.Status == 'error'){
-                alert('提交失败，请稍后重试...');
-            }else{
+            if(result.resultCode == 0){
                 alert('提交成功！');
-                refreshTable();
+                refreshTable(3);
+            }else{
+               alert("提交失败");
             }
         } 
     });
 }
 $('#bulkAccept').click(function(){
+    debugger;
     AddToSelectedApplication();
     if(selectedApplication.length == 0){
         alert('您当前还未选择任何夹具！');
     }else{
-        var transData = {
-            'Type': 'accept',
-            'OrderID': selectedApplication
+        var type=1;
+        if(displayType=='Out'){
+            type=3;
         }
-        //SubmitByAjax(transData, '');
+        if(displayType=='In'){
+            type=2;
+        }
+        if(displayType=='Repair'){
+            type=4;
+        }
+        if(displayType=='Scrap'){
+            type=5;
+        }
+        var orderId=[];
+        for(var i=0;i<selectedApplication.length;i++){
+            var o=selectedApplication[i].orderId;//订单编号
+            orderId.push(parseInt(o));
+
+        }
+        var transData = {
+            'type': type,
+            'orderIds': orderId,
+            'result':1
+        }
+        SubmitByAjax(transData, '/do/approval');
     }
+    
 });
 $('#bulkReject').click(function(){
+    debugger;
     AddToSelectedApplication();
     if(selectedApplication.length == 0){
         alert('您当前还未选择任何夹具！');
     }else{
-        var transData = {
-            'Type': 'reject',
-            'OrderID': selectedApplication
+        var type=1;
+        if(displayType=='Out'){
+            type=3;
         }
-        //SubmitByAjax(transData, '');
+        if(displayType=='In'){
+            type=2;
+        }
+        if(displayType=='Repair'){
+            type=4;
+        }
+        if(displayType=='Scrap'){
+            type=5;
+        }
+        var orderId=[];
+        for(var i=0;i<selectedApplication.length;i++){
+            var o=selectedApplication[i].orderId;//订单编号
+            orderId.push(parseInt(o));
+
+        }
+        var transData = {
+            'type': type,
+            'orderIds': orderId,
+            'result':2
+        }
+        SubmitByAjax(transData, '/do/approval');
     }
 });
 //#endregion
