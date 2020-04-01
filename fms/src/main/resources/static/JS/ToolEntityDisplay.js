@@ -323,8 +323,8 @@ $('#bulkOperBtn').click(function () {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 获取夹具定义的详细信息
 function getInfo(e) {
-    var code = $(e).parent().parent().children().eq(0).text();
-    var seqId = $(e).parent().parent().children().eq(1).text();
+    var code = $(e).parent().parent().children().eq(1).text();
+    var seqId = $(e).parent().parent().children().eq(2).text();
     $.ajax({
         type: 'GET',
         dataType: 'JSON',

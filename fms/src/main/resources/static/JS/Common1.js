@@ -51,7 +51,20 @@ function find(str,cha,num){
 //夹具管理  需要将当前用户Id带过去
 $('#apply1').click(function () {
     $('#content').empty();
-    $('#content').load('../HTML/TempApplicationManage1.html');
+    $('#content').load('../HTML/AdminToolDefinitionDisplay.html');
+})
+
+//跳转夹具定义页面
+
+$('#apply2').click(function () {
+    $('#content').empty();
+    $('#content').load('../HTML/ToolDefinitionDisplay.html');
+})
+//跳转夹具实体页面
+
+$('#apply3').click(function () {
+    $('#content').empty();
+    $('#content').load('../HTML/ToolEntityDisplay.html');
 })
 /*//租借记录
 $('#inout').click(function(){

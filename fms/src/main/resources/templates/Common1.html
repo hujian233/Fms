@@ -2,15 +2,15 @@
 <html lang="zh-CN">
 <head>
     <title></title>
-  <!--  <base th:href="@{/}">-->
+    <!--  <base th:href="@{/}">-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="../IMG/favicon.ico">
-    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../node_modules/normalize.css/normalize.css"/>
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="icon" href="../static/IMG/favicon.ico">
+    <link href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/node_modules/normalize.css/normalize.css"/>
+    <script src="../static/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -18,7 +18,7 @@
 <nav class="navbar navbar-fixed-top header_box">
     <div class="container-fluid">
         <div id="logo">
-            <img src="../IMG/company_logo2.png">
+            <img src="../static/IMG/company_logo2.png">
         </div>
         <ul class="nav nav-pills title_user">
             <li><a id="name"></a></li>
@@ -33,34 +33,42 @@
     <nav class="menu">
         <ul class="nav nav-pills nav-stacked navbar-link">
             <li class="active">
-                <a class="collapse" data-toggle="collapse" id="apply1"><i  class="fa fa-align-left"
-                                                                           aria-hidden="true"></i> 夹具管理</a>
-               <!-- <ul id="tool" class="nav collapse coll_a">
-                    <li><a id="apply1">夹具采购入库申请</a></li>
-                    <li><a id="apply2">夹具入库申请</a></li>
+                <a class="collapse" data-toggle="collapse" href="#tool"><i class="fa fa-align-left" aria-hidden="true"></i>   夹具管理</a>
+                <ul id="tool" class="nav collapse coll_a">
+                    <li><a id="apply2">夹具定义</a></li>
+                    <li><a id="apply3">夹具实体</a></li>
+                    <li><a id="apply1">夹具申请</a></li>
+
+
+                </ul>
+               <!-- <a class="collapse" data-toggle="collapse" id="apply1"><i class="fa fa-align-left"
+                                                                          aria-hidden="true"></i> 夹具管理</a>
+
+
+                <ul id="tool" class="nav collapse coll_a">
                     <li><a id="apply3">夹具出库申请</a></li>
                     <li><a id="apply4">报修申请</a></li>
                 </ul>-->
-           <!-- </li>-->
+            </li>
            <!-- <li class="active">
                 <a class="collapse" data-toggle="collapse" id="inout"><i class="fa fa-handshake-o"
-                                                                            aria-hidden="true"></i> 租借记录</a>-->
-               <!-- <ul id="inout" class="nav collapse coll_a">
+                                                                         aria-hidden="true"></i> 租借记录</a>
+                <ul id="11" class="nav collapse coll_a">
                     <li><a href="#">Test</a></li>
                     <li><a href="#">Test</a></li>
                     <li><a href="#">Test</a></li>
                 </ul>-->
-           <!-- </li>
-            <li class="active">
-                <a class="collapse" data-toggle="collapse" id="function" ><i class="fa fa-line-chart"
-                                                                               aria-hidden="true"></i> 高级功能</a>-->
-               <!-- <ul id="function" class="nav collapse coll_a">
-                    <li><a href="#">Test</a></li>
-                    <li><a href="#">Test</a></li>
-                    <li><a href="#">Test</a></li>
-                </ul>-->
-           <!-- </li>
-            <li class="active"><a  id="user"><i class="fa fa-address-card-o" aria-hidden="true"></i> 用户信息</a></li>-->
+                <!-- </li>
+                 <li class="active">
+                     <a class="collapse" data-toggle="collapse" id="function" ><i class="fa fa-line-chart"
+                                                                                    aria-hidden="true"></i> 高级功能</a>-->
+                <!-- <ul id="function" class="nav collapse coll_a">
+                     <li><a href="#">Test</a></li>
+                     <li><a href="#">Test</a></li>
+                     <li><a href="#">Test</a></li>
+                 </ul>-->
+                <!-- </li>
+                 <li class="active"><a  id="user"><i class="fa fa-address-card-o" aria-hidden="true"></i> 用户信息</a></li>-->
         </ul>
     </nav>
     <!-- 响应式抽屉按钮 -->
@@ -81,13 +89,13 @@
     </div>
 </div>
 
-<link rel="stylesheet" type="text/css" href="../node_modules/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../CSS/Common.css"/>
-<script src="../JS/sidebar/snap.svg-min.js"></script>
-<script src="../JS/sidebar/html5.js"></script>  <!--兼容IE-->
-<script src="../JS/Common1.js"></script>
-<script src="../JS/sidebar/classie.js"></script>
-<script src="../JS/sidebar/main4.js"></script>
+<link rel="stylesheet" type="text/css" href="../static/node_modules/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../static/CSS/Common.css"/>
+<script src="../static/JS/sidebar/snap.svg-min.js"></script>
+<script src="../static/JS/sidebar/html5.js"></script>  <!--兼容IE-->
+<script src="../static/JS/Common1.js"></script>
+<script src="../static/JS/sidebar/classie.js"></script>
+<script src="../static/JS/sidebar/main4.js"></script>
 
 </body>
 </html>

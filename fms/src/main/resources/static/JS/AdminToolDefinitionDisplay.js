@@ -243,7 +243,10 @@ $('#EditBtn').click(function(){
 //#region 获取夹具实体列表
 function getEntity(e){
     var code = $(e).parent().parent().children().eq(0).text();
-    window.location = '/displayToolEntity?code='+code;
+    //在原来窗体上打开新页面
+   // window.location = '/displayToolEntity?code='+code;
+    //打开新窗体
+    window.open('/displayToolEntity?code='+code);
 }
 //#endregion
 
