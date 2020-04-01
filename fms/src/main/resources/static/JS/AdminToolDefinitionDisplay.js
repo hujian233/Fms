@@ -26,6 +26,7 @@ var fmDict = {};                //Family、Model字典
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 初始化/刷新表格数据
 function displayTable(data){
+   // $('tbody').empty();
     $('#paginationToolDeinit').jqPaginator({
         first: '<li class="first"><a href="javascript:;">首页</a></li>',
         prev: '<li class="prev"><a href="javascript:;"><<</a></li>',
@@ -106,6 +107,7 @@ function runFilter(e, type){  //执行筛选，并刷新展示的表格
         displayTable(tempData);
     else{
         alert('无筛选结果..');
+        $('tbody').empty();
         $(e).val('');
         filterBy[type] = '';
     }
@@ -119,6 +121,7 @@ function changeFilter(e, type){  //响应绑定的控件
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 筛选框动画效果、固定顶部
 function showFilterInput(e){
+    debugger;
     var inputBoxNode = $(e).parent().children().eq(1);
     var iconNode = $(e).parent().children().eq(0).children().eq(0);
     var inputNode = inputBoxNode.children().eq(0); 

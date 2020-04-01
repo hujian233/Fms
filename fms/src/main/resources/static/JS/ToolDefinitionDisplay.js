@@ -121,6 +121,7 @@ function runFilter(e, type){  //执行筛选，并刷新展示的表格
         displayTable(tempData);
     else{
         alert('无筛选结果..');
+        $('tbody').empty();
         $(e).val('');
         filterBy[type] = '';
     }
