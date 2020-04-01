@@ -92,19 +92,23 @@ function showEditModal(e){
     $('#editModal').modal('show');
 }
 $('#EditBtn').click(function(){
-    var transData = {
+   /* var transData = {
         'UserID': $('#UserID').val(),
         'NewPrivilege': $('#NewPrivilege').val()
-    };
-    /* $.ajax({
-        type: 'POST',
+    };*/
+ //lert($('#NewPrivilege').val());
+    debugger;
+     $.ajax({
+
+        type: 'get',
         dataType: 'JSON',
         contentType: 'application/json',
-        data: transData,
-        url: '',               //待填
+      //  data: transData,
+        url: '/updateAuthority?jobNumber='+$('#UserID').val()+"&authority="+$('#NewPrivilege').val(),               //待填
         success: function(result){
-            if(result.Status == 'success'){
+            if(result.resultCode==0){
                 alert('修改成功！');
+                $('#editModal').modal('hide');
                 refleshTable();
             }else{
                 alert('修改失败，请稍后重试...');
@@ -113,7 +117,7 @@ $('#EditBtn').click(function(){
         error: function(){
             alert('修改失败，请稍后重试...')
         }
-    }); */
+    });
 });
 //#endregion
 
