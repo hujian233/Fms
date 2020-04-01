@@ -18,7 +18,7 @@ $.ajax({                            //url待改
     }
 })*/
 $('#content').empty();
-$('#content').load('../HTML/TempApplicationManage1.html');
+/*$('#content').load('../HTML/TempApplicationManage1.html');*/
 //$('#content').load('../HTML/ToolEntityDisplay.html');
 //$('#content').load('../HTML/ToolDefinitionDisplay.html');
 //$('#content').load('../HTML/AdminToolDefinitionDisplay.html');
