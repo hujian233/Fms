@@ -10,7 +10,6 @@ import com.school.fms.utils.JsonUtils;
 import com.school.fms.vo.ApprovalVo;
 import com.school.fms.vo.CheckListVo;
 import com.school.fms.vo.CodeListVo;
-import com.school.fms.vo.WaitSubmitVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,7 +78,7 @@ public class OperationController {
      */
     @RequestMapping(value = "/inbound", method = {RequestMethod.POST})
     @ResponseBody
-    public String inbound(@RequestBody Inbound inbound) {
+    public Response inbound(@RequestBody Inbound inbound) {
         try {
             Date time = new Date(System.currentTimeMillis());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -93,7 +92,7 @@ public class OperationController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return JsonUtils.objectToJson(Response.ok("入库申请成功"));
+        return Response.ok("入库申请成功");
     }
 
     /**
@@ -103,7 +102,7 @@ public class OperationController {
      */
     @RequestMapping(value = "/outbound", method = {RequestMethod.POST})
     @ResponseBody
-    public String outbound(@RequestBody Outbound outbound) {
+    public Response outbound(@RequestBody Outbound outbound) {
         try {
             Date time = new Date(System.currentTimeMillis());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -117,7 +116,7 @@ public class OperationController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return JsonUtils.objectToJson(Response.ok("出库申请成功"));
+        return Response.ok("出库申请成功");
     }
 
     /**
@@ -127,7 +126,7 @@ public class OperationController {
      */
     @RequestMapping(value = "/repair", method = {RequestMethod.POST})
     @ResponseBody
-    public String repair(@RequestBody Repair repair) {
+    public Response repair(@RequestBody Repair repair) {
         try {
             Date time = new Date(System.currentTimeMillis());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -141,7 +140,7 @@ public class OperationController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return JsonUtils.objectToJson(Response.ok("报修申请成功"));
+        return Response.ok("报修申请成功");
     }
 
     /**
@@ -151,7 +150,7 @@ public class OperationController {
      */
     @RequestMapping(value = "/scrapped", method = {RequestMethod.POST})
     @ResponseBody
-    public String scrapped(@RequestBody Scrap scrap) {
+    public Response scrapped(@RequestBody Scrap scrap) {
         try {
             Date time = new Date(System.currentTimeMillis());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -165,7 +164,7 @@ public class OperationController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return JsonUtils.objectToJson(Response.ok("报废申请成功"));
+        return Response.ok("报废申请成功");
     }
 
     /**
@@ -176,7 +175,7 @@ public class OperationController {
      */
     @RequestMapping(value = "/querysubmit", method = {RequestMethod.GET})
     @ResponseBody
-    public String getSubmit(@RequestParam(value = "type", required = false) Integer status) {
+    public Response getSubmit(@RequestParam(value = "type", required = false) Integer status) {
         List<CheckListVo> checkListVos = new ArrayList<>();
         switch (status) {
             case 2:
@@ -192,9 +191,9 @@ public class OperationController {
                 checkListVos = operationService.queryScrapList();
                 break;
             default:
-                return JsonUtils.objectToJson(Response.error("操作失败，无此类型"));
+                return Response.error("操作失败，无此类型");
         }
-        return JsonUtils.objectToJson(new Response(checkListVos));
+        return new Response(checkListVos);
     }
 
     /**
@@ -205,7 +204,7 @@ public class OperationController {
      */
     @PostMapping(value = "/approval")
     @ResponseBody
-    public String approval(@RequestBody ApprovalVo approvalVo) {
+    public Response approval(@RequestBody ApprovalVo approvalVo) {
         int type = approvalVo.getType();
         List<Integer> orderIds = approvalVo.getOrderIds();
         int result = approvalVo.getResult();
@@ -223,14 +222,14 @@ public class OperationController {
                 operationService.approvalScrap(orderIds, result);
                 break;
             default:
-                return JsonUtils.objectToJson(Response.error("操作失败，无此类型"));
+                return Response.error("操作失败，无此类型");
         }
-        return JsonUtils.objectToJson(Response.ok("操作成功"));
+        return Response.ok("操作成功");
     }
 
     @GetMapping(value = "/seeDetail")
     @ResponseBody
-    public String seeDetail(@RequestParam int type, @RequestParam int orderId) {
+    public Response seeDetail(@RequestParam int type, @RequestParam int orderId) {
         Object response;
         switch (type) {
             case 2:
@@ -246,8 +245,8 @@ public class OperationController {
                 response = operationService.queryScrap(orderId);
                 break;
             default:
-                return JsonUtils.objectToJson(Response.error("操作失败，无此类型"));
+                return Response.error("操作失败，无此类型");
         }
-        return JsonUtils.objectToJson(new Response(response));
+        return new Response(response);
     }
 }

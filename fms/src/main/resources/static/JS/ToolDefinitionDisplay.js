@@ -3,11 +3,12 @@
 var initData = [];                 //从后端获取的初始数据           
 var pageSize = 20;              //一页最多显示20条信息
 var filterBy = {                //存放筛选条件
-    'Code': '',
-    'Name': '',
-    'Family': '',
-    'Model': ''
-};   
+    'code': '',
+    'name': '',
+    'family': '',
+    'model': ''
+};
+initDefineData();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 初始化/刷新表格数据
 function displayTable(data){
@@ -24,25 +25,27 @@ function displayTable(data){
             $('tbody').empty();
             var begin = (num - 1) * pageSize;
             for(var i = begin; i < data.length && i < begin + pageSize; i++){
-                $('tbody').append('<tr><td>' + data[i].Code
-                + '</td><td>' + data[i].Name
-                + '</td><td>' + data[i].Family
-                + '</td><td>' + data[i].Model
-                + '</td><td>' + data[i].PartNo
-                + '</td><td>' + data[i].OwnerID + '&nbsp&nbsp&nbsp' + data[i].OwnerName
+                $('tbody').append('<tr><td>' + data[i].code
+                + '</td><td>' + data[i].name
+                + '</td><td>' + data[i].family
+                + '</td><td>' + data[i].model
+                + '</td><td>' + data[i].partNo
+                + '</td><td>' + data[i].owner + '&nbsp&nbsp&nbsp'
                 + '</td><td><button class="btn act-btn" onclick="getInfo(this);">查看详情</button>'
-                + '<button class="btn act-btn" onclick="getEntity(this);">查看实体</button>'
+               /* + '<button class="btn act-btn" onclick="getEntity(this);">查看实体</button>'*/
                 + '</td></tr>');
             }
         }
     });
 }
-
-$(window).on('load', function(){
+//初始化方法
+function initDefineData(){
+    debugger;
     $.ajax({                    //获取夹具定义数据
         type: 'GET',
         dataType: 'JSON',
-        url: '../TestData/ToolDefinitionList.json',  //后端Url，待改
+        // url: '../TestData/ToolDefinitionList.json',  //后端Url，待改
+        url: '/fixture/queryDefine',
         success: function(result){
             displayTable(result);
             initData = result;
@@ -66,21 +69,53 @@ $(window).on('load', function(){
             $('#modelFilterInput').replaceWith('<input class="form-control filterby-input" id="modelFilterInput" onchange="changeFilter(this, ' + "'Family'" + ');">');
         }
     })
-})
+}
+/*
+$(window).on('load', function(){
+    $.ajax({                    //获取夹具定义数据
+        type: 'GET',
+        dataType: 'JSON',
+       // url: '../TestData/ToolDefinitionList.json',  //后端Url，待改
+        url: '/fixture/queryDefine',
+        success: function(result){
+            displayTable(result);
+            initData = result;
+        },
+        error: function(){
+            alert('获取信息失败，请刷新重试...');
+        }
+    });
+    $.ajax({                    //获取family、model字典
+        type: 'GET',
+        dataType: 'JSON',
+        url: '../TestData/FamModDict.json',  //后端Url，待改
+        success: function(result){
+            for(let p in result.Family)
+                $('#familyFilterInput').append('<option value="' + result.Family[p] + '">' + result.Family[p] + '</option>');
+            for(let n in result.Model)
+                $('#modelFilterInput').append('<option value="' + result.Model[n] + '">' + result.Model[n] + '</option>');
+        },
+        error: function(){
+            $('#familyFilterInput').replaceWith('<input class="form-control filterby-input" id="familyFilterInput" onchange="changeFilter(this, ' + "'Model'" + ');">');
+            $('#modelFilterInput').replaceWith('<input class="form-control filterby-input" id="modelFilterInput" onchange="changeFilter(this, ' + "'Family'" + ');">');
+        }
+    })
+})*/
 //#endregion
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //#region 筛选
 function runFilter(e, type){  //执行筛选，并刷新展示的表格
+    debugger;
     var tempData = initData;
-    if(filterBy.Code != '')
-        tempData = tempData.filter(item => {return item.Code == filterBy.Code});
-    if(filterBy.Name != '')
-        tempData = tempData.filter(item => {return item.Name == filterBy.Name});
-    if(filterBy.Family != '')
-        tempData = tempData.filter(item => {return item.Family == filterBy.Family});
-    if(filterBy.Model != '')
-        tempData = tempData.filter(item => {return item.Model == filterBy.Model});
+    if(filterBy.code != '')
+        tempData = tempData.filter(function(item) {return item.code == filterBy.code});
+    if(filterBy.name != '')
+        tempData = tempData.filter(function(item) {return item.name == filterBy.name});
+    if(filterBy.family != '')
+        tempData = tempData.filter(function(item) {return item.family == filterBy.family});
+    if(filterBy.model != '')
+        tempData = tempData.filter(function(item) {return item.model == filterBy.model});
     
     if(tempData.length > 0)
         displayTable(tempData);
@@ -145,27 +180,29 @@ function getInfo(e){
     $.ajax({
         type: "GET",
         dataType: "JSON",
-        url: "../TestData/ToolDefinitionInfo.json",  //code附在url后  "...?code=" + code
-        success: function(result){
-            
-            $('#Code').text(result.Code);
-            $('#Name').text(result.Name);
-            $('#Family').text(result.Family);
-            $('#Model').text(result.Model);
-            $('#PartNo').text(result.PartNo);
-            $('#UPL').text(result.UPL);
-            $('#UsedFor').text(result.UsedFor);
-            $('#PMPeriod').text(result.PMPeriod);
-            $('#PMContent').text(result.PMContent);
-            $('#OwnerID').text(result.OwnerID);
-            $('#OwnerName').text(result.OwnerName);
-            $('#RecOn').text(result.RecOn);
-            $('#RecorderID').text(result.RecorderID);
-            $('#RecorderName').text(result.RecorderName);
-            $('#EditOn').text(result.EditOn);
-            $('#EditorID').text(result.EditorID);
-            $('#EditorName').text(result.EditorName);
-            $('#Workcell').text(result.Workcell);
+       // url: "../TestData/ToolDefinitionInfo.json",  //code附在url后  "...?code=" + code
+        url: "/fixture/queryDefine",
+        success: function(result1){
+            var result=result1[0];
+            $('#Code').text(result.code);
+            $('#Name').text(result.name);
+            $('#Family').text(result.family);
+            $('#Model').text(result.model);
+            $('#PartNo').text(result.partNo);
+            $('#UPL').text(result.upl);
+            $('#UsedFor').text(result.usedFor);
+            $('#PMPeriod').text(result.pmPeriod);
+            //点检内容
+         /*   $('#PMContent').text(result.PMContent);*/
+            $('#OwnerID').text(result.owner);
+           /* $('#OwnerName').text(result.OwnerName);*/
+            $('#RecOn').text(result.recOn);
+            $('#RecorderID').text(result.recBy);
+           /* $('#RecorderName').text(result.RecorderName);*/
+            $('#EditOn').text(result.editOn);
+            $('#EditorID').text(result.editBy);
+         /*   $('#EditorName').text(result.EditorName);*/
+            $('#Workcell').text(result.workCell);
         },
         error: function(){
             alert('获取数据失败，请稍后重试...')

@@ -18,4 +18,28 @@ public class CheckListVo {
      * 申请时间
      */
     private String applicantTime;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getApplicant() {
+        return applicant;
+    }
+
+    public void setApplicant(String applicant) {
+        this.applicant = applicant;
+    }
+
+    public String getApplicantTime() {
+        return applicantTime;
+    }
+
+    public void setApplicantTime(String applicantTime) {
+        this.applicantTime = applicantTime;
+    }
 }

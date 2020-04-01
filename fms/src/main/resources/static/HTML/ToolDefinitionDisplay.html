@@ -37,7 +37,7 @@
                             夹具代码<i class="fa fa-chevron-right a-icon" aria-hidden="true"></i>
                         </span>
                         <div class="filter-input-box">
-                            <input class="form-control" type="text" id="codeFilterInput" onchange="changeFilter(this, 'Code');" placeholder="填写夹具代码">
+                            <input class="form-control" type="text" id="codeFilterInput" onchange="changeFilter(this, 'code');" placeholder="填写夹具代码">
                         </div>
                     </li>
                     <li>
@@ -45,29 +45,35 @@
                             夹具名称<i class="fa fa-chevron-right a-icon" aria-hidden="true"></i>
                         </span>
                         <div class="filter-input-box">
-                            <input class="form-control" type="text" id="nameFilterInput" onchange="changeFilter(this, 'Name');" placeholder="填写夹具名称">
+                            <input class="form-control" type="text" id="nameFilterInput" onchange="changeFilter(this, 'name');" placeholder="填写夹具名称">
                         </div>
                     </li>
-                    <li>
+                  <!--  <li>
                         <span class="a-filterby" onclick="showFilterInput(this);">
                             所属大类<i class="fa fa-chevron-right a-icon" aria-hidden="true"></i>
                         </span>
                         <div class="filter-input-box">
-                            <select class="form-control" id="familyFilterInput" onchange="changeFilter(this, 'Family');">
+                          &lt;!&ndash;  <select class="form-control" id="familyFilterInput" onchange="changeFilter(this, 'Family');">
                                 <option value="">选择所属大类</option>
-                            </select>
+                            </select>&ndash;&gt;
+                            <span class="a-filterby" onclick="showFilterInput(this);">
+                            夹具名称<i class="fa fa-chevron-right a-icon" aria-hidden="true"></i>
+                        </span>
+                            <div class="filter-input-box">
+                                <input class="form-control" type="text" id="familyFilterInput" onchange="changeFilter(this, 'family');" placeholder="填写所属大类">
+                            </div>
                         </div>
-                    </li>
-                    <li>
+                    </li>-->
+                   <!-- <li>
                         <span class="a-filterby" onclick="showFilterInput(this);">
                             夹具模组<i class="fa fa-chevron-right a-icon" aria-hidden="true"></i>
                         </span>
                         <div class="filter-input-box">
-                            <select class="form-control" id="modelFilterInput" onchange="changeFilter(this, 'Model');">
+                            <select class="form-control" id="modelFilterInput" onchange="changeFilter(this, 'model');">
                                 <option value="">选择夹具模组</option>
                             </select>
                         </div>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
 
@@ -135,18 +141,18 @@
                                 <label class="control-label" for="PMPeriod">保养点检周期</label>
                                 <p class="attr" id="PMPeriod"></p>
                             </div>
-                            <div class="form-group">
+                           <!-- <div class="form-group">
                                 <label class="control-label" for="PMContent">点检内容</label>
                                 <p class="attr" id="PMContent"></p>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label class="control-label" for="OwnerID">责任人工号</label>
                                 <p class="attr" id="OwnerID"></p>
                             </div>
-                            <div class="form-group">
+                         <!--   <div class="form-group">
                                 <label class="control-label" for="OwnerName">责任人姓名</label>
                                 <p class="attr" id="OwnerName"></p>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label class="control-label" for="RecOn">录入时间</label>
                                 <p class="attr" id="RecOn"></p>
@@ -155,10 +161,10 @@
                                 <label class="control-label" for="RecorderID">录入人工号</label>
                                 <p class="attr" id="RecorderID"></p>
                             </div>
-                            <div class="form-group">
+                          <!--  <div class="form-group">
                                 <label class="control-label" for="RecorderName">录入人姓名</label>
                                 <p class="attr" id="RecorderName"></p>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label class="control-label" for="EditOn">修改日期</label>
                                 <p class="attr" id="EditOn"></p>
@@ -167,10 +173,10 @@
                                 <label class="control-label" for="EditorID">修改人工号</label>
                                 <p class="attr" id="EditorID"></p>
                             </div>
-                            <div class="form-group">
+                          <!--  <div class="form-group">
                                 <label class="control-label" for="EditorName">修改人姓名</label>
                                 <p class="attr" id="EditorName"></p>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label class="control-label" for="Workcell">工作部门</label>
                                 <p class="attr" id="Workcell"></p>
