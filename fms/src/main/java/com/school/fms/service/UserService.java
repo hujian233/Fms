@@ -51,4 +51,6 @@ public interface UserService {
      * @param jobNumber 工号
      */
     void updateTime(long jobNumber);
+
+    void updateAuthority(long jobNumber, int authority);
 }

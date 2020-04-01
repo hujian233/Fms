@@ -44,4 +44,6 @@ public interface UserDao {
     public void deleteUser(@Param("jobnumber") long jobnumber);
 
     void updateTime(@Param("jobnumber")long jobNumber, @Param("current")String current);
+
+    void updateAuthority(@Param("jobnumber")long jobNumber, @Param("authority")int authority);
 }

@@ -51,6 +51,11 @@
         SET logintime = #{current}
         WHERE jobnumber = #{jobnumber}
     </update>
+    <update id="updateAuthority">
+        UPDATE user
+        SET authority = #{authority}
+        WHERE jobnumber = #{jobnumber}
+    </update>
 
     <delete id="deleteUser">
         Delete from user where jobnumber = #{jobnumber}

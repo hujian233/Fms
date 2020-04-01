@@ -51,6 +51,19 @@ public class UserController {
     }
 
     /**
+     * 修改用户权限
+     * @param jobNumber 工号
+     * @param authority 权限
+     * @return response
+     */
+    @GetMapping(value = "/updateAuthority", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String updateAuthority(@RequestParam long jobNumber, @RequestParam int authority) {
+        userService.updateAuthority(jobNumber, authority);
+        return JsonUtils.objectToJson(Response.ok("ok"));
+    }
+
+    /**
      * 注册,要设置produces,否则回调函数会出现中文乱码
      *
      * @param userVo  user

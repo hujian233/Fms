@@ -56,4 +56,9 @@ public class UserServiceImpl implements UserService {
         String current = sdf.format(time);
         userDao.updateTime(jobNumber ,current);
     }
+
+    @Override
+    public void updateAuthority(long jobNumber, int authority) {
+        userDao.updateAuthority(jobNumber ,authority);
+    }
 }
