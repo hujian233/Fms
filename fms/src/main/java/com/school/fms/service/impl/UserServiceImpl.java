@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,5 +47,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(String username, String newPwd) {
 
+    }
+
+    @Override
+    public void updateTime(long jobNumber) {
+        Date time = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String current = sdf.format(time);
+        userDao.updateTime(jobNumber ,current);
     }
 }

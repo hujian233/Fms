@@ -110,6 +110,7 @@ public class UserController {
                     CookieUtil.removeCookie(httpServletRequest, httpServletResponse, "username");
                     CookieUtil.removeCookie(httpServletRequest, httpServletResponse, "password");
                 }
+                userService.updateTime(user1.getJobNumber());
                 //登录成功
                 return JsonUtils.objectToJson(new Response(user1));
             } else {

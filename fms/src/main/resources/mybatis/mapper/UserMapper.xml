@@ -46,6 +46,11 @@
         SET password = #{newPwd}
         WHERE username = #{username}
     </update>
+    <update id="updateTime">
+        UPDATE user
+        SET logintime = #{current}
+        WHERE jobnumber = #{jobnumber}
+    </update>
 
     <delete id="deleteUser">
         Delete from user where jobnumber = #{jobnumber}

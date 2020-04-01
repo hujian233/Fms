@@ -21,7 +21,7 @@ CREATE TABLE `user`
     `mailaddress` VARCHAR(50)  NOT NULL UNIQUE COMMENT '邮箱',
     `authority`   INT(10)      NOT NULL COMMENT '权限',
     `department`  VARCHAR(50)  NOT NULL COMMENT '部门',
-    `logintime`   DATE COMMENT '上次登录时间'
+    `logintime`   DATETIME COMMENT '上次登录时间'
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8
@@ -72,7 +72,7 @@ CREATE TABLE `inbound`
     `codeList`      varchar(256) COMMENT '夹具列表',
     `note`          varchar(256) COMMENT '备注',
     `applicant`     varchar(64) COMMENT '申请人',
-    `applicantTime` DATE COMMENT '申请时间',
+    `applicantTime` DATETIME COMMENT '申请时间',
     `status`        INT(10) DEFAULT NULL COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='入库申请表';
@@ -86,7 +86,7 @@ CREATE TABLE `outbound`
     `ifCheck`       boolean COMMENT '是否点检',
     `note`          varchar(256) COMMENT '备注',
     `applicant`     varchar(64) COMMENT '申请人',
-    `applicantTime` DATE COMMENT '申请时间',
+    `applicantTime` DATETIME COMMENT '申请时间',
     `status`        INT(10) DEFAULT NULL COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='出库申请表';
@@ -98,7 +98,7 @@ CREATE TABLE `repair`
     `failureType`   varchar(64) COMMENT '故障类别',
     `failureDesc`   varchar(256) COMMENT '故障描述',
     `applicant`     varchar(64) COMMENT '申请人',
-    `applicantTime` DATE COMMENT '申请时间',
+    `applicantTime` DATETIME COMMENT '申请时间',
     `status`        INT(10) DEFAULT NULL COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='报修申请表';
@@ -109,7 +109,7 @@ CREATE TABLE `scrap`
     `codeList`      varchar(256) COMMENT '夹具列表',
     `reason`        varchar(256) COMMENT '报废原因',
     `applicant`     varchar(64) COMMENT '申请人',
-    `applicantTime` DATE COMMENT '申请时间',
+    `applicantTime` DATETIME COMMENT '申请时间',
     `status`        INT(10) DEFAULT NULL COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='报废申请表';

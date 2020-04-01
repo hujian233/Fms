@@ -42,4 +42,6 @@ public interface UserDao {
      * @param jobnumber 工号
      */
     public void deleteUser(@Param("jobnumber") long jobnumber);
+
+    void updateTime(@Param("jobnumber")long jobNumber, @Param("current")String current);
 }

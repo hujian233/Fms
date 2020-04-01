@@ -45,4 +45,10 @@ public interface UserService {
      * @param newPwd 新密码
      */
     public void changePassword(String username,String newPwd);
+
+    /**
+     * 更新登录时间
+     * @param jobNumber 工号
+     */
+    void updateTime(long jobNumber);
 }
