@@ -86,8 +86,8 @@ $('#loginBtn').click(function () {
                             + '">' + result.WorkcellList[i] + '</option>');
                     }*/
                     alert(result.description);
-                    $('#chooseWorkcellModal').modal('show');
-                    $('#chooseWorkcellModal').modal('show');
+                   /* $('#chooseWorkcellModal').modal('show');
+                    $('#chooseWorkcellModal').modal('show');*/
                 } else if (result.Status == 'first') {     //用户首次登录，需更改初始密码
                     $('#setPwModal'), modal('show');
                 } else {
