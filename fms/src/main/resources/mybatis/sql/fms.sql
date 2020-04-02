@@ -51,7 +51,7 @@ CREATE TABLE `fixture_define`
 
 CREATE TABLE `fixture_entity`
 (
-    `code`      varchar(20) UNIQUE COMMENT '夹具代码',
+    `code`      varchar(20)  COMMENT '夹具代码',
     `seqid`     varchar(20) COMMENT '夹具序列号',
     `billno`    varchar(64) COMMENT '采购单据号',
     `regDate`   DATE    DEFAULT NULL COMMENT '入库日期',
