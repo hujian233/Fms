@@ -89,4 +89,10 @@ public interface FixtureService {
      * @return FixtureDefine
      */
     FixtureDefine queryDefineDetail(String code);
+
+    /**
+     * 添加一个夹具实体
+     * @param fixtureEntity 实体信息
+     */
+    void addFixtureEntity(FixtureEntity fixtureEntity);
 }

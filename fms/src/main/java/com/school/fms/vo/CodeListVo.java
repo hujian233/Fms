@@ -12,6 +12,14 @@ public class CodeListVo implements Serializable {
     private String code;
     private String seqId;
 
+    public CodeListVo() {
+    }
+
+    public CodeListVo(String code, String seqId) {
+        this.code = code;
+        this.seqId = seqId;
+    }
+
     public String getCode() {
         return code;
     }

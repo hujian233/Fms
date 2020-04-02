@@ -3,18 +3,19 @@ package com.school.fms.controller;
 import com.school.fms.common.Response;
 import com.school.fms.entity.FixtureDefine;
 import com.school.fms.entity.FixtureEntity;
+import com.school.fms.entity.Inbound;
 import com.school.fms.service.FixtureService;
 import com.school.fms.service.OperationService;
 import com.school.fms.utils.JsonUtils;
+import com.school.fms.vo.CodeListVo;
 import com.school.fms.vo.WaitSubmitVo;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Author: hujian
@@ -107,10 +108,10 @@ public class FixtureController {
                                                   @RequestParam(value = "seqId", required = false) String seqId) {
         List<FixtureEntity> fixtureEntities = new ArrayList<>();
         try {
-            if (null == code){
+            if (null == code) {
                 code = "";
             }
-            if (null == seqId){
+            if (null == seqId) {
                 seqId = "";
             }
             fixtureEntities = fixtureService.queryEntities(code, seqId, null);
@@ -140,14 +141,15 @@ public class FixtureController {
 
     /**
      * 删除待提交申请，删除该申请就是将夹具实体状态改成0：已入库，可用
-     * @param code 夹具代码
+     *
+     * @param code  夹具代码
      * @param seqId 夹具序列号
      * @return response
      */
     @RequestMapping(value = "/deletewaitsubmit", method = {RequestMethod.GET})
     @ResponseBody
     public String deleteWaitSubmit(@RequestParam(value = "code", required = false) String code,
-                                               @RequestParam(value = "seqId", required = false) String seqId) {
+                                   @RequestParam(value = "seqId", required = false) String seqId) {
         try {
             operationService.updateStatus(code, seqId, 0);
         } catch (Exception e) {
@@ -155,5 +157,36 @@ public class FixtureController {
             return JsonUtils.objectToJson(Response.error("操作失败"));
         }
         return JsonUtils.objectToJson(Response.ok("删除成功"));
+    }
+
+    /**
+     * 增加一个夹具实体申请，入库后状态为 2:待入库， 同时增加一条入库申请到inbound表
+     *
+     * @param fixtureEntity 实体信息
+     * @return response
+     */
+    @PostMapping(value = "/addFixtureEntity/{jobNumber}", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String addFixtureEntity(@RequestBody FixtureEntity fixtureEntity, @PathVariable String jobNumber) {
+        String code = fixtureEntity.getCode();
+        FixtureDefine fixtureDefine = fixtureService.queryDefineDetail(code);
+        //判断夹具定义是否存在
+        if (null == fixtureDefine){
+            return JsonUtils.objectToJson(Response.error("夹具定义不存在"));
+        }
+        //添加一个夹具实体
+        fixtureService.addFixtureEntity(fixtureEntity);
+        Inbound inbound = new Inbound();
+        CodeListVo vo  = new CodeListVo(fixtureEntity.getCode(),fixtureEntity.getSeqId());
+        List<CodeListVo> listVos = new ArrayList<>();
+        listVos.add(vo);
+        inbound.setCodeListVo(listVos);
+        Date time = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String current = sdf.format(time);
+        inbound.setApplicantTime(current);
+        inbound.setApplicant(jobNumber);
+        operationService.addToInbound(inbound);
+        return JsonUtils.objectToJson(Response.ok("操作成功"));
     }
 }

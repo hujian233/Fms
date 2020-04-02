@@ -159,4 +159,9 @@ public class FixtureServiceImpl implements FixtureService {
     public FixtureDefine queryDefineDetail(String code) {
         return fixtureDao.queryDefineDetail(code);
     }
+
+    @Override
+    public void addFixtureEntity(FixtureEntity fixtureEntity) {
+        fixtureDao.addOneFixtureEntity(fixtureEntity);
+    }
 }
