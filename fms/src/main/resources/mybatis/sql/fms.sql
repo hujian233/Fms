@@ -68,7 +68,7 @@ ALTER TABLE fixture_entity
 
 CREATE TABLE `inbound`
 (
-    `orderId`       INT(11) AUTO_INCREMENT PRIMARY KEY UNIQUE COMMENT '订单编号',
+    `orderId`       INT(11) AUTO_INCREMENT PRIMARY KEY COMMENT '订单编号',
     `codeList`      varchar(256) COMMENT '夹具列表',
     `note`          varchar(256) COMMENT '备注',
     `applicant`     varchar(64) COMMENT '申请人',
