@@ -174,16 +174,19 @@ public class FixtureController {
         if (null == fixtureDefine){
             return JsonUtils.objectToJson(Response.error("夹具定义不存在"));
         }
-        //添加一个夹具实体
+        Date time = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String current = sdf.format(time);
+        //添加入库时间
+        fixtureEntity.setRegDate(current);
+        //添加一个夹具实体,夹具代码和序列id具有唯一性，添加了唯一索引，前段需要控制一下序列id不能是已经存在的
         fixtureService.addFixtureEntity(fixtureEntity);
         Inbound inbound = new Inbound();
         CodeListVo vo  = new CodeListVo(fixtureEntity.getCode(),fixtureEntity.getSeqId());
         List<CodeListVo> listVos = new ArrayList<>();
         listVos.add(vo);
         inbound.setCodeListVo(listVos);
-        Date time = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String current = sdf.format(time);
+        //添加申请时间
         inbound.setApplicantTime(current);
         inbound.setApplicant(jobNumber);
         operationService.addToInbound(inbound);

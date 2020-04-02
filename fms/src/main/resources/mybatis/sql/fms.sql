@@ -64,7 +64,7 @@ CREATE TABLE `fixture_entity`
 
 # 增加联合索引，确保夹具代码和夹具序列号联合唯一性
 ALTER TABLE fixture_entity
-    ADD INDEX idx2 (`code`, `seqid`);
+    ADD UNIQUE INDEX idx2 (`code`, `seqid`);
 
 CREATE TABLE `inbound`
 (
